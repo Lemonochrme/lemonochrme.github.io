@@ -1,55 +1,55 @@
 ---
 layout: post
-title: "Développement d'une Aile Volante Autonome"
+title: Autonomous Flying Wing
 date: 2024-09-29
-categories: [projet, aéronautique, électronique]
+categories: [Aero]
 ---
 
-# Développer une aile volante autonome : où j'en suis
+### Introduction
 
-L'idée derrière ce projet est de créer une aile volante capable de voler de manière autonome. À terme, j'aimerais intégrer une charge utile, mais ce point reste encore à définir. Une des pistes envisagées serait d'utiliser la **vision par ordinateur** pour réaliser de la **cartographie** ou identifier des **biomes**. Cela pourrait avoir des applications intéressantes pour l'exploration de zones isolées ou difficiles d'accès.
+The project focuses on developing an autonomous flying wing, with the eventual goal of integrating a payload. While the payload specifics are still undecided, potential applications include **computer vision for mapping** and **biome recognition**. For now, the priority is on building the platform itself and making sure the flight control system works smoothly.
 
-Cependant, pour l'instant, je me concentre sur la base, à savoir la **plateforme de vol** elle-même. L'aile volante est déjà construite, ce qui me permet de gagner du temps en utilisant un modèle pré-assemblé. Tout l'enjeu est désormais de mettre au point l'**ordinateur de vol**, le cœur de l'appareil qui va gérer tout le traitement des données et les actions en vol.
+### Current Progress
 
-## Pourquoi un SoC (System on Chip) ?
+We've already built the wing and decided to use a pre-made airframe to save time. This lets us focus entirely on developing the **flight computer** and other electronics.
 
-Pour développer cet ordinateur de vol, j'ai opté pour un **System on Chip (SoC)**, plus précisément le **Luckfox Pico Mini B**. Le choix d'un SoC n'est pas anodin : il s'agit d'une puce intégrée qui regroupe en un seul composant tous les éléments essentiels d'un ordinateur (processeur, mémoire, interfaces de communication, etc.). Cela permet d'avoir une solution compacte, légère et économe en énergie — des critères essentiels pour une aile volante où chaque gramme compte et où l'autonomie est primordiale.
+### Why Use a System-on-Chip (SoC)?
 
-### Le SoC Luckfox Pico Mini B
+For the flight computer, we opted for the **Luckfox Pico Mini B** SoC. A **System-on-Chip** (SoC) is a compact and efficient way to integrate multiple components like the processor, memory, and I/O controllers onto a single chip. This makes SoCs perfect for projects like ours where size, power consumption, and performance are critical factors. The **Luckfox Pico Mini B** combines processing power, efficient power management, and integrated neural network support, making it an ideal choice for future enhancements like AI-based mapping.
 
-J'ai choisi ce modèle de SoC car il offre un bon compromis entre puissance de calcul et consommation énergétique. Voici les spécifications techniques principales du **Luckfox Pico Mini B** :
+### System Architecture
 
-- **Processeur** : ARM Cortex-A7 32-bit à 1.2 GHz, avec une unité RISC-V intégrée.
-- **NPU (Neural Processing Unit)** : capable de traiter des algorithmes d'intelligence artificielle avec une puissance de calcul allant jusqu'à 1.0 TOPS (Tera Operations Per Second) en int4. Cela pourra s'avérer utile si, plus tard, j'intègre des fonctions de vision par ordinateur, par exemple pour identifier des objets au sol ou reconnaître des motifs géographiques.
-- **Mémoire** : 64 MB DDR2, suffisant pour les calculs embarqués et la gestion des capteurs.
-- **Stockage** : 128 MB SPI NAND FLASH, de quoi stocker les données essentielles et les logs de vol.
-- **GPIO** : 17 broches pour connecter les différents capteurs et actuateurs (servos, transceiver, etc.).
-- **Interface caméra** : Supporte le MIPI CSI pour connecter une caméra, ce qui pourra servir plus tard pour les tests de vision par ordinateur.
+The architecture of our autonomous wing revolves around the **Luckfox Pico Mini B**. Here's a breakdown of the key components:
 
-Le **Pico Mini B** a aussi l'avantage d'intégrer un système de gestion d'alimentation optimisé et un encodeur d'images performant, ce qui permettra de maximiser l'efficacité énergétique et la qualité des flux vidéo, si nécessaire.
+#### Flight Computer (SoC: Luckfox Pico Mini B)
+- **Processing Unit**: Cortex A7@1.2GHz + RISC-V, offering a balanced mix of processing and efficiency.
+- **GPS Module**: NEO6M, providing accurate location data during flight.
+- **Transceiver**: HC-12 433MHz, handling communication between the wing and ground station.
+- **IMU**: MPU9250 (9-axis), responsible for monitoring orientation and movement.
+- **Battery**: LiPo 2S 7.4V, delivering the necessary power for all onboard electronics.
 
-## L'architecture de l'aile volante
+Each of these components plays a vital role in the wing's autonomy:
+- The **GPS** ensures real-time location tracking.
+- The **IMU** helps maintain stability and orientation, critical for autonomous flight.
+- The **HC-12 transceiver** allows us to send control commands and telemetry data between the wing and the ground.
 
-L'architecture de l'aile volante est organisée autour du SoC et d'une série de composants critiques pour assurer le vol et la communication avec le sol. Voici un aperçu des principaux modules :
+### PCB Design for Expansion
 
-### Les composants principaux
+To tie all these components together, we are designing a **custom PCB** as an extension of the SoC. This PCB will integrate all the necessary inputs and outputs, such as the IMU, GPS, and power regulation for the various modules. The goal is to create a compact, efficient, and easily maintainable setup.
 
-1. **GPS NEO6M** : Ce module GPS permet de connaître la position exacte de l'aile à tout moment. Il est crucial pour la navigation autonome, notamment pour définir des plans de vol préprogrammés ou pour éviter des zones spécifiques.
-  
-2. **Transceiver HC-12 (433MHz)** : Ce module de communication sans fil permet à l'aile de transmettre des données à une station au sol. Il fonctionne à 433 MHz, ce qui offre une bonne portée tout en maintenant une consommation énergétique modérée. Cela permet d'envoyer des données de télémétrie, comme la position GPS, la vitesse ou l'état de la batterie.
+### Luckfox Pico Mini B Specifications
 
-3. **IMU MPU9250 (9 axes)** : Ce capteur inerte permet de mesurer l'orientation, la vitesse angulaire et l'accélération sur trois axes. Ces données sont essentielles pour stabiliser l'aile en vol et ajuster automatiquement son attitude en fonction des conditions de vol (vent, turbulences, etc.).
+The **Luckfox Pico Mini B** has some impressive features that set it apart from other options:
 
-4. **Batterie LiPo 2S 7.4V** : L'alimentation principale de l'aile. J'utilise une batterie LiPo 2S de 7.4V pour alimenter le SoC et les autres systèmes embarqués. La gestion de l'énergie est un facteur clé dans ce projet, car elle détermine l'autonomie de l'aile en vol.
+- **Processor**: Single-core ARM Cortex-A7 (1.2GHz) with NEON and FPU.
+- **NPU**: 0.5TOPS, supporting int4, int8, and int16 for AI-based tasks, like computer vision.
+- **Built-in RISC-V MCU**: Ideal for low power consumption, with fast startup and picture capture for real-time data.
+- **Memory**: 64MB DDR2 for smooth operation of demanding tasks.
+- **GPIO Pins**: 17x GPIO pins to support sensors and actuators.
+- **Camera Support**: MIPI CSI interface for future integration of a camera for mapping.
 
-### Le rôle du PCB
+These features make the **Luckfox Pico Mini B** a highly capable core for our project, particularly when it comes to **AI-enhanced functionalities** like biome recognition and mapping in future iterations.
 
-Tous ces composants sont reliés à un **PCB sur mesure**, conçu spécifiquement pour mon projet. Le PCB intègre toutes les **entrées/sorties** du SoC et sert d'interface avec les différents capteurs et modules de communication. Il joue un rôle central dans la gestion des signaux provenant des capteurs (GPS, IMU) et dans le contrôle des servos qui gèrent les surfaces de contrôle de l'aile (ailerons et moteur brushless).
+---
 
-J'ai pris soin de concevoir un circuit qui permet une **connexion efficace** entre le SoC et les composants, tout en garantissant une **alimentation stable** à chaque module. Le PCB inclut également des régulateurs de tension pour convertir la tension de la batterie en 5V et 3.3V, selon les besoins des différents éléments du système.
-
-## En résumé
-
-Ce projet est encore en développement, mais les grandes lignes sont désormais bien établies. L'utilisation du **Luckfox Pico Mini B** en tant que cerveau de l'aile, associée à une série de capteurs et de modules de communication, pose les bases solides pour un système de vol autonome. La prochaine étape sera d'intégrer tous ces éléments, de finaliser le design du PCB et de procéder aux premiers essais en vol pour valider l'ensemble du système.
-
-L'objectif final est d'avoir une **plateforme de vol stable et autonome**, qui pourra ensuite évoluer en fonction des besoins en intégrant, par exemple, de la vision par ordinateur ou d'autres technologies pour rendre l'aile encore plus polyvalente.
+As the project progresses, the aim is to refine the flight system and prepare for the integration of a payload. Stay tuned for updates on the PCB design and how we optimize the wing's autonomous capabilities.
