@@ -48,6 +48,10 @@ The figure below shows two different setups for virtualization:
 | **containerd**     | Strong isolation.                                            | Application-level       | API-driven, integrates well with Kubernetes.                                                   |
 | **systemd-nspawn** | Good isolation with systemd, trusted multi-tenancy.        | OS-level (lightweight VMs) | Integrated with systemd, lacks CI/CD capabilities.                                             |
 
+
+![image](https://github.com/user-attachments/assets/e2c15eab-223d-47e7-bbdb-7d5e854293d4)
+
+
 ### 3. Similarities and Differences Between Type 1 & Type 2 Hypervisors
 
 - **Type 1 - Bare-metal Virtualization**:  
