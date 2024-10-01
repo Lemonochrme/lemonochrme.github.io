@@ -21,7 +21,7 @@
       <main>
         {% if page.url == "/" %}
 
-        <h2>Hello 👋</h2>
+        <h1>Bonjour 👋</h1>
         I am Robin, an engineering student in Automation, Computer Science, and Electronics at INSA Toulouse. Passionate about many things, here you will find my personal projects where I experiment with what I learn daily.
         <div style="height: 42px;"></div>
         <div style="text-align: right;">
@@ -31,18 +31,30 @@
         <style>
           .btn-outline {
             display: inline-block;
-            font-weight: bold;
             padding: 10px 20px;
             font-size: 16px;
             color: white;
             border: 2px solid white;
             text-decoration: none;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
           }
             
           .btn-outline:hover {
             background-color: white;
             color: black;
+            animation: pulse 1s infinite;
+          }
+
+          @keyframes pulse {
+            0% {
+              box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            70% {
+              box-shadow: 0 0 20px 20px rgba(255, 255, 255, 0);
+            }
+            100% {
+              box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
           }
         </style>
         <div style="height: 42px;"></div>
