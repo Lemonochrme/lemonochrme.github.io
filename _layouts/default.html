@@ -20,8 +20,8 @@
 
       <main>
         {% if page.url == "/" %}
-
-        I am Robin, an engineering student in Automation, Computer Science, and Electronics at INSA Toulouse. Passionate about many things, here you will find my personal projects where I experiment with what I learn daily.
+        <h1 style="font-weight: normal;">Bonjour, je suis Robin.</h1>
+        I'm an engineering student in Control Engineering, Computer Science, and Electronics at INSA Toulouse. Passionate about many things, here you will find my personal projects where I experiment with what I learn daily.
         <div style="height: 42px;"></div>
         <div style="text-align: right;">
           <a href="archive" class="btn-outline">Discover the projects</a>
@@ -44,21 +44,8 @@
             background-color: white;
             color: black;
           }
-
-          .btn-outline:hover::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('https://i.gifer.com/4KL.gif') no-repeat center center;
-            background-size: cover;
-            opacity: 0.5;
-            z-index: -1;
-          }
         </style>
-        <div style="height: 42px;"></div>
+        <div style="height: 100px;"></div>
 
         {% endif %}
         {{ content }}

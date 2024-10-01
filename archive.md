@@ -3,9 +3,10 @@ layout: default
 title: Archive
 ---
 
-# Projets
+# Projects
 
-Parcourir tous les projets par mois et année.
+Browse all projects by month and year.
+
 
 {% assign postsByYearMonth = site.posts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
 {% for yearMonth in postsByYearMonth %}
