@@ -13,7 +13,7 @@ Water consumption is one of the critical utilities in a household, yet it is oft
 
 The goal of this project is to build an **IoT-based water monitoring system** that can monitor a home's water consumption and detect possible leaks. The system leverages the **ESP32** for real-time water flow measurements and uses **two ultrasonic transceivers** attached externally to a water pipe to calculate the flow rate non-invasively. The collected data is transmitted via **Wi-Fi** to a remote server for further analysis and storage. By incorporating advanced analysis techniques, possibly using **machine learning algorithms**, the system will be able to distinguish between normal water usage patterns and abnormal behaviors that may indicate leaks.
 
-![alt text](leaksdetection.drawio(1).png)
+![alt text](https://upload.wikimedia.org/wikipedia/commons/0/0e/Mesure_de_d%C3%A9bit_sur_conduite_en_charge.jpg)
 
 Users will be notified via **email** or other communication channels if a potential leak is detected. Additionally, the system provides a **user-friendly interface** for tracking real-time and historical water consumption through a dedicated application. This application will also enable users to view daily, weekly, or monthly water usage trends, helping them better understand their consumption patterns and take action when necessary.
 
