@@ -3,6 +3,7 @@ layout: post
 title: Autonomous Flying Wing
 date: 2024-09-29
 categories: [Aero]
+image: https://picsum.photos/600/200
 ---
 
 ### Introduction

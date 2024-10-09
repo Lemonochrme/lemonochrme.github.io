@@ -3,6 +3,7 @@ layout: post
 title: "Simulateur de Pendule en Python et Contrôle PID"
 date: 2024-06-06
 categories: projets
+image: https://picsum.photos/600/200
 ---
 
 # Simulateur de Pendule en Python et Contrôle PID

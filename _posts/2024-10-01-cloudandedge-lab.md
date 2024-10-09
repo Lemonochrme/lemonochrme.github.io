@@ -3,6 +3,7 @@ layout: post
 title: "Cloud and Edge Computing Lab"
 date: 2024-10-01
 categories: lab virtualization containers
+image: https://picsum.photos/600/200
 ---
 
 # Lab 1 : Virtualization and Containerization
