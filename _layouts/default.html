@@ -2,8 +2,8 @@
 <html lang="en" data-theme="dark-poole">
   {% include head.html %}
 
-  <body>
-    <div class="container content">
+  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <div class="container content" style="flex: 1;">
       <header class="masthead">
         <h3 class="masthead-title">
             <a href="{{ site.baseurl }}/" title="Home" style="display: inline-block; vertical-align: middle;">
@@ -20,6 +20,8 @@
 
       <main>
         {% if page.url == "/" %}
+        <br>
+        <br>
         <h2 style="font-weight: normal;">Hi, I'm Robin.</h2>
         I'm an engineering student in Control Engineering, Computer Science, and Electronics at INSA Toulouse. Passionate about many things, here you will find my personal projects where I experiment with what I learn daily.
         <div style="height: 42px;"></div>
@@ -35,7 +37,7 @@
             color: white;
             border: 2px solid white;
             text-decoration: none;
-            transition: background-color 0.4s, color 0.3s;
+            transition: background-color 0.4s, color 0.3s, transform 0.2s;
             position: relative;
             overflow: hidden;
           }
@@ -43,26 +45,31 @@
           .btn-outline:hover {
             background-color: white;
             color: black;
+            transform: scale(1.05);
           }
         </style>
-        <div style="height: 100px;"></div>
 
-        <h1 style="font-weight: normal; text-decoration: underline;">Latest posts</h1>
-        <br>
+        <div style="height: 200px;"></div>
 
+        <!-- <h1 style="font-weight: normal; text-decoration: underline;">Latest posts</h1> -->
+  
         {% endif %}
+        
+        {% if page.url != "/" %}
         {{ content }}
+        {% endif %}
       </main>
-
-      <footer class="footer">
-        <small>
-          &copy;
-          <time datetime="{{ site.time | date_to_xmlschema }}"
-            >{{ site.time | date: '%Y' }}</time
-          >. All rights reserved.
-        </small>
-      </footer>
     </div>
 
+    <footer class="footer" style="background-color: #000; color: white; text-align: center; padding: 10px 0; width: 100%;">
+      <small>
+        &copy;
+        <time datetime="{{ site.time | date_to_xmlschema }}"
+          >{{ site.time | date: '%Y' }}</time
+        >. All rights reserved.
+        <br />
+        marin-muller@insa-toulouse.fr
+      </small>
+    </footer>
   </body>
 </html>
