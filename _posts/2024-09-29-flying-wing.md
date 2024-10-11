@@ -3,7 +3,8 @@ layout: post
 title: Autonomous Flying Wing
 date: 2024-09-29
 categories: [Aero]
-image: https://github.com/user-attachments/assets/fa35b610-76b8-4501-83aa-8b81d716d8f1
+image: https://github.com/user-attachments/assets/fa5442fd-eb30-4976-98d5-264942c3b7c3
+
 ---
 
 ### Introduction
