@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Smart Water Monitoring and Leak Detection System Using ESP32 and Ultrasonic Sensors"
+title: "Smart Water Monitoring and Leak Detection System Using ESP32 and Fusion Sensors (IMU and Sound)"
 date: 2024-10-02
 categories: [IoT, Water Management, Smart Home]
 image: https://picsum.photos/600/200
@@ -8,35 +8,22 @@ image: https://picsum.photos/600/200
 
 ## Introduction
 
-Water consumption is one of the critical utilities in a household, yet it is often difficult to monitor effectively. With the rising concerns over water conservation and the financial impact of undetected leaks, having a smart system that can both monitor water usage and detect potential leaks becomes essential. This project presents a smart water monitoring and leak detection system using an **ESP32** microcontroller and ultrasonic sensors to measure water flow in a household or apartment. The system is designed to help users track their water consumption, detect leaks in real-time, and receive alerts, all through a web or mobile application.
+Water consumption is one of the critical utilities in a household, yet it is often difficult to monitor effectively. With the rising concerns over water conservation and the financial impact of undetected leaks, having a smart system that can both monitor water usage and detect potential leaks becomes essential. This project presents a smart water monitoring and leak detection system using an **ESP32** microcontroller and fusion sensors to detect water leaks in a household or apartment. The system is designed to help users track their water consumption, detect leaks in real-time, and receive alerts, all through a web or mobile application.
 
-## Project Overview
+## Litterature Review
 
-The goal of this project is to build an **IoT-based water monitoring system** that can monitor a home's water consumption and detect possible leaks. The system leverages the **ESP32** for real-time water flow measurements and uses **two ultrasonic transceivers** attached externally to a water pipe to calculate the flow rate non-invasively. The collected data is transmitted via **Wi-Fi** to a remote server for further analysis and storage. By incorporating advanced analysis techniques, possibly using **machine learning algorithms**, the system will be able to distinguish between normal water usage patterns and abnormal behaviors that may indicate leaks.
+### Leak Detection Using Vibration Sensors (IMU)
 
-![alt text](https://upload.wikimedia.org/wikipedia/commons/0/0e/Mesure_de_d%C3%A9bit_sur_conduite_en_charge.jpg)
+Vibration-based leak detection methods are increasingly being researched due to their non-intrusive nature and adaptability to various pipeline conditions. In many studies, accelerometer sensors (IMUs) are attached to the pipeline to detect minute vibrations caused by water escaping through leaks. The principle here is that a leak induces vibrations in the pipe structure, which can be detected and analyzed. One key approach is to use Fast Fourier Transform (FFT) and Short-Time Fourier Transform (STFT) techniques to detect frequency changes that correspond to leakage events. This method works by analyzing the vibration signals and correlating them with leak locations based on signal propagation and attenuation. 
 
-Users will be notified via **email** or other communication channels if a potential leak is detected. Additionally, the system provides a **user-friendly interface** for tracking real-time and historical water consumption through a dedicated application. This application will also enable users to view daily, weekly, or monthly water usage trends, helping them better understand their consumption patterns and take action when necessary.
+Recent studies have also incorporated machine learning models like support vector machines (SVM) and convolutional neural networks (CNNs) to improve the accuracy of leak classification from vibration data. For example, a CNN-based model achieved high accuracy (F1-score of 94.82%) in detecting and classifying leaks from vibration spectra, outperforming traditional models like SVMs. This combination of IMU sensors with advanced machine learning techniques shows promising results for real-time monitoring of pipelines, reducing both detection time and labor costs ([Choi & Im, 2023](https://www.mdpi.com/2076-3417/13/5/2845)).
 
-## System Architecture
+In another study, a machine learning model based on vibration data from pipelines showed 99.79% accuracy in detecting leaks when using the XGBoost algorithm. The model processed vibration signals using frequency bands and applied predictive analytics to pinpoint leaks accurately, demonstrating that AI-based models can significantly enhance the reliability of vibration-based leak detection ([Lee & Kim, 2023](https://www.mdpi.com/2076-3417/13/5/2845)).
 
-### Hardware Components:
-- **ESP32**: A powerful microcontroller with integrated Wi-Fi capabilities, used for data acquisition and wireless communication.
-- **Ultrasonic transceivers**: Two sensors are placed on the outside of the water pipe to measure water flow using the transit-time method.
-- **Power supply**: To power the ESP32 and the sensors.
+### Leak Detection Using Sound Sensors
 
-### Software Components:
-- **Flow measurement algorithm**: Embedded in the ESP32, this algorithm will calculate water flow based on the transit times of ultrasonic waves.
-- **Data transmission**: Water consumption data will be transmitted via Wi-Fi to a remote server in real-time.
-- **Remote server**: This server will store water usage data in a **database** (e.g., **MySQL** or **PostgreSQL**), and a **machine learning model** could be implemented to detect anomalies in water consumption patterns, such as leaks.
-- **User notifications**: If an anomaly is detected, the system will trigger an email notification to alert the user of a potential water leak.
+Sound sensors are another non-intrusive method commonly used in leak detection, leveraging the acoustic emissions generated by water escaping from a pipe. Acoustic-based systems typically rely on listening devices that can pick up the noise of escaping water. Traditional methods often require expert operators to interpret the sound patterns, which can be time-consuming and prone to human error. However, modern systems employ advanced signal processing techniques, including cross-spectral density (CSD) analysis and Generalized Cross-Correlation (GCC) methods. These techniques allow for more precise time-difference estimation between sound waves picked up by sensors placed at different locations along the pipeline, helping to triangulate the leak location.
 
-### Monitoring Application:
-- **Tech stack**: The monitoring application will be built using modern web technologies like **React** or **Vue.js** for the frontend, while the backend could be implemented using **Node.js** with an **Express** server. The app will pull water usage data from the database and present it in a clean, user-friendly interface.
-- **Database**: A relational database like **MySQL** or **PostgreSQL** will store user data, water consumption history, and detected leak events.
-- **User notifications**: The backend will integrate with a **mail service API** (e.g., **SendGrid** or **SMTP**) to send alerts about potential water leaks.
-- **Mobile app**: An additional mobile interface could be built using **React Native** or **Flutter** to enable on-the-go monitoring and control.
+Recent innovations in the field include the use of adaptive filtering methods to reduce noise from non-leak-related sources (e.g., environmental sounds), which improves detection reliability. Studies comparing traditional acoustic methods with vibration-based approaches suggest that acoustic sensors perform better in certain environments, especially when the pipeline is buried deep underground ([Jungyu et al., 2023](https://www.mdpi.com/2076-3417/13/5/2845); [MDPI, 2023](https://www.mdpi.com/2076-3417/13/5/2845)).
 
-### Future Enhancements:
-- **AI-driven insights**: The system could eventually incorporate AI to optimize water usage recommendations based on user habits.
-- **Integration with smart home ecosystems**: The system could be extended to interface with smart home hubs (e.g., **Google Home** or **Amazon Alexa**), enabling voice commands and automation triggers based on water usage data.
+The integration of vibration (IMU) and sound sensors in water leak detection systems could offers a robust, non-intrusive solution for monitoring water pipelines. Both methods have shown significant improvements when combined with machine learning algorithms, particularly in terms of accuracy and efficiency. The use of CNNs and other AI models enables real-time leak detection and classification, reducing human intervention and improving overall system performance. The complementary use of these sensors, supported by advanced data analysis techniques, is key to developing reliable, automated leak detection systems.
