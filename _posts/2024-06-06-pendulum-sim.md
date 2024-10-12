@@ -6,11 +6,12 @@ categories: projets
 image: https://github.com/user-attachments/assets/10754d80-acd4-4255-85b6-76317070e86f
 ---
 
-# Simulateur de Pendule en Python et Contrôle PID
+<div style="text-align: center;">
+    {% raw %}
+    <iframe src="/assets/pendulum.html" width="100%" height="600" frameborder="0"></iframe>
+    {% endraw %}
+</div>
 
-Je vous présente un nouveau projet en cours de développement : **la simulation d'un pendule simple et sa régulation via un contrôleur PID**. Le but de ce projet est de modéliser le comportement d'un pendule simple en Python, puis d'utiliser un contrôle PID pour stabiliser le pendule dans sa position haute, malgré des perturbations. 
-
-Le projet est encore à ses débuts, mais je souhaitais partager les premiers éléments que j'ai déjà développés, ainsi que quelques détails mathématiques sur le modèle utilisé.
 
 ## Lien vers le code source
 
@@ -66,10 +67,3 @@ Afin d'améliorer la précision du système et de mieux adapter le contrôle PID
 Le processus de Q-Learning se base sur une exploration de différentes combinaisons de paramètres et leur évaluation en fonction de la stabilité et de la performance du système.
 
 ---
-
-## Conclusion
-
-Le simulateur de pendule et le contrôleur PID sont des outils intéressants pour comprendre les bases de la régulation de systèmes dynamiques. Le projet est encore en cours de développement, mais je suis enthousiaste à l'idée d'implémenter l'optimisation des paramètres via l'apprentissage machine. Si vous avez des idées, suggestions ou souhaitez contribuer, n'hésitez pas à me contacter ou à explorer le [code sur GitHub](https://github.com/Lemonochrme/pendulum).
-
-Restez à l'affût pour les prochaines étapes !
-

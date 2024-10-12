@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendulum Simulation with PID Control</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: white;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: sans-serif;
+        }
+        canvas {
+            width: 100%;
+            height: auto;
+            max-width: 600px;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="pendulumCanvas" width="600" height="400"></canvas>
+    <div class="controls">
+        <button id="togglePID">Toggle PID Control</button>
+        <button id="resetAngle">Reset Angle</button>
+    </div>
+    <div class="metrics">
+        <div id="angle">Angle (rad): 0</div>
+        <div id="omega">Vitesse Angulaire (rad/s): 0</div>
+        <div id="position">Position sur l'axe (px): 0</div>
+        <div id="pidStatus">PID Control: OFF</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('pendulumCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // Pendulum parameters
+        const g = 9.81;
+        const l = 150;
+        const b = 0.05;
+        const dt = 0.08;
+        let theta = Math.PI - 0.4;
+        let omega = 0.0;
+
+        let origin_x = width / 2;
+        let origin_y = height / 2;
+        const move_speed = 10;
+
+        let pidEnabled = false;
+        let v_origin_x = 0;
+        let integral = 0;
+        let previous_error = 0;
+
+        const Kp = 5.0;
+        const Ki = 0.1;
+        const Kd = 2.0;
+
+        function updatePendulum(theta, omega, dt, l, g, b, v_origin_x) {
+            const alpha = -(g / l) * Math.sin(theta) - b * omega - (v_origin_x * Math.cos(theta) / l);
+            omega += alpha * dt;
+            theta += omega * dt;
+            theta = (theta + Math.PI) % (2 * Math.PI) - Math.PI; // Normalize angle between -π and π
+            return [theta, omega];
+        }
+
+        function pidControl(theta, dt, Kp, Ki, Kd) {
+            let error = Math.atan2(Math.sin(Math.PI - theta), Math.cos(Math.PI - theta));  // Correction cyclique
+            integral += error * dt;
+            let derivative = (error - previous_error) / dt;
+            let output = Kp * error + Ki * integral + Kd * derivative;
+            previous_error = error;
+            return Math.max(Math.min(output, move_speed), -move_speed); // Clamping
+        }
+
+        function drawPendulum(theta) {
+            ctx.clearRect(0, 0, width, height);
+
+            // Calculate pendulum position
+            const x = origin_x + l * Math.sin(theta);
+            const y = origin_y + l * Math.cos(theta);
+
+            // Draw horizontal axis
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(100, origin_y);
+            ctx.lineTo(width - 100, origin_y);
+            ctx.stroke();
+
+            // Draw pendulum rod
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(origin_x, origin_y);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            // Draw pendulum bob
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Draw the red marker controlled by PID
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(origin_x, origin_y - 10);
+            ctx.lineTo(origin_x, origin_y + 10);
+            ctx.stroke();
+        }
+
+        function updateMetrics() {
+            document.getElementById('angle').textContent = `Angle (rad): ${theta.toFixed(2)}`;
+            document.getElementById('omega').textContent = `Vitesse Angulaire (rad/s): ${omega.toFixed(2)}`;
+            document.getElementById('position').textContent = `Position sur l'axe (px): ${origin_x.toFixed(2)}`;
+            document.getElementById('pidStatus').textContent = `PID Control: ${pidEnabled ? 'ON' : 'OFF'}`;
+        }
+
+        function loop() {
+            const previous_origin_x = origin_x;
+            
+            if (pidEnabled) {
+                const pid_output = pidControl(theta, dt, Kp, Ki, Kd);
+                origin_x += pid_output;
+            }
+
+            // Apply position limits
+            origin_x = Math.max(100, Math.min(width - 100, origin_x));
+
+            // Update horizontal velocity
+            v_origin_x = (origin_x - previous_origin_x) / dt;
+
+            // Update pendulum
+            [theta, omega] = updatePendulum(theta, omega, dt, l, g, b, v_origin_x);
+
+            // Draw everything
+            drawPendulum(theta);
+            updateMetrics();
+
+            requestAnimationFrame(loop);
+        }
+
+        document.getElementById('togglePID').addEventListener('click', () => {
+            pidEnabled = !pidEnabled;
+        });
+
+        document.getElementById('resetAngle').addEventListener('click', () => {
+            theta = Math.PI - 0.4;
+            omega = 0;
+        });
+
+        // Start the animation loop
+        loop();
+    </script>
+</body>
+</html>
