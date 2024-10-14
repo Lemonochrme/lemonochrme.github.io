@@ -4,6 +4,7 @@ title: "Cloud and Edge Computing Lab"
 date: 2024-10-01
 categories: lab virtualization containers
 image: https://github.com/user-attachments/assets/88882602-2a5e-42d6-8849-5b9d12d6f27b
+categories: [INSA]
 ---
 
 # Lab 1: Virtualization & Cloud Computing Lab - 2023-2024
