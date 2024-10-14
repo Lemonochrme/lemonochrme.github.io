@@ -28,3 +28,29 @@ Key features of the project include:
     <iframe src="/assets/gps-path-algorithm.html" width="100%" height="400" frameborder="0"></iframe>
     {% endraw %}
 </div>
+
+```
+while simulation is running:
+    if no more waypoints:
+        stop the simulation
+        exit loop
+    
+    get the next target waypoint
+    
+    targetAngle = atan2(targetWaypoint.y - flyingWing.y, targetWaypoint.x - flyingWing.x)
+    
+    angleDifference = targetAngle - flyingWing.angle
+    normalize angleDifference to be between -π and π
+    
+    adjust flyingWing.angle based on angleDifference, limited by max turn rate
+    
+    increase flyingWing.velocity until maxSpeed is reached
+    apply drag to reduce flyingWing.velocity slightly
+    
+    flyingWing.x += cos(flyingWing.angle) * flyingWing.velocity
+    flyingWing.y += sin(flyingWing.angle) * flyingWing.velocity
+    
+    if flyingWing is close to the target waypoint:
+        move to next waypoint
+
+```
