@@ -2,7 +2,7 @@
 layout: post
 title: "Smart Water Monitoring and Leak Detection System Using ESP32 and Fusion Sensors (IMU and Sound)"
 date: 2024-10-02
-categories: [IoT, Water Management, Smart Home]
+categories: [INSA]
 image: https://picsum.photos/600/200
 ---
 
