@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPS Path Following Simulation</title>
+    <title>GPS Path Following Simulation with Trail and Predicted Trajectory</title>
     <style>
         body {
             margin: 0;
@@ -72,6 +72,8 @@
 
         let currentWaypointIndex = 0;
         let simulationRunning = false;
+        let trail = [];
+        const maxTrailLength = 42; // Maximum number of points in the trail
 
         const speedRange = document.getElementById('speedRange');
         const speedValueDisplay = document.getElementById('speedValue');
@@ -116,11 +118,12 @@
             flyingWing.angle = 0;
             flyingWing.velocity = 0;
             currentWaypointIndex = 0;
+            trail = [];
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
 
         function distance(x1, y1, x2, y2) {
-            return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+            return Math.hypot(x2 - x1, y2 - y1);
         }
 
         function angleToTarget(current, target) {
@@ -161,6 +164,14 @@
             // If the flying wing is close enough to the target, switch to the next waypoint
             if (distance(flyingWing.x, flyingWing.y, target.x, target.y) < 10) {
                 currentWaypointIndex++;
+            }
+
+            // Add current position to trail
+            trail.push({ x: flyingWing.x, y: flyingWing.y });
+
+            // Limit trail length
+            if (trail.length > maxTrailLength) {
+                trail.shift(); // Remove oldest position
             }
         }
 
@@ -206,20 +217,111 @@
             ctx.setLineDash([5, 5]);
 
             for (let x = 0; x <= canvas.width; x += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, canvas.height);
-            ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
             }
 
             for (let y = 0; y <= canvas.height; y += gridSize) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(canvas.width, y);
-            ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
             }
 
             ctx.setLineDash([]);  // Reset to solid lines for other elements
+        }
+
+        function drawTrail() {
+            // Draw trail with positions in trail array
+            for (let i = 0; i < trail.length - 1; i++) {
+            const pos1 = trail[i];
+            const pos2 = trail[i + 1];
+            // Calculate opacity based on position in trail
+            const alpha = (i + 1) / trail.length;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(pos1.x, pos1.y);
+            ctx.lineTo(pos2.x, pos2.y);
+            ctx.stroke();
+            }
+        }
+
+        function predictTrajectory() {
+            const predictionSteps = 400; // Number of steps to predict
+            const predictedPositions = [];
+
+            // Copy the flyingWing state
+            let simulatedWing = {
+                x: flyingWing.x,
+                y: flyingWing.y,
+                angle: flyingWing.angle,
+                velocity: flyingWing.velocity
+            };
+
+            let waypointIndex = currentWaypointIndex;
+
+            for (let i = 0; i < predictionSteps; i++) {
+                if (waypointIndex >= waypoints.length) {
+                    break;
+                }
+
+                const target = waypoints[waypointIndex];
+                const targetAngle = angleToTarget(simulatedWing, target);
+
+                // Calculate angular difference
+                let angleDifference = targetAngle - simulatedWing.angle;
+
+                // Normalize the angle difference to be between -π and π
+                while (angleDifference > Math.PI) angleDifference -= 2 * Math.PI;
+                while (angleDifference < -Math.PI) angleDifference += 2 * Math.PI;
+
+                // Adjust the angle based on the turn rate
+                simulatedWing.angle += Math.sign(angleDifference) * Math.min(Math.abs(angleDifference), flyingWing.turnRate);
+
+                // Accelerate the wing until it reaches max speed
+                if (simulatedWing.velocity < flyingWing.maxSpeed) {
+                    simulatedWing.velocity += flyingWing.acceleration;
+                }
+
+                // Apply drag
+                simulatedWing.velocity -= simulatedWing.velocity * flyingWing.drag;
+
+                // Update position
+                simulatedWing.x += Math.cos(simulatedWing.angle) * simulatedWing.velocity;
+                simulatedWing.y += Math.sin(simulatedWing.angle) * simulatedWing.velocity;
+
+                // Save the position
+                predictedPositions.push({ x: simulatedWing.x, y: simulatedWing.y });
+
+                // If the simulated wing is close enough to the target, switch to the next waypoint
+                if (distance(simulatedWing.x, simulatedWing.y, target.x, target.y) < 10) {
+                    waypointIndex++;
+                    if (waypointIndex >= waypoints.length) {
+                        break;
+                    }
+                }
+            }
+
+            return predictedPositions;
+        }
+
+        function drawPredictedTrajectory() {
+            const predictedPositions = predictTrajectory();
+
+            ctx.strokeStyle = "rgba(0, 255, 255, 0.8)";
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            if (predictedPositions.length > 0) {
+                ctx.moveTo(predictedPositions[0].x, predictedPositions[0].y);
+                for (let i = 1; i < predictedPositions.length; i++) {
+                    ctx.lineTo(predictedPositions[i].x, predictedPositions[i].y);
+                }
+            }
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset line dash
         }
 
         function animate() {
@@ -234,6 +336,8 @@
 
             if (simulationRunning) {
                 updateFlyingWing();
+                drawTrail();
+                drawPredictedTrajectory();
                 drawFlyingWing();
             }
 
