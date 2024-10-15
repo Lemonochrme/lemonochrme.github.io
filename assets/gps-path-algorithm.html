@@ -67,9 +67,12 @@
             maxSpeed: 5,    // Max speed (pixels per frame)
             acceleration: 0.1,  // Acceleration rate
             drag: 0.01,     // Drag coefficient (slows down the wing)
-            turnRate: 0.05  // Maximum turn rate (radians per frame)
+            baseTurnRate: 0.05, // Base turn rate (maximum turn rate at lowest speed)
+            turnRate: 0.05,  // Turn rate, updated dynamically based on speed
+            trail: []  // Store positions for the trail effect
         };
 
+        const waypointSlack = 50; // Define a slack area around each waypoint (in pixels)
         let currentWaypointIndex = 0;
         let simulationRunning = false;
 
@@ -104,6 +107,7 @@
                 flyingWing.velocity = 0;
                 currentWaypointIndex = 1;
                 simulationRunning = true;
+                flyingWing.trail = []; // Reset the trail when simulation starts
             }
         });
 
@@ -116,6 +120,7 @@
             flyingWing.angle = 0;
             flyingWing.velocity = 0;
             currentWaypointIndex = 0;
+            flyingWing.trail = []; // Reset the trail when simulation is reset
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         });
 
@@ -143,6 +148,9 @@
             while (angleDifference > Math.PI) angleDifference -= 2 * Math.PI;
             while (angleDifference < -Math.PI) angleDifference += 2 * Math.PI;
 
+            // Adjust the turn rate inversely proportional to the velocity
+            flyingWing.turnRate = flyingWing.baseTurnRate / (1 + flyingWing.velocity / 5);
+
             // Adjust the angle based on the turn rate (more realistic turning)
             flyingWing.angle += Math.sign(angleDifference) * Math.min(Math.abs(angleDifference), flyingWing.turnRate);
 
@@ -158,8 +166,16 @@
             flyingWing.x += Math.cos(flyingWing.angle) * flyingWing.velocity;
             flyingWing.y += Math.sin(flyingWing.angle) * flyingWing.velocity;
 
-            // If the flying wing is close enough to the target, switch to the next waypoint
-            if (distance(flyingWing.x, flyingWing.y, target.x, target.y) < 10) {
+            // Add the current position to the trail
+            flyingWing.trail.push({ x: flyingWing.x, y: flyingWing.y });
+
+            // Limit the trail to 50 points to keep the visual effect smooth
+            if (flyingWing.trail.length > 50) {
+                flyingWing.trail.shift();
+            }
+
+            // If the flying wing is within the slack area of the target, move to the next waypoint
+            if (distance(flyingWing.x, flyingWing.y, target.x, target.y) < waypointSlack) {
                 currentWaypointIndex++;
             }
         }
@@ -176,6 +192,23 @@
             ctx.closePath();
             ctx.fill();
             ctx.restore();
+        }
+
+        function drawTrail() {
+            for (let i = 0; i < flyingWing.trail.length - 1; i++) {
+                const point = flyingWing.trail[i];
+                const nextPoint = flyingWing.trail[i + 1];
+
+                // The opacity of the trail decreases with distance from the flying wing
+                const opacity = (i + 1) / flyingWing.trail.length;
+                ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(point.x, point.y);
+                ctx.lineTo(nextPoint.x, nextPoint.y);
+                ctx.stroke();
+            }
         }
 
         function drawWaypoint(x, y) {
@@ -234,6 +267,7 @@
 
             if (simulationRunning) {
                 updateFlyingWing();
+                drawTrail();
                 drawFlyingWing();
             }
 
