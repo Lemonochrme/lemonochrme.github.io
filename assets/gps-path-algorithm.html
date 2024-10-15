@@ -31,13 +31,25 @@
         button#resetButton {
             background-color: #dc3545;
         }
+        #speedControl {
+            margin-top: 10px;
+            color: white;
+        }
+        input[type="range"] {
+            width: 200px;
+        }
     </style>
 </head>
 <body>
     <canvas id="simulation"></canvas>
-    <div id="controls">
+    <div id="controls" style="display: flex; align-items: center;">
         <button id="startButton">Start</button>
         <button id="resetButton">Reset</button>
+        <div id="speedControl" style="display: flex; align-items: center; margin-left: 10px;">
+            <label for="speedRange" style="margin-right: 5px;">Speed: </label>
+            <input type="range" id="speedRange" min="1" max="10" value="5" style="margin-right: 5px;">
+            <span id="speedValue">5</span> pixels/frame
+        </div>
     </div>
 
     <script>
@@ -60,6 +72,16 @@
 
         let currentWaypointIndex = 0;
         let simulationRunning = false;
+
+        const speedRange = document.getElementById('speedRange');
+        const speedValueDisplay = document.getElementById('speedValue');
+
+        // Update the displayed speed value and flying wing's maxSpeed
+        speedRange.addEventListener('input', (event) => {
+            const newSpeed = parseInt(event.target.value);
+            flyingWing.maxSpeed = newSpeed;
+            speedValueDisplay.textContent = newSpeed;
+        });
 
         // Handle clicks to define waypoints
         canvas.addEventListener('click', (event) => {
