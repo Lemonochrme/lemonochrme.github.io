@@ -22,12 +22,14 @@ Key features of the project include:
 
 ## Path Following Algorithm Basics
 
+*Click to add Waypoints*
 <div style="text-align: center;">
     {% raw %}
-    <h2>Click to add Waypoints</h2>
     <iframe src="/assets/gps-path-algorithm.html" width="100%" height="400" frameborder="0"></iframe>
     {% endraw %}
 </div>
+
+
 
 ```
 while simulation is running:
