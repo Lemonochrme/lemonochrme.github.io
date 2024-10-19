@@ -70,7 +70,12 @@ title: Projects Archive
     border-radius: 16px;
     overflow: hidden;
     padding: 20px;
-    /* No hover animation or shadow */
+    transition: background-color 0.3s ease; /* Smooth background color transition */
+  }
+
+  .project-card:hover {
+    border-color: #7cc6fe; 
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
   }
 
   .project-link {
@@ -81,11 +86,13 @@ title: Projects Archive
   }
 
   .project-image img.thumbnail {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 12px;
+      width: 100%;
+      height: 142px; 
+      display: block;
+      border-radius: 12px;
+      object-fit: cover;
   }
+
 
   .project-info {
     padding: 15px;
@@ -120,7 +127,7 @@ title: Projects Archive
 
   .view-more {
     display: inline-block;
-    color: #7cc6fe;
+    color: #ffff;
     font-weight: bold;
     margin-top: 10px;
   }
