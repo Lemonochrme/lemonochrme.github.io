@@ -2,6 +2,7 @@
 layout: post
 title: Example content
 image: https://picsum.photos/600/200
+categories: [Personnal]
 ---
 
 **Howdy!** This is an example blog post that shows several types of HTML content supported in this theme.

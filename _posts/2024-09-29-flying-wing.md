@@ -2,7 +2,7 @@
 layout: post
 title: Autonomous Flying Wing
 date: 2024-09-29
-categories: [Aero]
+categories: [Personnal]
 image: https://github.com/user-attachments/assets/fa5442fd-eb30-4976-98d5-264942c3b7c3
 
 ---

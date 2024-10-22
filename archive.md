@@ -32,7 +32,6 @@ title: Projects Archive
                   {% endfor %}
                 </div>
               {% endif %}
-              <span class="view-more">View Project &rarr;</span>
             </div>
           </a>
         </div>
@@ -42,7 +41,7 @@ title: Projects Archive
 
   <!-- Personal Portfolio Section -->
   <h2 class="portfolio-title">Personal Portfolio</h2>
-  {% assign personalPosts = site.posts | reject: "categories", "INSA" %}
+  {% assign personalPosts = site.posts | where: "categories", "Personnal" %}
   {% assign personalPostsByYearMonth = personalPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
   {% for yearMonth in personalPostsByYearMonth %}
     <h3 class="year-month">{{ yearMonth.name }}</h3>
@@ -67,7 +66,6 @@ title: Projects Archive
                   {% endfor %}
                 </div>
               {% endif %}
-              <span class="view-more">View Project &rarr;</span>
             </div>
           </a>
         </div>
@@ -145,7 +143,6 @@ title: Projects Archive
       object-fit: cover;
   }
 
-
   .project-info {
     padding: 15px;
   }
@@ -176,11 +173,4 @@ title: Projects Archive
     margin-right: 5px;
     margin-bottom: 5px;
   }
-
-  .view-more {
-    display: inline-block;
-    color: #ffff;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  </style>
+</style>
