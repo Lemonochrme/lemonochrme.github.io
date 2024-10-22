@@ -49,11 +49,16 @@
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
         button:hover {
-            background-color: #cacaca;
+            background-color: #9c9c9c;
         }
         button:active {
             background-color: #dfdfdf;
             transform: translateY(0);
+        }
+        .toggled {
+            background-color: #0000 !important;
+            color: white;
+            box-shadow: inset 0 0 0 2px #ffffff;
         }
         .metrics {
             margin-top: 20px;
@@ -115,6 +120,11 @@
         const Ki = 0.1;
         const Kd = 2.0;
 
+        // For trailing effect
+        const trail = [];
+        const maxTrailLength = 50; // Adjust the length of the trace
+        const fadeFactor = 0.95; // How fast the trail fades
+
         function updatePendulum(theta, omega, dt, l, g, b, v_origin_x) {
             const alpha = -(g / l) * Math.sin(theta) - b * omega - (v_origin_x * Math.cos(theta) / l);
             omega += alpha * dt;
@@ -146,6 +156,25 @@
             ctx.moveTo(100, origin_y);
             ctx.lineTo(width - 100, origin_y);
             ctx.stroke();
+
+            // Add position to the trail
+            trail.push({x, y});
+
+            // Limit trail length
+            if (trail.length > maxTrailLength) {
+                trail.shift();
+            }
+
+            // Draw the trail
+            ctx.lineWidth = 4;
+            for (let i = 0; i < trail.length - 1; i++) {
+                const alpha = (i / trail.length) * fadeFactor;
+                ctx.strokeStyle = `rgba(0, 255, 255, ${alpha})`;
+                ctx.beginPath();
+                ctx.moveTo(trail[i].x, trail[i].y);
+                ctx.lineTo(trail[i + 1].x, trail[i + 1].y);
+                ctx.stroke();
+            }
 
             // Draw pendulum rod
             ctx.strokeStyle = 'white';
@@ -201,8 +230,9 @@
             requestAnimationFrame(loop);
         }
 
-        document.getElementById('togglePID').addEventListener('click', () => {
+        document.getElementById('togglePID').addEventListener('click', (e) => {
             pidEnabled = !pidEnabled;
+            e.target.classList.toggle('toggled');
         });
 
         document.getElementById('resetAngle').addEventListener('click', () => {
