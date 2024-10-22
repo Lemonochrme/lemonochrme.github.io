@@ -6,15 +6,26 @@
     <title>Pendulum Simulation with PID Control</title>
     <style>
         body {
-            background-color: #000000;
+            background-color: black;
             color: white;
             margin: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            background-color: #0d1117;
+            border: 2px solid #b0b0b0;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 700px;
+            width: 100%;
         }
         canvas {
             width: 100%;
@@ -22,32 +33,59 @@
             max-width: 600px;
         }
         .controls {
-            margin-top: 10px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
         button {
-            margin: 5px;
-            padding: 10px;
-            background-color: #444;
-            color: white;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
             border: none;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         button:hover {
-            background-color: #555;
+            background-color: #cacaca;
+        }
+        button:active {
+            background-color: #dfdfdf;
+            transform: translateY(0);
+        }
+        .metrics {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 600px;
+            font-size: 14px;
+        }
+        .metrics div {
+            background-color: #161b22;
+            padding: 10px;
+            border-radius: 8px;
+            flex: 1;
+            text-align: center;
+            margin: 5px;
         }
     </style>
 </head>
 <body>
-    <canvas id="pendulumCanvas" width="600" height="400"></canvas>
-    <div class="controls">
-        <button id="togglePID">Toggle PID Control</button>
-        <button id="resetAngle">Reset Angle</button>
-    </div>
-    <div class="metrics">
-        <div id="angle">Angle (rad): 0</div>
-        <div id="omega">Vitesse Angulaire (rad/s): 0</div>
-        <div id="position">Position sur l'axe (px): 0</div>
-        <div id="pidStatus">PID Control: OFF</div>
+    <div class="container">
+        <canvas id="pendulumCanvas" width="600" height="400"></canvas>
+        <div class="controls">
+            <button id="togglePID">Toggle PID Control</button>
+            <button id="resetAngle">Reset Angle</button>
+        </div>
+        <div class="metrics">
+            <div id="angle">Angle (rad): 0</div>
+            <div id="omega">Angular Velocity (rad/s): 0</div>
+            <div id="position">Position (px): 0</div>
+            <div id="pidStatus">PID Control: OFF</div>
+        </div>
     </div>
 
     <script>
@@ -68,7 +106,7 @@
         let origin_y = height / 2;
         const move_speed = 10;
 
-        let pidEnabled = false;
+        let pidEnabled = true; // PID enabled by default
         let v_origin_x = 0;
         let integral = 0;
         let previous_error = 0;
@@ -134,14 +172,14 @@
 
         function updateMetrics() {
             document.getElementById('angle').textContent = `Angle (rad): ${theta.toFixed(2)}`;
-            document.getElementById('omega').textContent = `Vitesse Angulaire (rad/s): ${omega.toFixed(2)}`;
-            document.getElementById('position').textContent = `Position sur l'axe (px): ${origin_x.toFixed(2)}`;
+            document.getElementById('omega').textContent = `Angular Velocity (rad/s): ${omega.toFixed(2)}`;
+            document.getElementById('position').textContent = `Position (px): ${origin_x.toFixed(2)}`;
             document.getElementById('pidStatus').textContent = `PID Control: ${pidEnabled ? 'ON' : 'OFF'}`;
         }
 
         function loop() {
             const previous_origin_x = origin_x;
-            
+
             if (pidEnabled) {
                 const pid_output = pidControl(theta, dt, Kp, Ki, Kd);
                 origin_x += pid_output;
@@ -172,7 +210,7 @@
             omega = 0;
         });
 
-        // Start the animation loop
+        // Start the animation loop with PID enabled
         loop();
     </script>
 </body>
