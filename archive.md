@@ -4,9 +4,13 @@ title: Projects Archive
 ---
 
 <div class="projects-container">
-  {% assign postsByYearMonth = site.posts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
-  {% for yearMonth in postsByYearMonth %}
-    <h2 class="year-month">{{ yearMonth.name }}</h2>
+
+  <!-- INSA Portfolio Section -->
+  <h2 class="portfolio-title">INSA Portfolio</h2>
+  {% assign insaPosts = site.posts | where: "categories", "INSA" %}
+  {% assign insaPostsByYearMonth = insaPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
+  {% for yearMonth in insaPostsByYearMonth %}
+    <h3 class="year-month">{{ yearMonth.name }}</h3>
     <div class="projects-grid">
       {% for post in yearMonth.items %}
         <div class="project-card">
@@ -35,10 +39,58 @@ title: Projects Archive
       {% endfor %}
     </div>
   {% endfor %}
+
+  <!-- Personal Portfolio Section -->
+  <h2 class="portfolio-title">Personal Portfolio</h2>
+  {% assign personalPosts = site.posts | reject: "categories", "INSA" %}
+  {% assign personalPostsByYearMonth = personalPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
+  {% for yearMonth in personalPostsByYearMonth %}
+    <h3 class="year-month">{{ yearMonth.name }}</h3>
+    <div class="projects-grid">
+      {% for post in yearMonth.items %}
+        <div class="project-card">
+          <a href="{{ post.url }}" class="project-link">
+            <div class="project-image">
+              {% if post.image %}
+                <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail">
+              {% endif %}
+            </div>
+            <div class="project-info">
+              <h3>{{ post.title }}</h3>
+              {% if post.description %}
+                <p class="description">{{ post.description | truncate: 150 }}</p>
+              {% endif %}
+              {% if post.technologies %}
+                <div class="technologies">
+                  {% for tech in post.technologies %}
+                    <span class="tech-badge">{{ tech }}</span>
+                  {% endfor %}
+                </div>
+              {% endif %}
+              <span class="view-more">View Project &rarr;</span>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  
 </div>
 
 <!-- CSS Styling -->
 <style>
+  .portfolio-title {
+    font-size: 2.5rem;
+    margin-top: 40px;
+    color: #ffffff;
+  }
+
+  .year-month {
+    margin-top: 20px;
+    font-size: 1.75rem;
+    color: #f1f1f1;
+  }
+
   body {
     background-color: #000; /* Set background to black */
     color: #f1f1f1; /* Light text for contrast */
@@ -131,4 +183,4 @@ title: Projects Archive
     font-weight: bold;
     margin-top: 10px;
   }
-</style>
+  </style>
