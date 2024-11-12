@@ -29,4 +29,3 @@ on utilise api rest (ok)
 • C’est quoi la différence entre les services Web SOAP et Rest ?
 
 Rest est récent et cool (swag) B) alors que Soap est vieux :(
-
