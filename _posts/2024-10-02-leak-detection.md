@@ -155,3 +155,15 @@ catch ME
     rethrow(ME);
 end
 ```
+
+### Preliminary Results
+
+![image](https://github.com/user-attachments/assets/43c49127-2088-4145-83b0-3a143bbd5622)
+
+
+![image](https://github.com/user-attachments/assets/8f96b1d8-f70f-419a-aa60-7afc668a8a1c)
+
+
+![image](https://github.com/user-attachments/assets/38e36f30-e23f-4ef3-b017-653cd53c94ed)
+
+
