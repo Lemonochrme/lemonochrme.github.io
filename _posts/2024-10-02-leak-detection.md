@@ -16,3 +16,142 @@ Water consumption is one of the critical utilities in a household, yet it is oft
 ## References
 
 1. [Leak Detection Using Flow-Induced Vibrations in Pressurized Wall-Mounted Water Pipelines](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9229405)
+
+
+## Frequency Anaylis : Fast Fourrier Transform (FFT) Implementation on ESP32
+
+Water flowing in pipelines create low frequency accoustic vibrations, our goal is to detect these vibrations and process them to retrieve the frequency component, for that matter we will use a FFT algorithm.
+
+Hardware :
+- ESP32C3
+- GY-MAX4466 Electret Microphone
+
+
+ESP32 Code :
+```
+#include "arduinoFFT.h"
+
+const uint16_t samples = 64;              // Must be a power of 2
+const double samplingFrequency = 1000;    // Sampling frequency in Hz (increase if possible)
+double vReal[samples];                    // Real part
+double vImag[samples];                    // Imaginary part
+
+ArduinoFFT<double> FFT = ArduinoFFT<double>(vReal, vImag, samples, samplingFrequency);
+
+const int micPin = 0; // Microphone pin (e.g., GPIO0 on ESP32)
+
+void setup() {
+  Serial.begin(115200); // Initialize serial communication
+  pinMode(micPin, INPUT); // Configure micPin as input
+  Serial.println("FFT Example: Microphone Input");
+}
+
+void loop() {
+  // Step 1: Sample the microphone signal
+  for (uint16_t i = 0; i < samples; i++) {
+    unsigned long startMicros = micros(); // Record the start time
+
+    vReal[i] = analogRead(micPin); // Read microphone value
+    vImag[i] = 0.0;                // Set imaginary part to 0
+
+    // Wait for the next sample
+    while (micros() - startMicros < (1000000 / samplingFrequency));
+  }
+
+  // Step 2: Remove DC Offset
+  double mean = 0;
+  for (uint16_t i = 0; i < samples; i++) {
+    mean += vReal[i];
+  }
+  mean /= samples;
+  for (uint16_t i = 0; i < samples; i++) {
+    vReal[i] -= mean; // Center signal around 0
+  }
+
+  // Step 3: Apply FFT Windowing
+  FFT.windowing(FFTWindow::Hamming, FFTDirection::Forward);
+
+  // Step 4: Compute the FFT
+  FFT.compute(FFTDirection::Forward);
+
+  // Step 5: Compute Magnitudes
+  FFT.complexToMagnitude();
+
+  // Step 6: Send Results Over Serial
+  Serial.println("Frequency (Hz) : Magnitude");
+  for (uint16_t i = 0; i < samples / 2; i++) {
+    double frequency = i * ((double)samplingFrequency / samples); // Calculate frequency bin
+    Serial.print(frequency, 2);
+    Serial.print(" Hz: ");
+    Serial.println(vReal[i], 4); // Magnitude
+  }
+
+  // Optional: Find the Peak Frequency
+  double peakFrequency = FFT.majorPeak();
+  Serial.print("Peak Frequency: ");
+  Serial.print(peakFrequency, 2);
+  Serial.println(" Hz");
+
+  delay(100); // Repeat every 500ms
+}
+```
+
+Matlab Visualisation Code :
+```
+% Parameters
+serialPort = 'COM4';
+baudRate = 115200;   % Must match the baud rate of Arduino Code
+numBins = 32;        % Number of frequency bins (samples / 2 in Arduino code)
+
+% Open the serial connection
+serialObj = serialport(serialPort, baudRate);
+configureTerminator(serialObj, "LF"); % Ensure line-feed terminator
+pause(2);
+
+% Initialize figure
+figure;
+freqPlot = plot(nan, nan, '-o'); % Create a blank plot
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+title('Real-Time FFT Visualization');
+grid on;
+
+% Infinite loop to read and display data
+try
+    while true
+        % Read data from serial
+        dataBuffer = "";
+        while ~contains(dataBuffer, "Peak Frequency")
+            line = readline(serialObj); % Read one line
+            dataBuffer = strcat(dataBuffer, line, "\n"); % Append line to buffer
+        end
+
+        % Parse the frequency and magnitude data
+        freqData = [];
+        magData = [];
+        lines = splitlines(dataBuffer);
+        for i = 1:length(lines)
+            line = lines{i};
+            if contains(line, " Hz:")
+                tokens = regexp(line, '([\d\.]+) Hz: ([\d\.]+)', 'tokens');
+                if ~isempty(tokens)
+                    freqData(end+1) = str2double(tokens{1}{1}); % Frequency
+                    magData(end+1) = str2double(tokens{1}{2});  % Magnitude
+                end
+            end
+        end
+
+        % Update the plot
+        if ~isempty(freqData) && ~isempty(magData)
+            set(freqPlot, 'XData', freqData, 'YData', magData);
+            ylim([0, max(magData) * 1.1]); % Adjust Y-axis dynamically
+            drawnow;
+        end
+    end
+catch ME
+    % Close serial port on error or termination
+    disp('Terminating...');
+    delete(serialObj);
+    rethrow(ME);
+end
+```
