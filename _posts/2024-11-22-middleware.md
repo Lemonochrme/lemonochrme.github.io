@@ -9,36 +9,151 @@ image: /assets/covers/energy.png
 https://moodle.insa-toulouse.fr/course/view.php?id=785
 
 
-### 2. MQTT
+```
+#include <ESP8266WiFi.h>
+#include <ArduinoMqttClient.h>
 
-- **Architecture IoT MQTT**: Devices (publish/subscribe), broker (manages topics), topics (channels for communication).
-- **IP Protocol**: MQTT uses TCP/IP, low bandwidth, reliable communication.
-- **Versions**: MQTT 3.1, 3.1.1, 5.0.
-- **Security**: Authentication (username/password), encryption (TLS/SSL), access control (topics).
-- **Smart System Topics**:
-  - `light/control`: Button publishes, light subscribes.
-  - `sensor/luminosity`: Sensor publishes.
-  - `light/status`: Light publishes status.
-  - Logic subscribes to luminosity, commands light.
+// WiFi credentials
+const char* ssid = "asni";             
+const char* password = "asniasni"; 
 
----
+// MQTT Broker details
+const char* mqtt_server = "10.0.1.254"; 
+const int mqtt_port = 1883;
 
-### 3. Mosquitto Broker
+// MQTT Topics
+const char* lightTopic = "ry/light";   // Topic pour contrôler la LED
+const char* buttonTopic = "ry/button"; // Topic pour publier l'état du bouton
+const char* lightSensorTopic = "ry/luminosity"; // Topic pour publier la luminosité
+const char* lightOtherTopic = "PaCy/ledState";
 
-1. Install Mosquitto ([mosquitto.org](https://mosquitto.org)).
-2. Run broker on your machine.
-3. Test:
-   - Publish: `mosquitto_pub`
-   - Subscribe: `mosquitto_sub`.
+// Pins
+const int buttonPin = D5;        
+const int lightSensorPin = A0;   
+const int ledPin = D4;        
 
----
+// WiFi and MQTT clients
+WiFiClient wifiClient;
+MqttClient mqttClient(wifiClient);
 
-### 4. NodeMCU and MQTT
+// Variables
+bool manualControl = false;       
+int luminosityThreshold = 500;
+int luminosityMemory = 0;
+#define LUM_MSG 20
+int sendLuminosity = 0;
+int payloadValue = 0;
 
-- **NodeMCU Features**: Built-in WiFi, GPIO pins, low power.
-- **Arduino IDE**: Install and add ESP8266 board.
-- **ArduinoMqtt Library**: Install library for MQTT communication.
-- **Code Example**:
-  - WiFi setup, connect to broker, publish/subscribe, maintain connection in the loop.
+void connectToWiFi() {
+    Serial.print("[Wi-Fi] Connecting...");
+    Serial.println(ssid);
+    WiFi.begin(ssid, password);
 
---- 
+    while (WiFi.status() != WL_CONNECTED)
+      delay(1000);
+
+    Serial.print("[Wi-Fi] Connected! IP Address: ");
+    Serial.println(WiFi.localIP());
+}
+
+void connectToMQTT() {
+    while (!mqttClient.connect(mqtt_server, mqtt_port))
+      delay(1000);
+
+    Serial.println("\n[MQTT] Connected.");
+
+    // Subscribe to the light control topic
+    mqttClient.subscribe("ry/#");
+    Serial.println("[MQTT] Subscribed to topic: ry/light");
+}
+
+void handleLight(int messageSize) {   
+    // Get the topic of the received message
+    String topic = mqttClient.messageTopic();
+
+    Serial.print("[MQTT] Received topic: ");
+    Serial.println(topic);
+    Serial.print("[MQTT] Message size: ");
+    Serial.println(messageSize);
+
+    // Get the payload
+    String payload;
+    while (mqttClient.available()) {
+      payload += (char)mqttClient.read();
+    }
+    Serial.print("[Payload] ");
+    Serial.println(payload);
+    int value = payload.toInt();
+
+    // Control the LED based on the payload
+    if (value == 1) {
+      digitalWrite(ledPin, LOW);  // Turn on LED
+    } else if (value == 0) {
+      digitalWrite(ledPin, HIGH);   // Turn off LED
+    }
+}
+
+void setup() {
+    // Initialize Serial Monitor
+    Serial.begin(115200);
+
+    // Initialize pins
+    pinMode(buttonPin, INPUT_PULLUP);
+    pinMode(ledPin, OUTPUT);
+
+    // Connect to WiFi
+    connectToWiFi();
+
+    // Set MQTT callback
+    mqttClient.onMessage(handleLight);
+
+    // Connect to MQTT broker
+    connectToMQTT();
+}
+
+void loop() {
+    // Ensure the connection to MQTT broker is active
+    if (!mqttClient.connected()) {
+        connectToMQTT();
+    }
+    mqttClient.poll();
+
+    // On button press: change control and send message
+    if (digitalRead(buttonPin) == HIGH) {
+        manualControl = !manualControl;
+        mqttClient.beginMessage(buttonTopic);
+        mqttClient.print(manualControl);
+        mqttClient.endMessage();
+        delay(300);
+    }
+
+
+    if(!manualControl) {
+     // Read luminosity
+      int luminosity = analogRead(lightSensorPin);
+      
+      // Test if we send
+      sendLuminosity++;
+      if((sendLuminosity >= LUM_MSG) && (luminosity != luminosityMemory))
+      {
+        sendLuminosity = 0;
+        mqttClient.beginMessage(lightSensorTopic);
+        mqttClient.print(luminosity);
+        mqttClient.endMessage();
+        Serial.print("[Light] Value: ");
+        Serial.println(luminosity);
+        luminosityMemory = luminosity;
+      }
+  
+      // Control LED based on luminosity if not manually controlled
+       if (luminosity < luminosityThreshold) {
+            digitalWrite(ledPin, LOW);
+            Serial.println("[Auto] LED ON");
+        } else {
+            digitalWrite(ledPin, HIGH);
+            Serial.println("[Auto] LED OFF");
+        }
+    }
+    delay(100); // Simple debounce
+}
+```
