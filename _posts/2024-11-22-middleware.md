@@ -9,7 +9,7 @@ image: /assets/covers/energy.png
 https://moodle.insa-toulouse.fr/course/view.php?id=785
 
 
-```
+```ino
 #include <ESP8266WiFi.h>
 #include <ArduinoMqttClient.h>
 
