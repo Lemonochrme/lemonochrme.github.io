@@ -167,3 +167,106 @@ end
 ![image](https://github.com/user-attachments/assets/38e36f30-e23f-4ef3-b017-653cd53c94ed)
 
 
+
+### IMU FFT
+
+```
+#include "SparkFunLSM6DS3.h"
+#include "arduinoFFT.h"
+#include "Wire.h"
+#include "SPI.h"
+
+// IMU Initialization
+LSM6DS3Core myIMU(I2C_MODE, 0x6B);
+
+// FFT Parameters
+const uint16_t samples = 1024;            // Increased samples for better frequency resolution
+const double samplingFrequency = 6660.0; // Original IMU sampling frequency
+double vReal[samples];                    // Real part
+double vImag[samples];                    // Imaginary part
+
+ArduinoFFT<double> FFT = ArduinoFFT<double>(vReal, vImag, samples, samplingFrequency);
+
+uint16_t errorsAndWarnings = 0;
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000); // Relax...
+  Serial.println("Processor came out of reset.\n");
+
+  // Initialize the IMU
+  if (myIMU.beginCore() != 0) {
+    Serial.println("Error at beginCore().");
+  } else {
+    Serial.println("beginCore() passed.");
+  }
+
+  // Configure Accelerometer for Maximum ODR
+  uint8_t dataToWrite = 0;
+  dataToWrite |= LSM6DS3_ACC_GYRO_BW_XL_400Hz; // Anti-aliasing filter at 400 Hz
+  dataToWrite |= LSM6DS3_ACC_GYRO_FS_XL_8g;    // Full scale ±8g
+  dataToWrite |= LSM6DS3_ACC_GYRO_ODR_XL_6660Hz; // Max ODR of 6.66 kHz
+  errorsAndWarnings += myIMU.writeRegister(LSM6DS3_ACC_GYRO_CTRL1_XL, dataToWrite);
+
+  Serial.println("IMU Configuration Complete.");
+}
+
+void loop() {
+  // Step 1: Sample Accelerometer Data
+  for (uint16_t i = 0; i < samples; i++) {
+    unsigned long startMicros = micros(); // Record the start time
+
+    int16_t accelX;
+    if (myIMU.readRegisterInt16(&accelX, LSM6DS3_ACC_GYRO_OUTX_L_XL) != 0) {
+      errorsAndWarnings++;
+    }
+
+    vReal[i] = accelX; // Use X-axis accelerometer data
+    vImag[i] = 0.0;    // Set imaginary part to 0
+
+    // Wait for the next sample
+    while (micros() - startMicros < (1000000 / samplingFrequency));
+  }
+
+  // Step 2: Remove DC Offset
+  double mean = 0;
+  for (uint16_t i = 0; i < samples; i++) {
+    mean += vReal[i];
+  }
+  mean /= samples;
+  for (uint16_t i = 0; i < samples; i++) {
+    vReal[i] -= mean; // Center signal around 0
+  }
+
+  // Step 3: Apply FFT Windowing
+  FFT.windowing(FFTWindow::Hamming, FFTDirection::Forward);
+
+  // Step 4: Compute the FFT
+  FFT.compute(FFTDirection::Forward);
+
+  // Step 5: Compute Magnitudes
+  FFT.complexToMagnitude();
+
+  // Step 6: Send Results Over Serial
+  Serial.println("Frequency (Hz) : Magnitude");
+  for (uint16_t i = 0; i < samples / 2; i++) {
+    double frequency = i * (samplingFrequency / samples); // Calculate frequency bin
+    if (frequency > 1000) break; // Stop output at 1000 Hz
+    Serial.print(frequency, 2);
+    Serial.print(" Hz: ");
+    Serial.println(vReal[i], 4); // Magnitude
+  }
+
+  // Optional: Find the Peak Frequency within 0–1000 Hz
+  double peakFrequency = FFT.majorPeak();
+  if (peakFrequency <= 1000.0) {
+    Serial.print("Peak Frequency: ");
+    Serial.print(peakFrequency, 2);
+    Serial.println(" Hz");
+  } else {
+    Serial.println("Peak Frequency above 1000 Hz, ignored.");
+  }
+
+  // delay(100); // Repeat every 100ms
+}
+```
