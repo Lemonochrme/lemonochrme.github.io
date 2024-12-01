@@ -6,6 +6,8 @@ categories: [INSA]
 image: /assets/covers/pipe.png
 ---
 
+Format du Portfolio : Description -> Technique -> Analyse
+
 ## Introduction
 
 Water consumption is one of the critical utilities in a household, yet it is often difficult to monitor effectively. With the rising concerns over water conservation and the financial impact of undetected leaks, having a smart system that can both monitor water usage and detect potential leaks becomes essential. This project presents a smart water monitoring and leak detection system using an **ESP32** microcontroller and fusion sensors to detect water leaks in a household or apartment. The system is designed to help users track their water consumption, detect leaks in real-time, and receive alerts, all through a web or mobile application.
