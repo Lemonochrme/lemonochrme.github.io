@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Lab Middleware
-date: 2024-10-14
+title: Middleware for Internet of Things
+date: 2024-11-18
 categories: [INSA]
 image: /assets/covers/energy.png
 ---
