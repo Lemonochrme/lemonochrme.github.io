@@ -12,30 +12,29 @@ Ce projet à pour but de renforcer mes compétences dans une multitude de domain
 ## Qu'est ce qu'un pendule et comment le modéliser ?
 
 ### Préambule
+Appliquons la seconde loi de Newton à notre problème, dans un premier temps faisons la liste des forces qui agissent sur …
+$$\ddot{\theta} = \frac{g}{l} \sin(\theta) - b\dot{\theta}$$
+
 
 Isaac Newton dans ses Principes Mathématiques de la Philosophie Naturelle définie le pendule simple comme suit : "A simple pendulum is an imaginary pendulum consisting of a heavy particle called the bob, suspended from a point by means of a rod or string without weight." On dès à présent en extraire les caractéristiques: un pendule simple est composé d'une masse dite ponctuelle (on ne considérera ni les changement l'orientation ni la déformation) attachée à un fil ou axe imaginaire qui ne pèse rien.
-
 ### Mise en équation
 
 Appliquons la seconde loi de Newton à notre problème, dans un premier temps faisons la liste des forces qui agissent sur notre pendule. Le pendule est soumis à deux forces principales, d'une part la force gravitationelle $F_g = mg$ qui agit vers le bas et la force de tension dans l'axe reliant la masse à l'origine du pendule, cet axe maintient la masse sur un arc de cercle.
 
 On projette la force gravitationnelle sur la direction tangentielle à la trajectoire du pendule, cela nous donne :
 
-$$F_t = -mg sin(\theta)$$
+$$F_t = -mg \sin(\theta)$$
 
 D'après la seconde loi de Newton :
 
-$$F_t = ma_t$$ avec $a_t$ l'accélération tangentielle liée à l'accélération angulaire $\theta''$ par $a_t=l\theta''$
+$$F_t = ma_t$$ avec $a_t$ l'accélération tangentielle liée à l'accélération angulaire $\ddot{\theta}$ par $a_t=l\ddot{\theta}$
 
 Alors :
 
-$$-mgsin(\theta) = ml\theta''$$
+$$-mg\sin(\theta) = ml\ddot{\theta}$$
 
-$$\theta'' = -\frac{g}{l} sin(\theta)$$
+$$\ddot{\theta} = -\frac{g}{l} \sin(\theta)$$
 
-Le système en l'état ne perd pas d'énergie, ajoutont de la dissipation (frottements), pour ce faire il nous suffit de soustraire un terme proportionnel à la vitesse angulaire $\theta'$ appelons le $b$ :
+Le système en l'état ne perd pas d'énergie, ajoutons de la dissipation (frottements), pour ce faire il nous suffit de soustraire un terme proportionnel à la vitesse angulaire $\dot{\theta}$ appelons le $b$ :
 
-$$\theta'' = \frac{g}{l} sin(\theta) - b\theta'$$
-
-
-
+$$\ddot{\theta} = \frac{g}{l} \sin(\theta) - b\dot{\theta}$$

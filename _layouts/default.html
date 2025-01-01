@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark-poole">
   {% include head.html %}
+  <script type="text/javascript" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
 
   <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
     <div class="container content" style="flex: 1;">
@@ -51,7 +62,7 @@
             
           .btn-outline:hover {
             background-color: white;
-            color: black;
+            color: black.
           }
         </style>
 
