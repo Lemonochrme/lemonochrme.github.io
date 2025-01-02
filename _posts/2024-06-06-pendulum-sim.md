@@ -46,8 +46,18 @@ $$
 \ddot{\theta} = -\frac{g}{l} \sin(\theta)
 $$
 
+![image](https://github.com/user-attachments/assets/1e95c3c2-cb97-4015-9c28-05c35a468090)
+
+
 Le système en l'état ne perd pas d'énergie, ajoutons de la dissipation (frottements), pour ce faire il nous suffit de soustraire un terme proportionnel à la vitesse angulaire $\dot{\theta}$ appelons le $b$ :
 
 $$
 \ddot{\theta} = -\frac{g}{l} \sin(\theta) - b\dot{\theta}
 $$
+
+![image](https://github.com/user-attachments/assets/826ded21-67d0-4036-bd2b-da2be71363c7)
+
+
+
+
+
