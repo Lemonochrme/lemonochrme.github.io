@@ -8,7 +8,7 @@ image: /assets/covers/energy.png
 
 # Descriptive Part
 
-The 5G technologies course was more of an exporatory course rather than a pure technical course. The goal was to discovery 5G and mobile 
+The 5G technologies course was more of an exporatory course rather than a pure technical course. The goal was to discovery 5G and mobile.
 
 # Technical Part
 
@@ -22,6 +22,9 @@ Modulation in 5G plays a crucial role in transmitting information efficiently ov
 ### **Orthogonal Frequency Division Multiplexing (OFDM)**
 **OFDM** is an evolution of Frequency Division Multiplexing (FDM) and is the backbone of 5G communication. It allows multiple data transmissions within the same bandwidth by splitting the signal into numerous subcarriers, each carrying data independently. 
 
+![Image](/assets/posts-images/portfolio-insa/5g/856eb867-d2b0-48a0-85dd-a74acea87983.png)
+
+
 - **Key Advantages**:
   - **High Spectral Efficiency**: Overlapping subcarriers use spectrum more effectively without interference.
   - **Multipath Handling**: Subcarriers remain orthogonal, ensuring no interference even in multipath propagation environments.
@@ -33,7 +36,12 @@ Modulation in 5G plays a crucial role in transmitting information efficiently ov
 
 
 ### **Quadrature Amplitude Modulation (QAM)**
+
+![Image](/assets/posts-images/portfolio-insa/5g/01e4b972-c2a3-4770-8a05-4081fbc21439.png)
+
 In 5G, **QAM** is the modulation technique applied to each OFDM subcarrier. It combines amplitude and phase modulation to increase the data rate. Higher-order QAM, such as 256-QAM and 1024-QAM, is used to encode more bits per symbol, improving throughput but requiring higher Signal-to-Noise Ratios (SNR).
+
+![Image](/assets/posts-images/portfolio-insa/5g/ff255561-dbdb-4a80-ba53-e83b4107b8d5.png)
 
 - **QAM Tradeoffs**:
   - **High Data Rates**: Higher QAM orders allow more bits per transmission but demand greater SNR.
