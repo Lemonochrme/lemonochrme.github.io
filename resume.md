@@ -4,6 +4,10 @@ title: Resume
 permalink: /resume/
 ---
 
+[PDF Version Here][1]
+
+[1]:/download/resume.pdf
+
 
 # Robin Marin-Muller
 
