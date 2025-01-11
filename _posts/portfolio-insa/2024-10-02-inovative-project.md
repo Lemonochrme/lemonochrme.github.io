@@ -6,6 +6,30 @@ categories: [INSA]
 image: /assets/covers/pipe.png
 ---
 
+
+# Development of a smart water leak detection system for public water infrastructures
+
+## Overview of the project
+
+This project is conducted as part of a multidisciplinary initiative within the ISS curriculum. The goal is to develop a system that accurately detects water leaks in networks using a non-intrusive method. Starting from scratch, we had to conceptualize the entire project, from hardware to software, while addressing protocols and other specifications. As a result, this project effectively illustrates the various notions covered in our courses.
+
+Initially, the idea was to develop a method to detect household water leaks. However, as we delved deeper into the project, we gradually shifted our focus from a domestic solution to a distributed approach for public water network infrastructures. This is due to the fact that public water infrastructures are significantly more subject to water losses due to undetected leaks, representing a major economic and environmental issue. On the other hand, monitoring household water leaks is a well known and already addressed problem, hence irrelevant for us.
+
+## My role in the project
+
+Our team consists of five members. With the exception of one member specializing in computer science and networking, the rest of us come from an automatic control and electronics background. At first, this might seem suboptimal for a multidisciplinary project. However, as we progressed, we realized that each team member could contribute significantly, even outside their primary area of expertise. Personally, although my academic background is in automatic control and electronics, I have led many personal projects and gained experience in various engineering fields. This experience naturally positioned me to oversee the technical aspects of the project.
+
+My role in this project is twofold, in one hand I'm responsible of the general technical direction of the project and on the other hand, as I'm fairly confortable with hardware electronic design, microcontroller programming, signal processing, harmonic analysis and machine learning, I take care of these aspects.
+
+For other aspects, such as the design of the MAC Communication Protocol, the development of the web application, and the database implementation, we delegated these tasks to team members that were more competent or more willing to work on these subjects. This decision was made to optimize the global efficiency of the team and to ensure that every individual in the team had a fair share of work.
+
+
+
+
+
+
+---
+
 Format du Portfolio : Description -> Technique -> Analyse
 
 ## Introduction
