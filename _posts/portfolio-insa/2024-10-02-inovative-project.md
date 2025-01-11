@@ -6,9 +6,6 @@ categories: [INSA]
 image: /assets/covers/pipe.png
 ---
 
-
-# Development of a smart water leak detection system for public water infrastructures
-
 ## Overview of the project
 
 This project is conducted as part of a multidisciplinary initiative within the ISS curriculum. The goal is to develop a system that accurately detects water leaks in networks using a non-intrusive method. Starting from scratch, we had to conceptualize the entire project, from hardware to software, while addressing protocols and other specifications. As a result, this project effectively illustrates the various notions covered in our courses.
