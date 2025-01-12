@@ -6,6 +6,20 @@ categories: [INSA]
 image: /assets/covers/energy.png
 ---
 
+# Descriptive Part
+
+This "Grand Domaine" was separated into two different courses: Service Oriented Architecture and Middleware. For SOA, the goal was to get an introduction to service-oriented web development through an online course and two lab projects where we had to use the concepts learned along the way. For Middleware, the format was a bit different. While the course was also online, the practical work was much more guided and took the form of standard "Travaux Pratiques" where we experienced the different concepts: oneM2M, MQTT, ACME or node-red.
+
+# Technical Part
+
+# Analytical Part
+
+## Middleware
+
+## Service Architecture
+
+
+
 https://moodle.insa-toulouse.fr/course/view.php?id=785
 
 
