@@ -12,6 +12,10 @@ This "Grand Domaine" was separated into two different courses: Service Oriented 
 
 # Technical Part
 
+## Middleware
+
+## Service Architecture
+
 # Analytical Part
 
 ## Middleware
