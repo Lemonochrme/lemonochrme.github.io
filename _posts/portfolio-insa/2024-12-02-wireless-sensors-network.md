@@ -62,12 +62,7 @@ The Spreading Factor value has a direct influence on the possible range and data
 
 | Preamble | Synchronization | Payload | CRC |
 |----------|-----------------|---------|-----|
-
-Composition of a LoRa Frame:
-- Preamble: Synchronization sequence used by the receiver to lock onto the signal.
-- Synchronization
-- Payload: Contains the data transmitted by the node.
-- CRC (Cyclic Redundancy Check): Ensures data integrity.
+| Synchronization sequence used by the receiver to lock onto the signal. | Synchronization sequence to align the receiver with the transmitter. | Contains the data transmitted by the node. | Ensures data integrity. |
 
 ### Lora Demodulation: Correlation
 
@@ -93,3 +88,4 @@ Above all, I am a self learner. I enjoy discovering and exploring new subjects b
 In addition, the presentaiton assignment (both on LoRa and on WSN Mac layers) required me to not only understand the subject but also to be able to explain complex concepts to others in a clear and concise manner. And as we all now, we truly understand a concept when we are able to explain it *well* to others. Preparing and doing the presentation improved greatly my communications skills and my ability to simplify complex technical ideas: in other words: science popularization skills.
 
 ## *What experience did I gained*
+
