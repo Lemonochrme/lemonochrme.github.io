@@ -36,7 +36,7 @@ Advantages:
 - Ability to transmit over long distances with low power levels.
 
 
-![Image](/assets/posts-images/portfolio-insa/wsn/css.png)
+![white](/assets/posts-images/portfolio-insa/wsn/css.png)
 
 Chirp Spread Spectrum modulation uses "chirps" signals whose frequency varies linearly over time, enabling interference-resistant encoding.
 
@@ -74,6 +74,10 @@ Composition of a LoRa Frame:
 ![Image](/assets/posts-images/portfolio-insa/wsn/correlation.png)
 
 > Transmitter symbols must be the same as receiver symbols, in other words the Spreading Factor must match between RX and TX !
+
+
+## Analyzing MAC Protocols for IoT Applications
+
 
 ## Bureau d'Etude
 
