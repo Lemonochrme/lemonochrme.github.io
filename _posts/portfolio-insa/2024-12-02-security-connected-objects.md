@@ -211,6 +211,24 @@ int main()
 ```
 
 
+
+## Security Features of the Interdisciplinary Project
+
+Security is a crucial aspect of all projects involving some sort of communication, especially in a Wireless Sensor Network where data integrity and confidentiality are essential.
+
+### Context and Challenges
+
+To add a bit of context on the matter, our interdisciplinary project aim to detect water leaks using a distributed network of sensors (WSN), each equipped with an ESP32 and a LoRa module for communication. These sensors transmit a payload consisting of metrics (frequency and harmonic data, timestamps, etc...) and edge computing analysis preliminary results (output of small machine learning models). Our LoRa module (SX1278) operate on frequencies ranging from 410MHz to 525MHz and is designed for low power consumption and limited bandwidth. Without any security features each sensor node is vulerable to every attack imaginable (replay attacks, data tempering, eavesdropping...). Consequently it is *necessary* for the project to implement a security solution that protects data integrity and confidentiality without introducing too much overhead.
+
+### Solution
+
+We propose a lighweight security mechanism based on pre-shared symmetric keys that use AES-128 encryption: each sensor encrypts its data using AES in Cipher Block Chaining (CBC) mode with a unique and randomly generated Initialization Vector (IV) for every message. The IV is then transmitted with the actual message.
+
+### Implementation
+
+In order to implement AES on the microcontroller we first thought about implementing AES in bare-metal without library as its not a particularly complex algorithm but we found TinyAES (https://github.com/kokke/tiny-AES-c), a lightweigh cross platform library.
+
+
 # Analytical Part
 
 
