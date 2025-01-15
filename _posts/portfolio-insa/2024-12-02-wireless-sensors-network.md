@@ -71,8 +71,58 @@ The Spreading Factor value has a direct influence on the possible range and data
 > Transmitter symbols must be the same as receiver symbols, in other words the Spreading Factor must match between RX and TX !
 
 
-## Analyzing MAC Protocols for IoT Applications
+## Analyzing MAC Protocols for IoT Applications: Efficient Communication in Wireless Sensor Networks
 
+#### Importance of MAC Protocols
+MAC protocols ensure that communication ressources are being use efficiently, in a word we have to balance three parameters: energy consumption, reliability and performance. Wireless Sensor Networks good operation heavily depends on the adapted design of the MAC protocol, poorly designed protocols potentially leads to wasted energy and communication failures (collisions). To give a tangible example, our water leak detection project (innovative project) require a MAC protocol tailored for energy efficiency, very low overhead and reliability.
+
+### Classification of MAC Protocols
+
+We can classify MAC protocols between three main sets: Contention-based, Schedule-based and hybrid (mix of the two).
+
+#### Contention-Based Protocols
+Contention-based protocols dynamically allocate the communication channel based on demand, offering flexibility but prone to collisions and energy inefficiencies.
+
+- **CSMA/CA**: Nodes sense the channel before transmitting, avoiding direct collisions but consuming more energy due to constant listening.
+- **S-MAC**: Introduces periodic sleep schedules and synchronization to save energy but faces challenges in dynamic or mobile networks.
+- **B-MAC**: Enhances energy efficiency with low-power listening (LPL) and asynchronous operations, avoiding synchronization overheads.
+
+#### Schedule-Based Protocols
+Schedule-based protocols use predefined time slots for communication, eliminating collisions but requiring precise synchronization.
+
+- **TDMA**: Allocates fixed slots, ensuring collision-free communication and energy savings by allowing nodes to sleep outside their slots. It struggles with dynamic network topologies due to its static scheduling.
+- **L-MAC**: An improvement over TDMA with decentralized slot allocation, enhancing scalability and adaptability while maintaining energy efficiency.
+
+#### Hybrid Protocols
+Hybrid protocols combine contention-based and schedule-based methods to adapt to varying traffic conditions.
+
+- **Z-MAC**: Switches between CSMA and TDMA modes depending on traffic levels, optimizing energy use and minimizing delays. However, it faces challenges with synchronization and hidden terminal issues.
+
+#### Receiver-Initiated Protocols
+These protocols invert the communication process, where the receiver initiates data exchange, reducing idle listening and energy consumption.
+
+- **RI-MAC**: Uses beacons from the receiver to indicate readiness, enabling energy-efficient asynchronous operation suitable for low-traffic, sporadic communication. However, beacon overhead can add delays and energy costs.
+
+### *How to choose the right mac protocol ?*
+
+MAC protocol selection is tighly linked to the specific network requirements of the application like energy efficiency, mobility, synchro or security.
+
+| **Protocol** | **Energy Efficiency** | **Sync**        | **Security** | **Scalability** |
+|--------------|-----------------------|-----------------|--------------|-----------------|
+| CSMA/CA      | Low              | No              | Low          | High            |
+| S-MAC        | Moderate         | Yes             | Low          | Moderate        |
+| B-MAC    | High             | No              | Low          | Moderate        |
+| TDMA         | High                 | Strict          | Low          | Low             |
+| L-MAC        | High                 | Local           | Low          | Moderate        |
+| Z-MAC        | High                 | Less Strict     | Low          | High            |
+| RI-MAC       | Very High            | No              | Low          | High            |
+
+*Table: Comparative Analysis of MAC Protocols*
+
+
+Contention-based protocols like S-MAC and B-MAC are flexible but energy-intensive. Schedule-based protocols (TDMA) are performant in static networks, while hybrids like Z-MAC offer some degrees of freedom for dynamic conditions. Receiver-initiated protocols optimize energy use for sporadic transmissions making them very efficient for low traffic scenarios.
+
+There is no perfect MAC protocol *(yet?)* each protocol offers trade-offs, when selecting a MAC protocol, one must ask the right question: *What are the network's primary requirements?* And adapt the MAC protocol to fit the specific needs.
 
 ## Bureau d'Etude
 
