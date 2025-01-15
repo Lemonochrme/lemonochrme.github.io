@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 🌐 Middleware for Internet of Things
+title: 🌐 Middleware and Services
 date: 2024-11-18
 categories: [INSA]
 image: /assets/covers/energy.png
@@ -8,19 +8,32 @@ image: /assets/covers/energy.png
 
 # Descriptive Part
 
-This "Grand Domaine" was separated into two different courses: Service Oriented Architecture and Middleware. For SOA, the goal was to get an introduction to service-oriented web development through an online course and two lab projects where we had to use the concepts learned along the way. For Middleware, the format was a bit different. While the course was also online, the practical work was much more guided and took the form of standard "Travaux Pratiques" where we experienced the different concepts: oneM2M, MQTT, ACME or node-red.
+This "Grand Domaine" was separated into four different courses: Service Oriented Architecture, Middleware, Software Engineering and Cloud and Edge Computing. 
+
+- For SOA, the goal was to get an introduction to service-oriented web development through an online course and two lab projects where we had to use the concepts learned along the way. 
+
+- For Middleware, the format was a bit different. While the course was also online, the practical work was much more guided and took the form of standard "Travaux Pratiques" where we experienced the different concepts: oneM2M, MQTT, ACME or node-red.
+
+- For Cloud and Edge Computing the goal was to understand the basics of cloud infrastructure and operation. The course was focused on Open Stack and Virtualization.
+
+- The Software Engineering part was done through the course of the innovative project where we adopted a Agile methodology and the Service Oriented Architecture project labs where we had to implement a CI/CD pipeline for the application we where developping.
 
 # Technical Part
 
-## Middleware
-
 ## Service Architecture
 
-# Analytical Part
+## Software Engineering
+
+I wrote an entire report on Software Engineering with a focus on DevOps, available here: [Automation and DevOps in the Space Industry: Focus on GitLab-CI][1]
+
+[1]:/download/devops-report.pdf
 
 ## Middleware
 
-## Service Architecture
+## Cloud and Edge Computing
+
+
+
 
 
 

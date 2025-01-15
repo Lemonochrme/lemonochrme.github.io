@@ -64,6 +64,8 @@ The Spreading Factor value has a direct influence on the possible range and data
 |----------|-----------------|---------|-----|
 | Synchronization sequence used by the receiver to lock onto the signal. | Synchronization sequence to align the receiver with the transmitter. | Contains the data transmitted by the node. | Ensures data integrity. |
 
+*Table: LoRa Frame Description*
+
 ### Lora Demodulation: Correlation
 
 ![Image](/assets/posts-images/portfolio-insa/wsn/correlation.png)
