@@ -34,5 +34,18 @@ This part, like the MOS&H was part of the continuity of the AIME work. The goal 
 
 # Technical Part
 
+## Microcontroller and Opensource Hardware (MOS&H)
+
+
+
 # Analytical Part
 
+## Microcontroller and Opensource Hardware (MOS&H)
+
+I strongly believe that Open Source Hardware is the key to achieving sustainability, both in technology and in the way we solve real-world problems. Open Source empowers users by making knowledge accessible and enabling innovation without barriers. Unlike proprietary solutions, Open Source gives everyone the tools to create, improve, and share freely. This approach fosters collaboration and ensures that progress benefits everyone, not just a select few.
+
+In our interdisciplinary innovative project, I had the opportunity to work on a water leak detection project. This project is fully Open Source, from the hardware design to the software code, and everything is accessible to anyone on GitHub. By sharing it openly, we ensure that communities, researchers, and developers worldwide can build upon our work, adapt it to their needs, and potentially create better, more effective solutions for water conservation.
+
+The importance of Open Source lies in its potential for large-scale impact. For instance, our project leverages affordable components like the ESP32-C3, LSM36 IMU, and MEMS microphones to create a network of sensors capable of detecting leaks in water distribution systems. By making our designs and code available, we lower the entry barrier for others to replicate or improve the system. This inclusiveness is a pathway to sustainability because it encourages widespread adoption and innovation.
+
+I support Open Source Hardware because it gives people the ability to learn and take control of the technology they use. It creates an ecosystem where ideas are shared, costs are reduced, and sustainable solutions become scalable. Our project is just one example of how Open Source can empower individuals and communities to make a difference. By embracing this approach, we pave the way for a future where technology is not only sustainable but also equitable and accessible to all. The Internet gave free knowledge to everyone; Open Source and Open Hardware is only the logical continuation of this philosophy. The only philosophy I believe in.
