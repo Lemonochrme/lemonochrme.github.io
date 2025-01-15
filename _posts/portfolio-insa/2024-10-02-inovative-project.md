@@ -22,6 +22,14 @@ For other aspects, such as the design of the MAC Communication Protocol, the dev
 
 
 
+Communication LoRa :
+
+```c
+[1] LoRa: Received packet of size 13
+RSSI: -32 dB
+Payload: 0x48 0x65 0x6c 0x6c 0x6f 0x20 0x57 0x6f 0x72 0x6c 0x64 0x21 0x0
+```
+
 
 
 
