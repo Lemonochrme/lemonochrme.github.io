@@ -25,8 +25,26 @@ This "Grand Domaine" was separated into four different courses: Service Oriented
 ## Software Engineering
 
 I wrote an entire report on Software Engineering with a focus on DevOps, available here: [Automation and DevOps in the Space Industry: Focus on GitLab-CI][1]
-
 [1]:/download/devops-report.pdf
+
+### Problem
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/problematique.png)
+
+
+### Solution
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/solution.png)
+
+### GitLab-CI Philosophy
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/gitlab-ci-philosophy.png)
+
+### Configuration as code: .gitlab-ci.yml
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/gitlabci-yml.png)
+
+
 
 ## Middleware
 
