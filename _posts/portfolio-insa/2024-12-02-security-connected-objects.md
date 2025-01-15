@@ -34,6 +34,11 @@ Instead of sending the whole Initialization Vector we can store a static decimat
 
 In order to implement AES on the microcontroller we first thought about implementing AES in bare-metal without library as its not a particularly complex algorithm but we found TinyAES (https://github.com/kokke/tiny-AES-c), a lightweigh cross platform library.
 
+Source code of the implementation: [light-encrypt](https://github.com/Lemonochrme/light-encrypt/tree/main)
+
+
+
+
 
 
 
