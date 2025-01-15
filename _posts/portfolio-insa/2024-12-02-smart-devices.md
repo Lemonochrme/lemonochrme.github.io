@@ -36,6 +36,11 @@ This part, like the MOS&H was part of the continuity of the AIME work. The goal 
 
 ## Microcontroller and Opensource Hardware (MOS&H)
 
+![Image](/assets/posts-images/portfolio-insa/smart-devices/gaz-sensor-node.png)
+*Image: 3D Render of the Gaz Sensor Integration Board*
+
+
+
 
 
 # Analytical Part
