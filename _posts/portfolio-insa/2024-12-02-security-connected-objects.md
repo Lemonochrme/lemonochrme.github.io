@@ -36,7 +36,17 @@ In order to implement AES on the microcontroller we first thought about implemen
 
 Source code of the implementation: [light-encrypt](https://github.com/Lemonochrme/light-encrypt/tree/main)
 
+```c
+[Test Task] Original Message: Hello World
+[Test Task] Encrypted Data:
+04 b4 d0 b0 1a f1 c4 a6 94 95 b3 f2 6c 4a ee fd 82 2c 
+[Test Task] Decrypted Message: Hello World
 
+[Test Task] Original Message: Hello World
+[Test Task] Encrypted Data:
+78 d8 f3 74 04 7b fb 13 49 d2 f7 a8 65 36 a3 01 39 cc 
+[Test Task] Decrypted Message: Hello World
+```
 
 
 
