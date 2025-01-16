@@ -53,7 +53,7 @@ Source code of the implementation: [light-encrypt](https://github.com/Lemonochrm
 78 d8 f3 74 04 7b fb 13 49 d2 f7 a8 65 36 a3 01 39 cc 
 [Test Task] Decrypted Message: Hello World
 ```
-
+In the demonstration above we can clearly see the entropy implemented by the IV, while the clear message is identical, the encrypted output is absolutely different. This mechanism effectively prevents replay attacks.
 
 
 
