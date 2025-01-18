@@ -87,7 +87,21 @@ In the MQTT labs we experimented with MQTT on a ESP8266, the goal was to simulat
 
 ## Cloud and Edge Computing
 
+### Differences between virtual machines and containers
 
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/vm-ct.png)
 
+The main difference between virtual machines and containers lies in their architecture and resource utilization.
+- On the left a type 2 Hypervisor is used to create and manage multiple Virtual Machines on a host operating system (hence type 2,  type 1: bare-metal hypervisor). Each VMs operate indepoendently with its own guest operating system and applications. Qemu or VVirtual Box are Type 2 hypervisors.
+
+- On the right, containers are used instead of VMs. Containers share the host OS kernel but run isolated environments with their own libraries and dependencies. This makes containers lightweight and efficient, as they do not require a separate OS for each instance. Containers are ideal for deploying applications consistently across different environments while using fewer resources compared to VMs.
 
 # Analytical Part
+
+## Cloud and Edge Computing
+
+I was already familiar with virtualization and hypervisor as I already worked with theses technologies. At CNES we extensively use Docker to deploy CI pipelines.
+
+I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with XtratuM: a space qualified bare-metal hypervisor.
+
+On the other hand I was not particularly familiar with the Cloud/Open Stack part. This was a enriching experience but the last lab on Kubernetes was too short to be completed, I would have liked to learn more on K8S because a theses led at CNES is specifically oriented on this subject. The goal is to achieve decentralized computing on satelites networks using KLubernetes as a base line.
