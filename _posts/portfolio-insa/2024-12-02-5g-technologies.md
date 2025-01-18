@@ -8,44 +8,49 @@ image: /assets/covers/energy.png
 
 # Descriptive Part
 
-The 5G technologies course was more of an exporatory course rather than a pure technical course. The goal was to discovery 5G and mobile.
+The 5G technologies course was more of an exporatory course rather than a pure technical course. The goal was to discovery 5G and mobile technologies.
 
 # Technical Part
 
-We were asked to research, prepare and present a subject related to mobile communication in a concise but complete way. I've choosen to on 5G modulation techniques because in all the proposed sunjects I tought it was the most interesting of all in a pure technical way.
+We were asked to research, prepare and present a subject related to mobile communications in a concise but complete way. I've choosen the 5G modulation techniques subject because in all the proposed subjects I thought it was the most interesting of all. It was a personnal choice as I really like to delve into the technical details of technology.
 
-### **Introduction to Modulation in 5G**
+### Introduction to Modulation in 5G
 Modulation in 5G plays a crucial role in transmitting information efficiently over carrier signals while optimizing factors such as range, robustness, and spectral usage. Unlike previous generations, 5G employs advanced modulation and multiplexing techniques to achieve higher throughput and lower latency.
 
 
+### Orthogonal Frequency Division Multiplexing (OFDM)
 
-### **Orthogonal Frequency Division Multiplexing (OFDM)**
-**OFDM** is an evolution of Frequency Division Multiplexing (FDM) and is the backbone of 5G communication. It allows multiple data transmissions within the same bandwidth by splitting the signal into numerous subcarriers, each carrying data independently. 
+OFDM is an evolution of Frequency Division Multiplexing (FDM) and is the at the center of 5G communication. OFDMA allows multiple data transmissions within the *same* bandwidth by splitting the signal into multiple subcarriers each carrying data independently. 
 
 ![Image](/assets/posts-images/portfolio-insa/5g/856eb867-d2b0-48a0-85dd-a74acea87983.png)
 
 
 - **Key Advantages**:
-  - **High Spectral Efficiency**: Overlapping subcarriers use spectrum more effectively without interference.
-  - **Multipath Handling**: Subcarriers remain orthogonal, ensuring no interference even in multipath propagation environments.
-  - **Cyclic Prefix (CP)**: Absorbs delays caused by reflections, avoiding overlap of delayed signals with actual data.
+  - High Spectral Efficiency: Overlapping subcarriers use spectrum more effectively without interference.
+  - Multipath Handling: Subcarriers remain orthogonal, ensuring no interference even in multipath propagation environments.
+  - Cyclic Prefix (CP): Absorbs delays caused by reflections, avoiding overlap of delayed signals with actual data.
 
-- **5G-Specific Enhancements**:
-  - Flexible subcarrier spacing ranging from 15 kHz to 240 kHz.
-  - Support for Discrete Fourier Transform-Spread OFDM (DFT-s-OFDM) in uplink scenarios to reduce power consumption, especially for mobile devices.
+- **5G Specific Mechanisms**:
+  - Dynamic subcarrier spacing ranging from 15 kHz to 240 kHz
+  - Support for Discrete Fourier Transform Spread OFDM (DFT-s-OFDM) in uplink scenarios to reduce power consumption
 
 
-### **Quadrature Amplitude Modulation (QAM)**
+### Quadrature Amplitude Modulation (QAM)
 
 ![Image](/assets/posts-images/portfolio-insa/5g/01e4b972-c2a3-4770-8a05-4081fbc21439.png)
 
-In 5G, **QAM** is the modulation technique applied to each OFDM subcarrier. It combines amplitude and phase modulation to increase the data rate. Higher-order QAM, such as 256-QAM and 1024-QAM, is used to encode more bits per symbol, improving throughput but requiring higher Signal-to-Noise Ratios (SNR).
+QAM is the modulation technique applied to each OFDM subcarrier, it combines amplitude and phase modulation to increase the data rate.
+
+Higher order QAM such as 256-QAM and 1024-QAM is used to encode more bits per symbol, hence improving throughput but requiring higher Signal-to-Noise Ratios (SNR).
 
 ![Image](/assets/posts-images/portfolio-insa/5g/ff255561-dbdb-4a80-ba53-e83b4107b8d5.png)
 
-- **QAM Tradeoffs**:
-  - **High Data Rates**: Higher QAM orders allow more bits per transmission but demand greater SNR.
-  - **Range vs. Efficiency**: Higher-order QAM is suitable for short-range, high-SNR conditions, such as dense urban environments.
+QPSK is a type of phase modulation that transmit data by changing the phase of the carrier wave. It is significantly more efficient than Binary Phase Shift Keying (BPSK) as it encodes two bits per symbol, thus doubling the data rate for the same bandwidth.
+
+
+- QAM Tradeoffs:
+  - High Data Rates: Higher QAM orders allow more bits per transmission but demand greater SNR.
+  - Range vs. Efficiency: Higher-order QAM is suitable for short-range, high-SNR conditions, such as dense urban environments.
   - Example: 1024-QAM can achieve exceptional data rates but is more sensitive to interference and limited in range compared to 16-QAM.
 
 
@@ -67,13 +72,13 @@ While 5G modulation techniques provide significant benefits, they also introduce
 
 
 
-The 5G technologies course was an interesting experience because it gave us a lot of freedom in how we approached our work. We could choose the subject we wanted to research and present, which allowed me to focus on 5G modulation techniques, a topic I found fascinating. This freedom made the course engaging and allowed me to explore areas of mobile communication that aligned with my technical interests.
+The 5G technologies course was an interesting experience because it gave us a lot of freedom in how we approached our work. We could choose the subject we wanted to research and present, which allowed me to focus on 5G modulation techniques, a topic I found very interesting. This freedom made the course engaging and allowed me to explore areas of mobile communication that aligned with my technical interests.
 
-However, the course had some limitations. While it was a good introduction to 5G, the range of technical subjects available for research felt narrow. Most of the topics provided were either too broad or lacked the depth needed for someone looking for a more technical understanding of 5G. For example, while OFDM and QAM were interesting to study, other advanced 5G topics, such as network slicing or energy efficiency strategies in mmWave communication, were not included in the scope of the course.
+However, the course had some limitations. While it was a good introduction to 5G, the range of technical subjects available for research limited. Most of the topics provided were either too vague or lacked the depth needed for someone looking for a more technical understanding of 5G. For example, while OFDM and QAM were interesting to study, other advanced 5G topics, such as network slicing or mmWave communication were not proposed.
 
-Another limitation was the brief and limited focus on future technologies like 6G. Some groups presented on this topic, but the available information was scarce, and the discussions lacked depth. This was understandable given that 6G is still in early research stages, but it felt like a missed opportunity to explore 5G and existing (well documented technologies) more in depth.
+Another issue was the focus on future technologies like 6G. Some groups presented on this topic but the available information was rare and the discussions lacked depth. This was understandable given that 6G is still in early research stages, but it felt like a missed opportunity to explore 5G and existing (well documented technologies) more in depth.
 
-Overall, the course provided a good introduction to 5G and mobile technologies and allowed me to focus on a subject I was passionate about. Still, it could have benefited from a wider range of technical topics.
+Overall, the course provided me with a fair understanding of my reseach preseentation on 5G modulation, which is appreciable. Still, it could have benefited from more technical topics to present. Additionnally, this course helped me improve my science communication skills like in WSNs. I had to had a good undersanding the subject in order to communicate it to others in a simple way, also I liked making the design of the different digram to convey my points. 
 
 | **Skill**                                                                                 | **Required Level** | **Self Evaluation** | **Skill Relevance** | **Main Skill Acquisition Method**    |
 |-------------------------------------------------------------------------------------------|---------------------|----------------------|----------------------|---------------------------------------|
