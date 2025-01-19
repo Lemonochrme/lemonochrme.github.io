@@ -77,17 +77,30 @@ Simulation of cutoff frequencies of the different filters:
 - Third filter: 1.6kHz
 
 <table>
-  <tr>
-    <td><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre1.png" alt="First Filter" style="max-width: 100%; height: auto;" /></td>
-    <td><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre2.png" alt="Second Filter" style="max-width: 100%; height: auto;" /></td>
-    <td><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre3.png" alt="Third Filter" style="max-width: 100%; height: auto;" /></td>
-  </tr>
+    <tr>
+        <td><a href="/assets/posts-images/portfolio-insa/smart-devices/filtre1.png"><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre1.png" alt="First Filter" style="max-width: 100%; height: auto;" /></a></td>
+        <td><a href="/assets/posts-images/portfolio-insa/smart-devices/filtre2.png"><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre2.png" alt="Second Filter" style="max-width: 100%; height: auto;" /></a></td>
+        <td><a href="/assets/posts-images/portfolio-insa/smart-devices/filtre3.png"><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre3.png" alt="Third Filter" style="max-width: 100%; height: auto;" /></a></td>
+    </tr>
 </table>
 
 
-### Simulation with gas sensor model
+### Gas sensor model LTSpice simulations
 
+In order to simulate the entire signal conditioning circuit, we needed an electrical model of the gas sensor, described as follow:
 
+![Image](/assets/posts-images/portfolio-insa/smart-devices/model.png)
+*Image: Gas sensor electrical model schematic*
+
+With the gas sensor modeled in LTSpice, we can integrate it into the complete conditioning circuit (amplification and filters) to perform simulations.
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/model-50hz-unfiltered.png)
+*Image: LTSpice Simulation of the gas sensor model without 50Hz filtering*
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/model-50hz-filtered.png)
+*Image: LTSpice Simulation of the gas sensor model with 50Hz filtering*
+
+Based on the above-cited images we can clearly see why the filters (and particularly the 50Hz filter) are useful. 
 
 
 ## Microcontroller and Open Source Hardware (MOSH)
@@ -103,7 +116,7 @@ Simulation of cutoff frequencies of the different filters:
 
 ## Microcontroller and Open Source Hardware (MOSH)
 
-I strongly believe that Open Source and Open Hardware is the key to achieving sustainability, both in technology and the consumer industry. Open Source encourage accessible knowledge and accelerate innovation. Unlike proprietary solutions, Open Source gives everyone the  tools to create, improve and share freely ensuring progress benefits everyone, not just a select few.
+I strongly believe that Open Source and Open Hardware is the key to achieving sustainability, both in technology and the consumer industry. Open Source encourage accessible knowledge and accelerate innovation. Unlike proprietary solutions, Open Source gives everyone the tools to create, improve and share freely ensuring progress benefits everyone, not just a select few.
 
 In out interdisciplinary innovative project, I worked on a non-intrusive cutting edge water leak detection system. We choose to make this project fully Open Source, from the hardware design to the software source code: everything is accessible to anyone on GitHub. By sharing it openly we ensure and everyone (researchers, developers, students...) can build on top our work  adapt it to their needs and create better solutions.
 
