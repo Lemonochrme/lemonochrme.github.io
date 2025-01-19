@@ -36,6 +36,9 @@ This part, like the MOSH was part of the continuity of the AIME work. The goal w
 
 ## AIME Lab Work
 
+![Image](/assets/posts-images/portfolio-insa/smart-devices/waffer.png)
+*Image: From left to right: Silicon Wafer, Close up view of an interdigitated comb and close up view of the gas sensor die integrated in its 10 Leads TO-5 Metal Package*
+
 ## Analog Electronics Lab: Signal Conditioning for the Analog Gas Sensor
 
 ### Gas sensor Characteristics
