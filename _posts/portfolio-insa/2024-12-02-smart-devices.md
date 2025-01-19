@@ -34,6 +34,62 @@ This part, like the MOSH was part of the continuity of the AIME work. The goal w
 
 # Technical Part
 
+## AIME Lab Work
+
+## Analog Electronics Lab: Signal Conditioning for the Analog Gas Sensor
+
+### Gas sensor Characteristics
+
+The gas sensor has an impedance of several gigaohms, requiring signal amplification. But amplification increases signal noise as well, hence the conditioning circuit needs several filters to improve signal quality:
+- Filter for the high-frequency noise.
+- Filter for the 50Hz outlet noise.
+- Filter for the ADC sampling noise.
+
+### Amplifier Design
+
+When designing the signal conditioning circuit two types of amplifiers were considered: a standard low-cost amplifier and a costly very low offset amplifier (LT1050).
+
+We performed simulations on both and found that the LTC1050, better suited our application (as expected) because a high offset could significantly affect the accuracy of the gas sensor readings.
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/offset-opamp-comparison.png)
+*Image: LTSpice Simulation of the circuit comparing the two OpAmps*
+
+
+
+
+### Filters Specifications 
+
+- First Filter: Cutoff frequency at 16 Hz.
+- Second Filter: Cutoff frequency at 1.5 Hz.
+- Third Filter: Cutoff frequency at 1.6 kHz.
+
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/filters.png)
+*Image: LTSpice Schematic of the cirtuit with the 3 filters outlined in blue*
+
+
+
+### Filters LTSpice Simulations
+
+Simulation of cutoff frequencies of the different filters:
+- First filter: 16Hz
+- Second filter: 1.5kHz
+- Third filter: 1.6kHz
+
+<table>
+  <tr>
+    <td><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre1.png" alt="First Filter" style="max-width: 100%; height: auto;" /></td>
+    <td><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre2.png" alt="Second Filter" style="max-width: 100%; height: auto;" /></td>
+    <td><img src="/assets/posts-images/portfolio-insa/smart-devices/filtre3.png" alt="Third Filter" style="max-width: 100%; height: auto;" /></td>
+  </tr>
+</table>
+
+
+### Simulation with gas sensor model
+
+
+
+
 ## Microcontroller and Open Source Hardware (MOSH)
 
 ![Image](/assets/posts-images/portfolio-insa/smart-devices/gaz-sensor-node.png)
