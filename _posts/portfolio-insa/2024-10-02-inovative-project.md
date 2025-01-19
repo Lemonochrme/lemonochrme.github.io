@@ -8,7 +8,7 @@ image: /assets/covers/pipe.png
 
 ## Overview of the project
 
-This project is conducted as part of a multidisciplinary initiative within the ISS curriculum. The goal is to develop a system that accurately detects water leaks in networks using a non-intrusive method. Starting from scratch, we had to conceptualize the entire project, from hardware to software, while addressing protocols and other specifications. As a result, this project effectively illustrates the various notions covered in our courses.
+This project is conducted as part of a multidisciplinary innovative project within the ISS curriculum. The goal is to develop a system that accurately detects water leaks in networks using a non-intrusive method. Starting from scratch, we had to conceptualize the entire project, from hardware to software, while addressing protocols and other specifications. As a result, this project effectively illustrates the various notions covered in our courses.
 
 Initially, the idea was to develop a method to detect household water leaks. However, as we delved deeper into the project, we gradually shifted our focus from a domestic solution to a distributed approach for public water network infrastructures. This is due to the fact that public water infrastructures are significantly more subject to water losses due to undetected leaks, representing a major economic and environmental issue. On the other hand, monitoring household water leaks is a well known and already addressed problem, hence irrelevant for us.
 
