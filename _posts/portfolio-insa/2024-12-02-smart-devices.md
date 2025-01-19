@@ -84,6 +84,8 @@ Simulation of cutoff frequencies of the different filters:
     </tr>
 </table>
 
+*Click the Images to Zoom*
+
 
 ### Gas sensor model LTSpice simulations
 
@@ -105,12 +107,84 @@ Based on the above-cited images we can clearly see why the filters (and particul
 
 ## Microcontroller and Open Source Hardware (MOSH)
 
+The goal is now to integrate the gas sensor into an IoT solution in order to provide useful information about air quality to users. We continue to build onto the previous tasks.
+
+### IoT Breadboard Prototype
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/breadboard-prototype.png)
+*Images: Breadboard prototype including: ESP32, RN2483A LoRa Module, SSD1306 I2C Screen and MQ5 Gas Sensor*
+
+In this part, the goal was to:
+1. Integrate the gas sensor with the ESP32 (due to lack of time we integrated an off-the-shelf sensor but the principle is the same).
+2. Send sensor readings to Chirpstack via LoRa.
+3. Display information to the user directly on the device using an OLED screen.
+
+As the gas sensor integration on the ESP32 is not extensively complex (ADC Reading) we will not cover it.
+
+#### Chirpstack Integration using LoRa RN2483A UART Module
+
+Chirpstack is an open source LoRaWAN Network Server stack that route and manages LoRaWAN data. 
+
+We used the following organisation:
+1. Integrate the LoRa RN2483A UART Module on the ESP32
+2. Configure the ESP32 to send data to the INSA LoRaWAN gateway
+3. Register to the INSA ChirpStack server
+4. Send sensor readings to the server and visualize it on the ChirpStack interface.
+
+We had a lot of trouble sending data to ChirpStack server, here is a summary of the issues we faced:
+- Erratic behavior (work 1/2 times) on damaged RN2483A module
+- The RN2483A module did not work properly with the ESP32 at 3.3V, despite the datasheet indicating compatibility. It functioned correctly at 5V possibly due to a damaged module.
+- While ChirpStack was configured correctly we faced issues with consistent data transmission because the INSA LoRaWAN gateway was saturated with traffic
+- We spent a lot of time debugging on our side while the issue was out of our scope and our code was working properly.
+
+After we found that the issue was not on our side we decided to focus on the part that we could control: reading/displaying data to user, developing the android application and working on the PCB Design (cf. next section).
+
+### Hardware PCB Design
+
 ![Image](/assets/posts-images/portfolio-insa/smart-devices/gaz-sensor-node.png)
 *Image: 3D Render of the Gaz Sensor Integration Board*
 
+#### Specifications
+
+As I was experienced with PCB design, we decided to directly dive into making the hardware based on what features we wanted:
+- ESP32 based system (as we were at ease with the esp-idf framework)
+- Gas sensor and conditioning circuitry
+- SX1278 LoRa Module as we extensively used it in our innovative project
+- LDL117 low dropout LDO to power the system efficiently on a single cell 3.7V LiPo battery
+- A 2.7kHz buzzer to alarm users if gas levels are above a certain threashold
+- The same SSD1306 I2C Oled Display that we used during the prototyping phase in order to diplay information to users locally
+- A 12650 standard Li-Ion battery holder
+- A button for easy mode switching and styreamlined user experience
+- *Bonus:* BME MEMS Humidity sensor to provide additional metrics to the users.
+
+#### Designing the Schematic
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/schematic.png)
+*Image: Complete Schematic with all the Features Listed Above*
+
+
+#### Routing the PCB
+
+I used a ground plane and a VCC plane to ensure stable power distribution. Dynamic track sizing was applied to handle varying current loads efficiently.
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/pcb-routing.png)
+*Image: From Left to Right: Top Plane, Bottom Plane and Focus on Dynamic Route Width*
 
 
 
+
+#### PCB Manufacturing
+
+We manufactured the PCB using JLCPCB as I am very familiar with the platform. After two weeks we received the PCB and all the electronic components.
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/pcb-collage.png)
+*Image: Manufactured PCBs*
+
+
+![Image](/assets/posts-images/portfolio-insa/smart-devices/components.png)
+*Image: Electronic Components*
+
+Due to lack of time, we couldn't assemble the PCB during the project time. However, I plan to complete the assembly in my personal time because it was a very interesting project.
 
 # Analytical Part
 
