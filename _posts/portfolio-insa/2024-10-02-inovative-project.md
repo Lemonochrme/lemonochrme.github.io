@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "💧 Smart Water Monitoring and Leak Detection System Using ESP32 and Fusion Sensors (IMU and Sound)"
+title: "💧 Non-Intrusive Detection of Water Leaks in Pipeline Networks Using Vibration and Acoustic Sensors"
 date: 2024-10-02
 categories: [INSA]
 image: /assets/covers/pipe.png
@@ -13,8 +13,7 @@ This project is conducted as part of a multidisciplinary innovative project with
 Initially, the idea was to develop a method to detect household water leaks. However, as we delved deeper into the project, we gradually shifted our focus from a domestic solution to a distributed approach for public water network infrastructures. This is due to the fact that public water infrastructures are significantly more subject to water losses due to undetected leaks, representing a major economic and environmental issue. On the other hand, monitoring household water leaks is a well known and already addressed problem, hence irrelevant for us.
 
 
-![Image](/assets/posts-images/portfolio-insa/inovative-project/audacity.png)
-*Image: Leak Audio Sample Signal Processing using Audacity*
+
 
 ## My role in the project
 
@@ -36,275 +35,27 @@ Payload: 0x48 0x65 0x6c 0x6c 0x6f 0x20 0x57 0x6f 0x72 0x6c 0x64 0x21 0x0
 
 
 
-
----
-
-Format du Portfolio : Description -> Technique -> Analyse
-
-## Introduction
-
-Water consumption is one of the critical utilities in a household, yet it is often difficult to monitor effectively. With the rising concerns over water conservation and the financial impact of undetected leaks, having a smart system that can both monitor water usage and detect potential leaks becomes essential. This project presents a smart water monitoring and leak detection system using an **ESP32** microcontroller and fusion sensors to detect water leaks in a household or apartment. The system is designed to help users track their water consumption, detect leaks in real-time, and receive alerts, all through a web or mobile application.
-
-## Litterature Review
-
-
-## References
-
-1. [Leak Detection Using Flow-Induced Vibrations in Pressurized Wall-Mounted Water Pipelines](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9229405)
-
-
-## Frequency Anaylis : Fast Fourrier Transform (FFT) Implementation on ESP32
-
-Water flowing in pipelines create low frequency accoustic vibrations, our goal is to detect these vibrations and process them to retrieve the frequency component, for that matter we will use a FFT algorithm.
-
-Hardware :
-- ESP32C3
-- GY-MAX4466 Electret Microphone
-
-
-ESP32 Code :
-```
-#include "arduinoFFT.h"
-
-const uint16_t samples = 64;              // Must be a power of 2
-const double samplingFrequency = 1000;    // Sampling frequency in Hz (increase if possible)
-double vReal[samples];                    // Real part
-double vImag[samples];                    // Imaginary part
-
-ArduinoFFT<double> FFT = ArduinoFFT<double>(vReal, vImag, samples, samplingFrequency);
-
-const int micPin = 0; // Microphone pin (e.g., GPIO0 on ESP32)
-
-void setup() {
-  Serial.begin(115200); // Initialize serial communication
-  pinMode(micPin, INPUT); // Configure micPin as input
-  Serial.println("FFT Example: Microphone Input");
-}
-
-void loop() {
-  // Step 1: Sample the microphone signal
-  for (uint16_t i = 0; i < samples; i++) {
-    unsigned long startMicros = micros(); // Record the start time
-
-    vReal[i] = analogRead(micPin); // Read microphone value
-    vImag[i] = 0.0;                // Set imaginary part to 0
-
-    // Wait for the next sample
-    while (micros() - startMicros < (1000000 / samplingFrequency));
-  }
-
-  // Step 2: Remove DC Offset
-  double mean = 0;
-  for (uint16_t i = 0; i < samples; i++) {
-    mean += vReal[i];
-  }
-  mean /= samples;
-  for (uint16_t i = 0; i < samples; i++) {
-    vReal[i] -= mean; // Center signal around 0
-  }
-
-  // Step 3: Apply FFT Windowing
-  FFT.windowing(FFTWindow::Hamming, FFTDirection::Forward);
-
-  // Step 4: Compute the FFT
-  FFT.compute(FFTDirection::Forward);
-
-  // Step 5: Compute Magnitudes
-  FFT.complexToMagnitude();
-
-  // Step 6: Send Results Over Serial
-  Serial.println("Frequency (Hz) : Magnitude");
-  for (uint16_t i = 0; i < samples / 2; i++) {
-    double frequency = i * ((double)samplingFrequency / samples); // Calculate frequency bin
-    Serial.print(frequency, 2);
-    Serial.print(" Hz: ");
-    Serial.println(vReal[i], 4); // Magnitude
-  }
-
-  // Optional: Find the Peak Frequency
-  double peakFrequency = FFT.majorPeak();
-  Serial.print("Peak Frequency: ");
-  Serial.print(peakFrequency, 2);
-  Serial.println(" Hz");
-
-  delay(100); // Repeat every 500ms
-}
-```
-
-Matlab Visualisation Code :
-```
-% Parameters
-serialPort = 'COM4';
-baudRate = 115200;   % Must match the baud rate of Arduino Code
-numBins = 32;        % Number of frequency bins (samples / 2 in Arduino code)
-
-% Open the serial connection
-serialObj = serialport(serialPort, baudRate);
-configureTerminator(serialObj, "LF"); % Ensure line-feed terminator
-pause(2);
-
-% Initialize figure
-figure;
-freqPlot = plot(nan, nan, '-o'); % Create a blank plot
-xlabel('Frequency (Hz)');
-ylabel('Magnitude');
-title('Real-Time FFT Visualization');
-grid on;
-
-% Infinite loop to read and display data
-try
-    while true
-        % Read data from serial
-        dataBuffer = "";
-        while ~contains(dataBuffer, "Peak Frequency")
-            line = readline(serialObj); % Read one line
-            dataBuffer = strcat(dataBuffer, line, "\n"); % Append line to buffer
-        end
-
-        % Parse the frequency and magnitude data
-        freqData = [];
-        magData = [];
-        lines = splitlines(dataBuffer);
-        for i = 1:length(lines)
-            line = lines{i};
-            if contains(line, " Hz:")
-                tokens = regexp(line, '([\d\.]+) Hz: ([\d\.]+)', 'tokens');
-                if ~isempty(tokens)
-                    freqData(end+1) = str2double(tokens{1}{1}); % Frequency
-                    magData(end+1) = str2double(tokens{1}{2});  % Magnitude
-                end
-            end
-        end
-
-        % Update the plot
-        if ~isempty(freqData) && ~isempty(magData)
-            set(freqPlot, 'XData', freqData, 'YData', magData);
-            ylim([0, max(magData) * 1.1]); % Adjust Y-axis dynamically
-            drawnow;
-        end
-    end
-catch ME
-    % Close serial port on error or termination
-    disp('Terminating...');
-    delete(serialObj);
-    rethrow(ME);
-end
-```
-
-### Preliminary Results
-
-![image](https://github.com/user-attachments/assets/43c49127-2088-4145-83b0-3a143bbd5622)
-
-
-![image](https://github.com/user-attachments/assets/8f96b1d8-f70f-419a-aa60-7afc668a8a1c)
-
-
-![image](https://github.com/user-attachments/assets/38e36f30-e23f-4ef3-b017-653cd53c94ed)
+![Image](/assets/posts-images/portfolio-insa/inovative-project/audacity.png)
+*Image: Leak Audio Sample Signal Processing using Audacity*
 
 
 
-### IMU FFT
 
-```
-#include "SparkFunLSM6DS3.h"
-#include "arduinoFFT.h"
-#include "Wire.h"
-#include "SPI.h"
+## Analytical Part
 
-// IMU Initialization
-LSM6DS3Core myIMU(I2C_MODE, 0x6B);
+Starting projects from scratch is an experience I really appreciate, as it provides an extensive learning opportunity. The freedom to explore solutions and concepts without limitations allows for a deep understanding of the subject matter. This project in particular, allowed me to apply theoretical knowledge to a practical real world problem which is a really important aspect of engineering. 
 
-// FFT Parameters
-const uint16_t samples = 1024;            // Increased samples for better frequency resolution
-const double samplingFrequency = 6660.0; // Original IMU sampling frequency
-double vReal[samples];                    // Real part
-double vImag[samples];                    // Imaginary part
+Leading the technical direction of the project gave me the opportunity to sharpen my technical thinking skills but also allowed me to improve my teamwork skills; a skill I need as I tend to prefer my own company when working on projects most of the time. As explained earlier, we decided to change (for the better) the project direction along the way: switch from a home consumer oriented project to a scalable public network solution, this part was a great experience to put to the test my resilience and flexibility.
 
-ArduinoFFT<double> FFT = ArduinoFFT<double>(vReal, vImag, samples, samplingFrequency);
+Throughout the project, I extensively learned about a myriad of various technical concepts and aspects: embedded C development, learning the esp-idf framework, advanced signal processing, machine learning, energy efficient hardware design, project planning, data sciences or 3D modelling, and this list is not even exhaustive. Each of these areas contributed to refine my understanding of the project and allowed me to master the whole technical stack. I personnally think that the depth of knowledge gained from this project is unequivalent by any other course in the curriculum. 
 
-uint16_t errorsAndWarnings = 0;
+Despite the significant progress made, the project faced harsh time constraints that limited the implementation of advanced concepts (sensor fusion, advanced edge machine learning...). The lack of time was a major drawback as we often worked overtime but still couldn't achieve everything we would have liked. This limitation ;while being out of our scope; highlighted the importance of efficient time management and realistic goal
 
-void setup() {
-  Serial.begin(115200);
-  delay(1000); // Relax...
-  Serial.println("Processor came out of reset.\n");
+In addition, the Agile methodology, which we were imposed, while beneficial to many cases (in industry for instance) was really not suited for the nature of this project. The rigid/fixed structure of Agile (early feature descriptions etc...) did not align with the dynamic, exploratory or even research oriented nature of our work leading to necessary overhead and time wasted managing the project.
 
-  // Initialize the IMU
-  if (myIMU.beginCore() != 0) {
-    Serial.println("Error at beginCore().");
-  } else {
-    Serial.println("beginCore() passed.");
-  }
+Moreover, the Agile methodology, while beneficial in many scenarios, proved to be ill-suited for our schedules and the nature of this project. The rigid structure of Agile did not align well with the dynamic and exploratory nature of our work, leading to inefficiencies. This experience underscored the need for selecting appropriate project management methodologies based on the specific context and requirements of the project.
 
-  // Configure Accelerometer for Maximum ODR
-  uint8_t dataToWrite = 0;
-  dataToWrite |= LSM6DS3_ACC_GYRO_BW_XL_400Hz; // Anti-aliasing filter at 400 Hz
-  dataToWrite |= LSM6DS3_ACC_GYRO_FS_XL_8g;    // Full scale ±8g
-  dataToWrite |= LSM6DS3_ACC_GYRO_ODR_XL_6660Hz; // Max ODR of 6.66 kHz
-  errorsAndWarnings += myIMU.writeRegister(LSM6DS3_ACC_GYRO_CTRL1_XL, dataToWrite);
-
-  Serial.println("IMU Configuration Complete.");
-}
-
-void loop() {
-  // Step 1: Sample Accelerometer Data
-  for (uint16_t i = 0; i < samples; i++) {
-    unsigned long startMicros = micros(); // Record the start time
-
-    int16_t accelX;
-    if (myIMU.readRegisterInt16(&accelX, LSM6DS3_ACC_GYRO_OUTX_L_XL) != 0) {
-      errorsAndWarnings++;
-    }
-
-    vReal[i] = accelX; // Use X-axis accelerometer data
-    vImag[i] = 0.0;    // Set imaginary part to 0
-
-    // Wait for the next sample
-    while (micros() - startMicros < (1000000 / samplingFrequency));
-  }
-
-  // Step 2: Remove DC Offset
-  double mean = 0;
-  for (uint16_t i = 0; i < samples; i++) {
-    mean += vReal[i];
-  }
-  mean /= samples;
-  for (uint16_t i = 0; i < samples; i++) {
-    vReal[i] -= mean; // Center signal around 0
-  }
-
-  // Step 3: Apply FFT Windowing
-  FFT.windowing(FFTWindow::Hamming, FFTDirection::Forward);
-
-  // Step 4: Compute the FFT
-  FFT.compute(FFTDirection::Forward);
-
-  // Step 5: Compute Magnitudes
-  FFT.complexToMagnitude();
-
-  // Step 6: Send Results Over Serial
-  Serial.println("Frequency (Hz) : Magnitude");
-  for (uint16_t i = 0; i < samples / 2; i++) {
-    double frequency = i * (samplingFrequency / samples); // Calculate frequency bin
-    if (frequency > 1000) break; // Stop output at 1000 Hz
-    Serial.print(frequency, 2);
-    Serial.print(" Hz: ");
-    Serial.println(vReal[i], 4); // Magnitude
-  }
-
-  // Optional: Find the Peak Frequency within 0–1000 Hz
-  double peakFrequency = FFT.majorPeak();
-  if (peakFrequency <= 1000.0) {
-    Serial.print("Peak Frequency: ");
-    Serial.print(peakFrequency, 2);
-    Serial.println(" Hz");
-  } else {
-    Serial.println("Peak Frequency above 1000 Hz, ignored.");
-  }
-
-  // delay(100); // Repeat every 100ms
-}
-```
+In conclusion, this project was a profound learning experience that allowed me to develop a wide range of skills and knowledge. However, the critical takeaway is the necessity for better time management and the selection of suitable methodologies to optimize project outcomes. The challenges faced and lessons learned will undoubtedly inform my approach to future projects, ensuring more effective and efficient execution.
 
 
 # Skills Matrix

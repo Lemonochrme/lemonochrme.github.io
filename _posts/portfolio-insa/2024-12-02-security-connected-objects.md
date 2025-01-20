@@ -11,6 +11,8 @@ image: /assets/covers/energy.png
 
 # Descriptive Part
 
+The goal of this course was to...
+
 # Technical Part
 
 ## Security Features of the Interdisciplinary Project
