@@ -12,6 +12,10 @@ This project is conducted as part of a multidisciplinary innovative project with
 
 Initially, the idea was to develop a method to detect household water leaks. However, as we delved deeper into the project, we gradually shifted our focus from a domestic solution to a distributed approach for public water network infrastructures. This is due to the fact that public water infrastructures are significantly more subject to water losses due to undetected leaks, representing a major economic and environmental issue. On the other hand, monitoring household water leaks is a well known and already addressed problem, hence irrelevant for us.
 
+
+![Image](/assets/posts-images/portfolio-insa/inovative-project/audacity.png)
+*Image: Leak Audio Sample Signal Processing using Audacity*
+
 ## My role in the project
 
 Our team consists of five members. With the exception of one member specializing in computer science and networking, the rest of us come from an automatic control and electronics background. At first, this might seem suboptimal for a multidisciplinary project. However, as we progressed, we realized that each team member could contribute significantly, even outside their primary area of expertise. Personally, although my academic background is in automatic control and electronics, I have led many personal projects and gained experience in various engineering fields. This experience naturally positioned me to oversee the technical aspects of the project.
@@ -301,3 +305,20 @@ void loop() {
   // delay(100); // Repeat every 100ms
 }
 ```
+
+
+# Skills Matrix
+
+| Skill | Level | Evaluation Method |
+| --- | --- | --- |
+| Analyse a real-life problem | 4 | report/presentation |
+| Suggest a technological solution to a problem | 4 | report/presentation |
+| Implement a prototype to solve the problem | 4 | prototype |
+| Present and debate (in English) the technical choice made | 4 | presentation |
+| Produce a report (in English) for the developed project | 4 | report |
+
+**Levels of Application:**
+1. Follow-up of instructions or procedures
+2. Improvement or optimization of solutions or proposals
+3. Design of programs or definitions of specifications
+4. Definition of guidelines or strategies

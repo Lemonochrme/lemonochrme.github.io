@@ -372,3 +372,21 @@ while(c>d) {
 
 
 ## Réflexion sur l'ascpect sécurité de notre projet interdisciplinaire
+
+# Skills Matrix
+
+| Skill | AE | Evaluation method |
+| --- | --- | --- |
+| Understand the fundamentals of security | 4 | Portfolio |
+| Be able to identify security weaknesses in an IoT architecture | 3 | Portfolio |
+| Be able to assess the impact of exploiting a security vulnerability in an IoT architecture | 3 | Portfolio |
+| Be able to propose adequate security counter-measures | 3 | Portfolio |
+| Knowing the main issues in security for IoT | 3 | Reports/Portfolio |
+| Understand the terminology of security | 2 | Reports/Portfolio |
+| Being able to have a critical look at the design of a system from a security point of view | 2 | Reports/Portfolio |
+| Being able to understand a scientific article that explains a weakness or a security solution and to explain it | 2 | Reports/Portfolio |
+
+1-level of application: follow-up of instructions or procedures  
+2-level analysis: improvement or optimization of solutions or proposals  
+3-level of control: design of programs or definitions of specifications  
+4-level of expertise: definition of guidelines or strategies  

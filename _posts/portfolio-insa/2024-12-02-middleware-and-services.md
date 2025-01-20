@@ -105,3 +105,30 @@ I was already familiar with virtualization and hypervisor as I already worked wi
 I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with XtratuM: a space qualified bare-metal hypervisor.
 
 On the other hand I was not particularly familiar with the Cloud/Open Stack part. This was a enriching experience but the last lab on Kubernetes was too short to be completed, I would have liked to learn more on K8S because a theses led at CNES is specifically oriented on this subject. The goal is to achieve decentralized computing on satelites networks using KLubernetes as a base line.
+
+# Skills Matrix
+
+| Skill Area | Level | Evaluation Method |
+| --- | --- | --- |
+| **Service Oriented Architecture** | AE | Evaluation method |
+| Know how to define a Service Oriented Architecture | 4 | Project |
+| Deploy an SOA with web services | 4 | Project |
+| Deploy and configure an SOA using SOAP | 4 | Project |
+| Deploy and configure an SOA using REST | 4 | Project |
+| Integrate a process manager in an SOA | 4 | Project |
+| **Middleware for the Internet of Things** | AE | Evaluation method |
+| Know how to situate the main standards for the Internet of Things | 4 | TP Report |
+| Deploy an architecture compliant to an IoT standard and implement a sensor network | 4 | TP Report |
+| Deploy and configure an IoT architecture using OM2M | 4 | TP Report |
+| Interact with the different resources of the architecture using REST services | 4 | TP Report |
+| Integrate a new technology into the deployed architecture | 4 | TP Report |
+| **Adaptability: Cloud Computing** | AE | Evaluation method |
+| Understand the concept of cloud computing | 3 | TP Report |
+| Use an IaaS-type cloud service | 3 | TP Report |
+| Deploy and adapt a cloud-based platform for IoT | 3 | TP Report |
+
+### Levels of Application
+1. Follow-up of instructions or procedures
+2. Improvement or optimization of solutions or proposals
+3. Design of programs or definitions of specifications
+4. Definition of guidelines or strategies

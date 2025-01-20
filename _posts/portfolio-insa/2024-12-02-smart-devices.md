@@ -10,9 +10,9 @@ image: /assets/covers/energy.png
 
 ## AIME Lab Work
 
- The gaz sensor is a project we carried out over the course of a week at the AIME micro-electronics laboratory. The goal was to make a nano-particle based passive gaz sensor using micro-electronics technology available in the lab. The work implied the following steps:
+ The gas sensor is a project we carried out over the course of a week at the AIME micro-electronics laboratory. The goal was to make a nanoparticle based passive gas sensor using micro-electronics technology available in the lab. The work implied the following steps:
 - Synthetize the $WO_3$ nano-particules using basic chemistry
-- Coating the polysilicon substract with photosensible resin to protect the useful circuit.
+- Coating the poly silicon substract with photosensible resin to protect the useful circuit.
 - Dip the subtract into acid to remove unwanted conductive parts of the circuit.
 - Clean the subtract.
 - Powder the subtract using electrophoresis with nano-particles and check that it is coated evenly on the conductive combs.
@@ -20,9 +20,9 @@ image: /assets/covers/energy.png
 - Wire bond the die to the package using ultrasonic bonding.
 - Characterize the gas sensor resistance.
 
-## Microcontroller and Open Source Hardware (MOS&H)
+## Microcontroller and Open Source Hardware (MOSH)
 
-This project is the continuity of the work we achieved at the AIME lab concerning the nano-particle gaz sensor. The goal was to integrate the analog gaz sensor into a complete embedded IoT system.
+This project is the continuity of the work we achieved at the AIME lab concerning the nanoparticle gas sensor. The goal was to integrate the analog gas sensor into a complete embedded IoT system.
 
 ## Sensors Introduction
 
@@ -165,10 +165,15 @@ As I was experienced with PCB design, we decided to directly dive into making th
 ![Image](/assets/posts-images/portfolio-insa/smart-devices/schematic.png)
 *Image: Complete Schematic with all the Features Listed Above*
 
+To facilitate and accelerate schematic design, we chose components that we were already familiar with from past projects. This enabled us to skip some prototyping steps.
+
+We also considered the assembly process during component selection, particularly focusing on component package types to ease the soldering process.
 
 #### Routing the PCB
 
-I used a ground plane and a VCC plane to ensure stable power distribution. Dynamic track sizing was applied to handle varying current loads efficiently.
+- ground and vcc plane
+- dynamic track width
+- thoughtfull component placement for easy soldering
 
 ![Image](/assets/posts-images/portfolio-insa/smart-devices/pcb-routing.png)
 *Image: From Left to Right: Top Plane, Bottom Plane and Focus on Dynamic Route Width*
@@ -200,3 +205,26 @@ In out interdisciplinary innovative project, I worked on a non-intrusive cutting
 Isaac Newton once said, *"If I have seen further it is by standing on the shoulders of giants."* What progress could he have made if science had been private and secret?
 
 I strongly support Open Source because it gives people the ability to learn and take control of the technology they use. The Internet gave free knowledge to everyone; Open Source and Open Hardware is only the logical continuation of this philosophy. A philosophy in which I believe.
+
+# Skill Matrix
+
+| Skills | AE | Evaluation method |
+| --- | --- | --- |
+| **Introduction to Sensors** | | |
+| Understand basic notions of sensors, data acquisition: physics, electronics and metrology point of view | 4 | Portfolio |
+| Be able to manufacture a nano-particles sensor using micro-electronics tools: chemical synthesis, assembly, testing | 4 | Cleanroom training |
+| Be able to design the datasheet of the sensor manufactured | 4 | Datasheet inserted in portfolio |
+| **Microcontrollers and Open Source Hardware** | | |
+| Understand microcontroller architecture and how to use them | 4 | Portfolio |
+| Be able to design data acquisition system (sensor, conditioner, microcontroller) with respect to the application | 4 | Portfolio |
+| Be able to design the electronic circuit of a sensor’s signal conditioner (design + simulation) | 4 | Portfolio |
+| Be able to design a shield to accommodate the gas sensor | 4 | Portfolio |
+| Be able to design the software to use the gas sensor and its HMI | 2 | Portfolio |
+| Be able to combine all of the above mentioned components into a smart device | 4 | Portfolio |
+
+1-level of application: follow-up of instructions or procedures  
+2-level analysis: improvement or optimization of solutions or proposals  
+3-level of control: design of programs or definitions of specifications  
+4-level of expertise: definition of guidelines or strategies  
+
+AE: Electronics/ Control

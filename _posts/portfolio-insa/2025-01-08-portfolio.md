@@ -19,7 +19,7 @@ Annexed to this portfolio, the reader will find additional documents including p
 
 ## Overview of the Content
 
-Each subject of the portfolio is organized into three main parts: the Descriptive Part, which presents the professional and training experiences context; the Technical Part, where specific problem-solving situations are detailed to highlight my skills and knowledge; and the Analytical Part, which provides a comprehensive evaluation of the competencies gained throughout my journey. In a nutsheell the first part answer the *"What have I done, and in what context?"* question, the second part *"How did I solve specific technical problems, and what knowledge did I use?"* and finally the last part answer *"What skills have I acquired, and how do they match the training objectives?."*
+Each subject of the portfolio is organized into three main parts: the Descriptive Part, which presents the professional and training experiences context; the Technical Part, where specific problem-solving situations are detailed to highlight my skills and knowledge; and the Analytical Part, which provides a comprehensive evaluation of the competencies gained throughout my journey. In a nutshell the first part answer the *"What have I done, and in what context?"* question, the second part *"How did I solve specific technical problems, and what knowledge did I use?"* and finally the last part answer *"What skills have I acquired, and how do they match the training objectives?."*
 
 ## Personal Objectives
 
