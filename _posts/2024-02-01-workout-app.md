@@ -52,3 +52,4 @@ As the name of the application suggest it, the goal of the user interface is to 
 
 # Development using React Native
 
+Code Source: https://github.com/Lemonochrme/lemonochrme.github.io
