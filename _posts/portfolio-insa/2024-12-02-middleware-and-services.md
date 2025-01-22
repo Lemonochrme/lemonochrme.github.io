@@ -26,6 +26,9 @@ Report on the first project detailing technical choices and presenting results: 
 
 [1]:/download/devops-report.pdf
 
+Prior to this course, I had no background in Service Architecture or understanding of what it means. The main concepts like services and microservices were relatively easy to grasp, but the most challenging part of this course was using the Java in the different practical lab we followed.
+
+
 ## Software Engineering
 
 I wrote an entire report on Software Engineering with a focus on DevOps, available here: [Automation and DevOps in the Space Industry: Focus on GitLab-CI][1]
@@ -87,14 +90,78 @@ In the MQTT labs we experimented with MQTT on a ESP8266, the goal was to simulat
 
 ## Cloud and Edge Computing
 
+### What is Cloud Computing?
+
+In a nutshell, cloud computing delivers various services over the Internet: storage, processing power, applications... Instead of owning and maintaining physical servers, data centers etc. users can access all these ressources on demand from services providers.
+
+It can provide the following advantages:
+- **Scalability**: Easily scale resources up or down based on demand.
+- **Cost Efficiency**: Pay only for the resources you use.
+- **Accessibility**: Access services from anywhere with an internet connection.
+- **Maintenance**: The cloud provider handles maintenance.
+
+We can categorize Cloud Computing into three main models:
+1. **Infrastructure as a Service (IaaS)**: Provides virtualized computing resources over the internet (AWS, Microsoft Azure)
+2. **Platform as a Service (PaaS)**: Offers hardware and software tools over the internet. (Google App Engine)
+3. **Software as a Service (SaaS)**: Delivers software applications over the internet on a subscription basis (Google Workspace)
+
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/models.png)
+*Image: Cloud Computing Models (Credit: [RedHat](https://www.redhat.com/rhdc/managed-files/iaas-paas-saas-diagram3-1638x1046.png))*
+
+
+Cloud Computing heavily relies on virtualization. In the following parts we will explore the differences between virtual machines and containers and compare various container types.
+
 ### Differences between virtual machines and containers
 
 ![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/vm-ct.png)
 
 The main difference between virtual machines and containers lies in their architecture and resource utilization.
-- On the left a type 2 Hypervisor is used to create and manage multiple Virtual Machines on a host operating system (hence type 2,  type 1: bare-metal hypervisor). Each VMs operate indepoendently with its own guest operating system and applications. Qemu or VVirtual Box are Type 2 hypervisors.
+- On the left a type 2 Hypervisor is used to create and manage multiple Virtual Machines on a host operating system (hence type 2, type 1: bare-metal hypervisor). Each VMs operate indepoendently with its own guest operating system and applications. Qemu or VVirtual Box are Type 2 hypervisors.
 
 - On the right, containers are used instead of VMs. Containers share the host OS kernel but run isolated environments with their own libraries and dependencies. This makes containers lightweight and efficient, as they do not require a separate OS for each instance. Containers are ideal for deploying applications consistently across different environments while using fewer resources compared to VMs.
+
+Difference Between Type 1 and Type 2 hypervisors
+- **Type 1 Hypervisors:** Directly operate on hardware (E.g., KVM).
+- **Type 2 Hypervisors:** Operate as software on existing OS (E.g., VirtualBox).
+
+
+### Comparison of Container Types
+
+| Container Provider | Application Isolation and Resources | Containerization Level | Tooling |
+| --- | --- | --- | --- |
+| **Docker** | Application Container. Strong isolation with cgroups and namespaces. Granular resource limits. Less ideal for multi-tenancy in shared environments. | Application-level containerization | Lot of ways to deal with Docker: Docker CLI, Docker API, Docker Compose. Strong CI/CD integration, widely used. Rootful. |
+| **Podman** | Strong isolation (like Docker). Better for multi-tenancy with rootless containers (doesn’t require daemon). Supports cgroups and namespaces. | Application-level containerization | Docker-compatible CLI. No daemon, rootless mode |
+| **LXC/LXD** | OS-level isolation (System Container). Suitable for multi-tenancy (offers good resource segregation). | OS-level containerization (lightweight VMs) | REST API. Not as integrated with CI/CD pipelines as Docker and Podman. |
+| **Rocket (rkt)** | Strong security (isolates containers with systemd-nspawn) | Application-level containerization | API support, systemd integration |
+| **OpenVZ** | Excellent for multi-tenancy (up to 20 customer networks). Provides strong isolation and resource management with low overhead. Shares a single kernel but offers isolated user spaces. | OS-level containerization (containerized VMs) | Lacks Docker-like API or CI/CD integration but is useful in web hosting environments. Integrated with Proxmox for UI. |
+| **containerd** | Strong isolation. | Application-level containerization | API-driven, integrates well with Kubernetes. |
+| **systemd-nspawn** | Light-weight namespace container. Offers good isolation using systemd. Suitable for trusted multi-tenancy. Can isolate resources but heavy configuration. | OS-level containerization (lightweight VMs) | Integrated with systemd, provides simple container management but lacks CI/CD capabilities. |
+
+### Open Stack
+
+
+
+
+### What is Edge Computing?
+
+https://www.redhat.com/en/products/edge/hatville
+
+
+Whereas cloud computing processes data in a centralized manner (data centers) edge computing allows computation and data storage closer to the location where it is needed (hence edge) avoiding unnecessary communications and improving response time. If it can be done on site why can we do it ?
+
+![Edge Computing](/assets/posts-images/portfolio-insa/middleware-service/cloud/edge.png)
+*Image: Edge Computing Architecture ([Credit](https://innovationatwork.ieee.org/real-life-edge-computing-use-cases/))*
+
+Edge Computing compared to Cloud Computing:
+- **Latency**: Edge Computing reduces latency by processing data locally.
+- **Bandwidth**: Saves bandwidth.
+- **Reliability**: Reducing dependency on central servers.
+- **Security**: We keep sensitive data on site.
+
+### Kubernetes
+
+In the practical lab we experimented with Edge Computing with the help of Kubernetes (or k8s). K8S is an open source orchestration tool that automates the deployment/scaling/management of containerized applications. 
+
 
 # Analytical Part
 
@@ -102,7 +169,7 @@ The main difference between virtual machines and containers lies in their archit
 
 I was already familiar with virtualization and hypervisor as I already worked with theses technologies. At CNES we extensively use Docker to deploy CI pipelines.
 
-I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with XtratuM: a space qualified bare-metal hypervisor.
+I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with [](XtratuM): a space qualified bare-metal hypervisor.
 
 On the other hand I was not particularly familiar with the Cloud/Open Stack part. This was a enriching experience but the last lab on Kubernetes was too short to be completed, I would have liked to learn more on K8S because a theses led at CNES is specifically oriented on this subject. The goal is to achieve decentralized computing on satelites networks using KLubernetes as a base line.
 
