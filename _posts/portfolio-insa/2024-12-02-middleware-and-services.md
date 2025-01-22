@@ -14,7 +14,7 @@ This "Grand Domaine" was separated into four different courses: Service Oriented
 
 - For Middleware, the format was a bit different. While the course was also online, the practical work was much more guided and took the form of standard "Travaux Pratiques" where we experienced the different concepts: oneM2M, MQTT, ACME or node-red.
 
-- For Cloud and Edge Computing the goal was to understand the basics of cloud infrastructure and operation. The course was focused on Open Stack and Virtualization.
+- For Cloud and Edge Computing the goal was to understand the basics of the different cloud computing models and the basis of edge computing. The course was focused on Open Stack and Virtualization.
 
 - The Software Engineering part was done through the course of the innovative project where we adopted a Agile methodology and the Service Oriented Architecture project labs where we had to implement a CI/CD pipeline for the application we where developping.
 
@@ -87,6 +87,28 @@ In the MQTT labs we experimented with MQTT on a ESP8266, the goal was to simulat
 - A light sensor publishes brightness levels (home/light/luminosity)
 - A system subscribes to these topics and decides when to turn lights on or off (home/light/command)
 
+### Understanding oneM2M Principles
+
+OneM2M is a standard for the Internet of Things and machine-to-machine (M2M) systems. It provides a common platform that ensures different IoT devices and services can work together no matter who made them. The oneM2M specifications define a logical architecture that includes components like servers, devices, and applications to make developing, deploying, and managing IoT systems easier.
+
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/middleware/oneM2M-architecture.png)
+*Image: oneM2M Architecture ([Source](https://wiki.onem2m.org/images/c/cc/Layered_model.PNG))*
+
+>*"For an application developer, oneM2M based technology appears like an operating system [...]. Hence the IoT Service Layer specified by oneM2M can be seen in a similar way as a mobile operating systems within the smart phone eco system."* From [oneM2M Wiki](https://wiki.onem2m.org/index.php?title=OneM2M_overview)
+
+### CSE (Common Services Entity)
+
+The CSE is the central component of the oneM2M architecture, it eases all kinds of information exchange between connected devices (like sensors), applications, and servers.
+
+CSE can be deployed on different types of nodes:
+- Infrastructure Node (IN-CSE): A central instance, usually hosted in the cloud.
+- Middle Node (MN-CSE): An intermediate instance that connects local devices to the cloud.
+- Application Node (AE-CSE): A local instance on a device or application.
+
+### ACME
+
+In the practical labs we used ACME which is an open-source implementation of a CSE. It allows creating and managing oneM2M resources through RESTful APIs.
+
 
 ## Cloud and Edge Computing
 
@@ -139,6 +161,66 @@ Difference Between Type 1 and Type 2 hypervisors
 
 ### Open Stack
 
+In order to better understand Cloud Computing principles, we experienced different scenarios using OpenStack. We created and configured virtual machines (VMs) using the OpenStack dashboard, setting up both private and public networks to ensure connectivity. This involved creating a router to bridge the networks and configuring port forwarding and ICMP rules for SSH and ping capabilities. 
+
+We deployed a web-based 2-tier Calculator application using Node.js microservices, with each microservice running on a separate VM. The microservice application architecture is described as follows:
+
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/calculator.png)
+*Image: Calculator using Microservices Architecure*
+
+
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/calculator-vms.png)
+*Image: Open Stack Dashboard View of the Different VMs for the Calculator Application*
+
+I really liked this part of the lab as it was interesting to see a simplified version of how all applications on the web work.
+
+**Testing the Calculator**
+
+```bash
+user@tutorial-vm:~$ curl -d "(5+6)*2" -X POST http://10.2.2.103:80
+result = 22
+```
+
+**Behind the Scene**
+
+```bash
+# Multiply Service
+user@multiply-vm:~/Documents$ node MulService.js
+Listening on port: 50003
+
+# Division Service
+user@div-vm:~/Documents$ node DivService.js
+Listening on port: 50004
+
+# Subtraction Service
+user@subtract-vm:~/Documents$ nano launch.sh
+
+CalculatorService.js   MulService.js   SumService.js
+DivService.js          SubService.js
+
+user@subtract-vm:~/Documents$ node SubService.js
+Listening on port: 50002
+
+# Addition Service
+user@add-vm:~/Documents$ node SumService.js
+Listening on port: 50001
+
+New request:
+A = 2
+B = 3
+A + B = 5
+
+New request:
+A = 2
+B = 3
+A + B = 5
+
+# Network Monitoring
+RX packets 52  bytes 4364 (4.3 KB)
+RX errors 0  dropped 0  overruns 0  frame 0
+TX packets 52  bytes 4364 (4.3 KB)
+TX errors 0  dropped 0  overruns 0  carrier 0  collisions 0
+```
 
 
 
