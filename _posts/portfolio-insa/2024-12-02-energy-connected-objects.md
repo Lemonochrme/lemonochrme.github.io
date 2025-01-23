@@ -60,15 +60,19 @@ I found the course particularly interesting. The practical lab was very interest
 # Skill Matrix
 
 
-| Associated Skills | AE | Evaluation Method |
-|--------------------|----|-------------------|
-| Understand the fundamentals of wireless energy transmission, including Tesla coils and microwave beams. | 3 | Portfolio/Report |
-| Model energy systems, calculate power requirements for LEDs, and evaluate power consumption of microcontrollers. | 3 | Portfolio/Report |
-| Analyze capacitor specifications to select appropriate energy storage solutions for systems. | 3 | Portfolio/Report |
-| Compare the impact of different frequencies and technologies (e.g., patches, horns) on energy propagation efficiency. | 3 | Portfolio/Report |
-| Identify and integrate alternative energy sources for IoT applications, such as water flow and temperature differences. | 3 | Portfolio/Report |
-| Design and test systems using software tools like GNURadio to assess power transfer and efficiency. | 3 | Portfolio/Report |
-| Evaluate practical limitations of wireless energy transfer for future potential applications. | 3 | Portfolio/Report |
+
+| **Skill/Objective**                                                               | **AE** | **Evaluation Method**       |
+|-----------------------------------------------------------------------------------|--------|-----------------------------|
+| Understand and apply methods for powering a connected object without wires or batteries, using ambient energy harvesting and wireless power transfer | 3      | Portfolio/Report            |
+| Design and optimize low-power wireless connected objects considering hardware, software, and electromagnetic components | 3      | Portfolio/Report            |
+| Evaluate and compare the state-of-the-art solutions for powering connected objects using modern technologies | 3      | Portfolio/Report            |
+| Analyze and implement electricity storage methods suitable for connected objects, including supercapacitors and hybrid solutions | 3      | Portfolio/Report            |
+| Develop and characterize connected object prototypes utilizing electromagnetic energy harvesting | 3      | Portfolio/Report            |
+| Integrate power management systems and ensure efficient use of energy in connected objects | 3      | Portfolio/Report            |
+| Assess environmental and application constraints to choose appropriate energy solutions for connected objects | 3      | Portfolio/Report            |
+| Optimize components such as antennas, rectifiers, and rectennas for energy-efficient design of wireless sensing nodes | 2      | Portfolio/Report            |
+| Identify and use Industrial, Scientific, and Medical (ISM) frequency bands for wireless power transfer applications | 2      | Portfolio/Lab/Report            |
+| Apply best practices for software and hardware integration to minimize power consumption in connected objects | 3      | Portfolio/Report            |
 
 
 1-level of application: follow-up of instructions or procedures  
