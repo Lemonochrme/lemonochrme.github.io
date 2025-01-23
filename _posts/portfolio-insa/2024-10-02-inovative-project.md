@@ -7,6 +7,7 @@ image: /assets/covers/pipe.png
 ---
 
 Link to the source code repository: https://github.com/what-a-leak
+
 The project promotion website is accessible here: https://what-a-leak.github.io/
 
 # Descriptive Part
@@ -29,13 +30,10 @@ For other aspects, such as the design of the MAC Communication Protocol, the dev
 
 # Technical Part
 
-## Spectral Analysis and Signal Processing
+## Principle
 
-Detecting water leaks isn’t as straightforward as it sounds. The challenge lies in the fact that leaks emit acoustic signals that blend into their environment. These signals are often masked by noise from surrounding activities, such as traffic or machinery. Our solution had to extract meaningful features from this chaotic and unpredictable background.
-
-Using Fast Fourier Transform (FFT), we converted raw time-domain signals into the frequency domain, where leak signatures (specific high-frequency patterns) became more distinguishable. However, this was far from easy. For instance, the frequency characteristics of leaks varied depending on the type of pipe—plastic pipes tend to attenuate high frequencies, while metal pipes transmit them better. To tackle this, we developed custom filtering techniques to isolate the relevant spectral features. 
-
-We also faced the issue of compressing FFT data for transmission. Raw FFT outputs are massive (our initial test produced 2048 bytes per frame), and LoRa, our communication protocol, couldn’t handle such payloads. The solution? A combination of data reduction and lossy compression. By focusing only on the most relevant frequency bands (typically under 22 kHz) and leveraging the sparsity of the signal, we reduced the payload size to fit within LoRa’s constraints. Was it perfect? No, but it was efficient, and that’s what mattered.
+![Image](/assets/posts-images/portfolio-insa/project/principle.png)
+*Image: Distributed Non-Intrusive Leak Detection Principle*
 
 ## Hardware Design
 
@@ -44,6 +42,20 @@ Our hardware journey (yes, it was a journey) started with the design of sensor n
 First, integrating these components onto a compact, low-power PCB was a puzzle. We iterated through two PCB designs. The first version, MARK1, was functional but had issues with power efficiency and noise susceptibility. So, for MARK2, we swapped out components like the LDO regulator for a low-dropout version and added a real-time clock (RTC) for timestamping. We even integrated a battery monitoring system to ensure nodes wouldn’t unexpectedly fail in the field.
 
 Then came the mechanical housing. Designing enclosures that protected the electronics while allowing precise sensor-pipeline coupling was tricky. Using SolidWorks, we modeled and 3D-printed several prototypes. Each iteration taught us something new—how to minimize vibrations, improve durability, or ensure waterproofing. (We’re pretty sure we could write a novel on trial-and-error at this point.)
+
+![Image](/assets/posts-images/portfolio-insa/project/architecture.png)
+*Image: Hardware Architecture*
+
+
+
+## Spectral Analysis and Signal Processing
+
+Detecting water leaks isn’t as straightforward as it sounds. The challenge lies in the fact that leaks emit acoustic signals that blend into their environment. These signals are often masked by noise from surrounding activities, such as traffic or machinery. Our solution had to extract meaningful features from this chaotic and unpredictable background.
+
+Using Fast Fourier Transform (FFT), we converted raw time-domain signals into the frequency domain, where leak signatures (specific high-frequency patterns) became more distinguishable. However, this was far from easy. For instance, the frequency characteristics of leaks varied depending on the type of pipe—plastic pipes tend to attenuate high frequencies, while metal pipes transmit them better. To tackle this, we developed custom filtering techniques to isolate the relevant spectral features. 
+
+We also faced the issue of compressing FFT data for transmission. Raw FFT outputs are massive (our initial test produced 2048 bytes per frame), and LoRa, our communication protocol, couldn’t handle such payloads. The solution? A combination of data reduction and lossy compression. By focusing only on the most relevant frequency bands (typically under 22 kHz) and leveraging the sparsity of the signal, we reduced the payload size to fit within LoRa’s constraints. Was it perfect? No, but it was efficient, and that’s what mattered.
+
 
 ## Machine Learning
 
