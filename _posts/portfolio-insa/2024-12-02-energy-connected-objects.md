@@ -22,7 +22,7 @@ The idea of sending power wirelessly dates back to Nikola Tesla and his inventio
 
 During WWII, radio communications improved significantly for military use leading to advancements in data transmission over electromagnetic waves, this era also saw the creation of the magnetron, which later paved the way for the discovery of microwaves, a technology that causes water molecules to vibrate when exposed to a 2.4 GHz wave, creating heat.
 
-In 2024, we live in a world surrounded by wireless signals like Wi-Fi, Bluetooth, and radio waves, which contain not just data but also energy that could theoretically be harvested.
+In 2024, we are surrounded by wireless signals like Wi-Fi, Bluetooth, and other radio waves, which contain not just data but also energy that could theoretically be harvested. Imagine being able to power a sensor just by allocating a Wi-Fi channel to wireless power transmission.
 
 A strong need for wireless power became apparent in 2014 when the Philae robot landed on a shadowed asteroid and couldn't recharge due to its solar dependency. Today, wireless power could help deliver energy to areas impacted by natural disasters or other energy disruptions. This project explores using Wi-Fi or other frequencies to power an LED wirelessly.
 
@@ -32,15 +32,53 @@ This course explores the principles and technologies behind powering connect obj
 
 ## Practical Lab Work
 
-The technical work involved selecting components like the BQ25504 ultra-low-power boost converter and a supercapacitor for energy storage. Capacitors of different capacities were evaluated to optimize power loss and energy storage. Frequencies of 868 MHz and 2.45 GHz were tested for their propagation and energy transfer efficiency. Practical testing was conducted using GNURadio and an Analog Discovery 2 device to analyze power output and LED activation. Results showed that wireless energy transfer is feasible but limited in range and efficiency, making it more of a proof of concept.
+### Goal of the Practical Lab: Exploring Sustainable Power Solutions for Connected Objects
+
+The goal of the practical lab was to understand how to power connected objects without relying on wires or batteries but by using wireless power transfer.
+
+### What We Did: Designing and Testing Energy Harvesting Systems
+
+During the lab, we first delved into theoretical concepts through lectures, which provided a strong foundation on energy storage technologies and various harvesting techniques, such as capturing light, mechanical, thermal, and electromagnetic energy. This helped us see how these sources could be applied in IoT systems. In the practical sessions, I worked on designing a connected object emulator, characterizing electromagnetic energy harvesters, and testing the emulator’s performance using both ambient energy and wireless power transfer methods. Each step required careful attention to detail, from selecting the right components to solving challenges in optimization and integration.
+
+### What We Learned: Energy Efficiency and Autonomous Design
+
+Through this experience, we learned not only the technical aspects of energy harvesting and wireless power transfer but also the complexities of implementing these solutions in real systems. I gained an appreciation for the trade-offs between efficiency, cost, and environmental constraints. It became clear how critical it is to design systems that balance energy use and autonomy, especially in applications where maintenance or battery replacement is impractical. Overall, the lab emphasized that while these technologies offer exciting possibilities, they also require a nuanced and innovative approach to achieve effective and sustainable results.
+
+
+
+
+
+
+
+
+
 
 # Analytical Part  
 
-I found the course particularly intriguing but somewhat unfulfilling. The introduction to the lab was captivating but felt too brief, leaving me eager to explore the technical aspects further. Additional labs focusing on energy harvesting techniques would be valuable, particularly in applying these methods to innovative projects. A hands-on "Bureau d'Étude" style approach, similar to the one in the WSN course, could significantly enhance the learning experience. This would provide an opportunity to implement and test energy harvesting in real-world scenarios, making the course more comprehensive and impactful.
+I found the course particularly interesting. The practical lab was very interesting but felt a bit too short in my opinion. I would have preferred to allocate more time on this subject, particularly on all the more technical aspects. Additionally, I think labs focusing on energy harvesting technicals would be very valuable, particularly in applying these methods to the innovative project: a "Bureau d'Etude" style approach, similar to the one in WSN course.
+
+# Skill Matrix
+
+
+| Associated Skills | AE | Evaluation Method |
+|--------------------|----|-------------------|
+| Understand the fundamentals of wireless energy transmission, including Tesla coils and microwave beams. | 3 | Portfolio/Report |
+| Model energy systems, calculate power requirements for LEDs, and evaluate power consumption of microcontrollers. | 3 | Portfolio/Report |
+| Analyze capacitor specifications to select appropriate energy storage solutions for systems. | 3 | Portfolio/Report |
+| Compare the impact of different frequencies and technologies (e.g., patches, horns) on energy propagation efficiency. | 3 | Portfolio/Report |
+| Identify and integrate alternative energy sources for IoT applications, such as water flow and temperature differences. | 3 | Portfolio/Report |
+| Design and test systems using software tools like GNURadio to assess power transfer and efficiency. | 3 | Portfolio/Report |
+| Evaluate practical limitations of wireless energy transfer for future potential applications. | 3 | Portfolio/Report |
+
+
+1-level of application: follow-up of instructions or procedures  
+2-level analysis: improvement or optimization of solutions or proposals  
+3-level of control: design of programs or definitions of specifications  
+4-level of expertise: definition of guidelines or strategies  
 
 
 
-## References
+# References
 
 1. [Tesla Science Center on Wardenclyffe Tower](https://teslasciencecenter.org/history/tower/)
 2. [Wireless Power Transmission from Space to Earth](https://www.independent.co.uk/space/space-earth-wireless-power-beamed-b2353588.html)
