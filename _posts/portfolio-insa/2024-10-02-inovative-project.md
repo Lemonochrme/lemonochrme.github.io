@@ -6,6 +6,11 @@ categories: [INSA]
 image: /assets/covers/pipe.png
 ---
 
+Link to the source code repository: https://github.com/what-a-leak
+The project promotion website is accessible here: https://what-a-leak.github.io/
+
+# Descriptive Part
+
 ## Overview of the project
 
 This project is conducted as part of a multidisciplinary innovative project within the ISS curriculum. The goal is to develop a system that accurately detects water leaks in networks using a non-intrusive method. Starting from scratch, we had to conceptualize the entire project, from hardware to software, while addressing protocols and other specifications. As a result, this project effectively illustrates the various notions covered in our courses.
@@ -22,24 +27,40 @@ My role in this project is twofold, in one hand I'm responsible of the general t
 For other aspects, such as the design of the MAC Communication Protocol, the development of the web application, and the database implementation, we delegated these tasks to team members that were more competent or more willing to work on these subjects. This decision was made to optimize the global efficiency of the team and to ensure that every individual in the team had a fair share of work.
 
 
-
-Communication LoRa :
-
-```c
-[1] LoRa: Received packet of size 13
-RSSI: -32 dB
-Payload: 0x48 0x65 0x6c 0x6c 0x6f 0x20 0x57 0x6f 0x72 0x6c 0x64 0x21 0x0
-```
+# Technical Part
 
 
+The technical aspects of the project required a comprehensive and multidisciplinary approach, blending hardware design, signal processing, communication protocols, and machine learning. This section describes the technical implementation, the challenges encountered during the project, and the solutions we developed to overcome them.
 
-![Image](/assets/posts-images/portfolio-insa/inovative-project/audacity.png)
-*Image: Leak Audio Sample Signal Processing using Audacity*
+## Spectral Analysis and Signal Processing
+
+The cornerstone of our system is its ability to detect specific acoustic and vibrational signatures emitted by water leaks. We used Fast Fourier Transform (FFT) to convert raw signals from the time domain into the frequency domain, enabling us to analyze the unique spectral characteristics of leaks. A major challenge was handling noisy environments, which often mask the leak frequencies. This required us to implement filtering techniques to isolate leak-relevant frequencies, such as high-frequency components typically associated with high-pressure leaks.
+
+**Challenges and Solutions**  
+One of the first challenges we encountered was the high variability of leak signatures due to differences in pipeline materials and environmental noise. To address this, we conducted an extensive analysis of various signal types, comparing their spectral signatures under controlled conditions. By focusing on the 0–22 kHz range, we reduced aliasing and noise interference, optimizing the detection pipeline. Moreover, data compression was necessary due to the limited packet size of LoRa communication. To tackle this, we developed a lossy compression technique that maintained critical leak signature data while achieving a 16:1 reduction in payload size.
+
+## Hardware Design
+
+Our hardware platform is built around MEMS-based sensors and an ESP32 microcontroller, chosen for its computational efficiency and low power consumption. We used the ICS-43434 MEMS microphone to capture acoustic signals and the LSM6DS3TR IMU for vibrational data. Designing a distributed sensor network that is both robust and energy-efficient was one of the most significant technical hurdles.
+
+**Challenges and Solutions**  
+The first version of the PCB (MARK1) encountered issues with power regulation and noise in sensor signals. To resolve these issues, we iteratively improved the design in the second version (MARK2) by implementing low-dropout regulators, adding battery monitoring, and upgrading to MEMS microphones with higher sensitivity. Another challenge arose in coupling sensors to the pipeline effectively. Using 3D modeling software, such as SolidWorks, we designed sensor housings to ensure direct contact with the pipe surface, thereby improving signal fidelity. Stress simulations and multiple iterations of 3D-printed prototypes helped us refine the design for durability and ease of installation.
+
+## Machine Learning
+
+Machine learning played a critical role in the classification of leak and non-leak signals. We implemented both supervised and unsupervised approaches, training Support Vector Machines (SVMs) on labeled datasets to achieve highly accurate leak detection. The lack of a reliable physical prototype initially hindered the collection of real-world data, so we simulated leaks using synthetic datasets to train the models.
+
+**Challenges and Solutions**  
+The primary challenge in this area was balancing the computational requirements of machine learning algorithms with the limited processing capabilities of the ESP32 microcontroller. We addressed this by designing lightweight models and leveraging edge computing to perform real-time analysis on the nodes. Furthermore, unsupervised methods, such as K-Means and auto-encoders, were explored to model unknown leak signatures, adding robustness to our system’s detection capabilities.
+
+## Overcoming Multidisciplinary Challenges
+
+Throughout the project, one of the overarching challenges was coordinating the various technical domains, from hardware and software to signal processing and machine learning. This required careful task delegation and collaboration within the team. For example, while I focused on the technical design and implementation, other team members managed the development of the web interface and database integration, ensuring that all components worked cohesively.
+
+This project taught us the importance of iterative design and testing. Challenges like noisy signal environments, hardware malfunctions, and communication inefficiencies pushed us to explore innovative solutions that combined theoretical knowledge with practical implementation. Ultimately, our system achieved its goal of detecting water leaks efficiently, while laying the groundwork for future improvements in scalability and adaptability.
 
 
-
-
-## Analytical Part
+# Analytical Part
 
 Starting projects from scratch is an experience I really appreciate, as it provides an extensive learning opportunity. The freedom to explore solutions and concepts without limitations allows for a deep understanding of the subject matter. This project in particular, allowed me to apply theoretical knowledge to a practical real world problem which is a really important aspect of engineering. 
 

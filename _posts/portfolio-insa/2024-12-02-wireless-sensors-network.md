@@ -126,7 +126,9 @@ Contention-based protocols like S-MAC and B-MAC are flexible but energy-intensiv
 
 There is no perfect MAC protocol *(yet?)* each protocol offers trade-offs, when selecting a MAC protocol, one must ask the right question: *What are the network's primary requirements?* And adapt the MAC protocol to fit the specific needs.
 
-## Bureau d'Etude
+## Bureau d'Étude: Developing and Implementing a Wirelesss Communication Protocol
+
+
 
 
 # Analytical
@@ -141,3 +143,17 @@ In addition, the presentaiton assignment (both on LoRa and on WSN Mac layers) re
 
 ## *What experience did I gained*
 
+Through this course, I gained a solid understanding of MAC protocols, including their basics and the various types used in IoT and connected objects. Thanks to all the research needed for the presentations I could gain an in-depth technical understanding of the LoRa Physical Layer, which   
+proved to be particularly suitable for the innovative project since we are using the LoRa for the node-to-node communication, this helped greatly as I already had an extensive understanding of LoRa when integrating it to our project. The "Bureau d'Etude" allowed me to get the basics of GNURadio which I didn't knew beforehand, I found this very valuable I will use GNURadio in future projects.
+
+
+# Skill Matrix
+
+Be able to analyse and evaluate protocoles dedicated to Wireless Sensor Networks / IoT : 4/4
+Understand and master the optimisation of IoT communication protocols at MAC level : 3/4
+
+
+1-level of application: follow-up of instructions or procedures  
+2-level analysis: improvement or optimization of solutions or proposals  
+3-level of control: design of programs or definitions of specifications  
+4-level of expertise: definition of guidelines or strategies  
