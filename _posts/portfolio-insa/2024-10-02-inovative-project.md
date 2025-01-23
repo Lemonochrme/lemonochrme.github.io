@@ -29,35 +29,39 @@ For other aspects, such as the design of the MAC Communication Protocol, the dev
 
 # Technical Part
 
-
-The technical aspects of the project required a comprehensive and multidisciplinary approach, blending hardware design, signal processing, communication protocols, and machine learning. This section describes the technical implementation, the challenges encountered during the project, and the solutions we developed to overcome them.
-
 ## Spectral Analysis and Signal Processing
 
-The cornerstone of our system is its ability to detect specific acoustic and vibrational signatures emitted by water leaks. We used Fast Fourier Transform (FFT) to convert raw signals from the time domain into the frequency domain, enabling us to analyze the unique spectral characteristics of leaks. A major challenge was handling noisy environments, which often mask the leak frequencies. This required us to implement filtering techniques to isolate leak-relevant frequencies, such as high-frequency components typically associated with high-pressure leaks.
+Detecting water leaks isn’t as straightforward as it sounds. The challenge lies in the fact that leaks emit acoustic signals that blend into their environment. These signals are often masked by noise from surrounding activities, such as traffic or machinery. Our solution had to extract meaningful features from this chaotic and unpredictable background.
 
-**Challenges and Solutions**  
-One of the first challenges we encountered was the high variability of leak signatures due to differences in pipeline materials and environmental noise. To address this, we conducted an extensive analysis of various signal types, comparing their spectral signatures under controlled conditions. By focusing on the 0–22 kHz range, we reduced aliasing and noise interference, optimizing the detection pipeline. Moreover, data compression was necessary due to the limited packet size of LoRa communication. To tackle this, we developed a lossy compression technique that maintained critical leak signature data while achieving a 16:1 reduction in payload size.
+Using Fast Fourier Transform (FFT), we converted raw time-domain signals into the frequency domain, where leak signatures (specific high-frequency patterns) became more distinguishable. However, this was far from easy. For instance, the frequency characteristics of leaks varied depending on the type of pipe—plastic pipes tend to attenuate high frequencies, while metal pipes transmit them better. To tackle this, we developed custom filtering techniques to isolate the relevant spectral features. 
+
+We also faced the issue of compressing FFT data for transmission. Raw FFT outputs are massive (our initial test produced 2048 bytes per frame), and LoRa, our communication protocol, couldn’t handle such payloads. The solution? A combination of data reduction and lossy compression. By focusing only on the most relevant frequency bands (typically under 22 kHz) and leveraging the sparsity of the signal, we reduced the payload size to fit within LoRa’s constraints. Was it perfect? No, but it was efficient, and that’s what mattered.
 
 ## Hardware Design
 
-Our hardware platform is built around MEMS-based sensors and an ESP32 microcontroller, chosen for its computational efficiency and low power consumption. We used the ICS-43434 MEMS microphone to capture acoustic signals and the LSM6DS3TR IMU for vibrational data. Designing a distributed sensor network that is both robust and energy-efficient was one of the most significant technical hurdles.
+Our hardware journey (yes, it was a journey) started with the design of sensor nodes capable of detecting both acoustic and vibrational signals. We chose high-performance components like the ICS-43434 MEMS microphone and LSM6DS3TR IMU, both known for their sensitivity and bandwidth. Sounds simple, right? Not quite.
 
-**Challenges and Solutions**  
-The first version of the PCB (MARK1) encountered issues with power regulation and noise in sensor signals. To resolve these issues, we iteratively improved the design in the second version (MARK2) by implementing low-dropout regulators, adding battery monitoring, and upgrading to MEMS microphones with higher sensitivity. Another challenge arose in coupling sensors to the pipeline effectively. Using 3D modeling software, such as SolidWorks, we designed sensor housings to ensure direct contact with the pipe surface, thereby improving signal fidelity. Stress simulations and multiple iterations of 3D-printed prototypes helped us refine the design for durability and ease of installation.
+First, integrating these components onto a compact, low-power PCB was a puzzle. We iterated through two PCB designs. The first version, MARK1, was functional but had issues with power efficiency and noise susceptibility. So, for MARK2, we swapped out components like the LDO regulator for a low-dropout version and added a real-time clock (RTC) for timestamping. We even integrated a battery monitoring system to ensure nodes wouldn’t unexpectedly fail in the field.
+
+Then came the mechanical housing. Designing enclosures that protected the electronics while allowing precise sensor-pipeline coupling was tricky. Using SolidWorks, we modeled and 3D-printed several prototypes. Each iteration taught us something new—how to minimize vibrations, improve durability, or ensure waterproofing. (We’re pretty sure we could write a novel on trial-and-error at this point.)
 
 ## Machine Learning
 
-Machine learning played a critical role in the classification of leak and non-leak signals. We implemented both supervised and unsupervised approaches, training Support Vector Machines (SVMs) on labeled datasets to achieve highly accurate leak detection. The lack of a reliable physical prototype initially hindered the collection of real-world data, so we simulated leaks using synthetic datasets to train the models.
+Machine learning brought the magic—well, sort of. The task was to teach a model to differentiate between “leak” and “no leak” signals. We started with supervised learning, using Support Vector Machines (SVM). Collecting training data was an adventure in itself: we generated spectrograms under controlled conditions, with and without leaks, and labeled each dataset manually. The result? A highly accurate model (near-perfect in our tests) that could reliably classify leak signals.
 
-**Challenges and Solutions**  
-The primary challenge in this area was balancing the computational requirements of machine learning algorithms with the limited processing capabilities of the ESP32 microcontroller. We addressed this by designing lightweight models and leveraging edge computing to perform real-time analysis on the nodes. Furthermore, unsupervised methods, such as K-Means and auto-encoders, were explored to model unknown leak signatures, adding robustness to our system’s detection capabilities.
+But real-world conditions are rarely perfect. Leaks don’t always sound the same, and noise levels fluctuate wildly. To address this, we explored unsupervised approaches like K-Means clustering and autoencoders. These algorithms helped us identify patterns in unknown leak scenarios. Implementing them on edge devices (our nodes) was another hurdle—we had to ensure they ran efficiently within the constrained processing power of the ESP32.
+
+One unexpected but valuable realization was how machine learning complemented signal processing. The spectral features extracted during FFT served as excellent inputs for the algorithms, effectively bridging the gap between raw data and actionable insights.
 
 ## Overcoming Multidisciplinary Challenges
 
-Throughout the project, one of the overarching challenges was coordinating the various technical domains, from hardware and software to signal processing and machine learning. This required careful task delegation and collaboration within the team. For example, while I focused on the technical design and implementation, other team members managed the development of the web interface and database integration, ensuring that all components worked cohesively.
+This project wasn’t just about engineering; it was about collaboration. Our team came from diverse backgrounds, yet none of us were experts in every domain this project required. For instance, while I handled the hardware and machine learning, another teammate specialized in web development, creating an interface for users to monitor leaks remotely. The communication protocol, designed by another member, ensured seamless data transmission between nodes.
 
-This project taught us the importance of iterative design and testing. Challenges like noisy signal environments, hardware malfunctions, and communication inefficiencies pushed us to explore innovative solutions that combined theoretical knowledge with practical implementation. Ultimately, our system achieved its goal of detecting water leaks efficiently, while laying the groundwork for future improvements in scalability and adaptability.
+But, let’s be honest—there were moments of chaos. Early on, our lack of experience with piping led to an unexpectedly leaky prototype (ironic, we know). It was frustrating, but we pivoted. Instead of focusing solely on physical emulation, we doubled down on signal simulation and spectral analysis.
+
+Time management was another challenge. Working within the constraints of an academic project meant balancing ambition with feasibility. To stay on track, we adopted Agile methodologies, breaking the work into sprints and assigning epics based on our strengths. This not only improved efficiency but also ensured no one felt overwhelmed (or underutilized).
+
+Perhaps the most satisfying part was seeing how our efforts came together. The hardware captured meaningful signals, the spectral analysis isolated leak signatures, and the machine learning algorithms made sense of it all. When the first successful leak detection happened, it felt like magic. But it wasn’t magic—it was engineering, perseverance, and a lot of caffeine.
 
 
 # Analytical Part
