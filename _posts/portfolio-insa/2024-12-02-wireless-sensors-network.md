@@ -127,9 +127,9 @@ Contention-based protocols like S-MAC and B-MAC are flexible but energy-intensiv
 There is no perfect MAC protocol *(yet?)* each protocol offers trade-offs, when selecting a MAC protocol, one must ask the right question: *What are the network's primary requirements?* And adapt the MAC protocol to fit the specific needs.
 
 ## Bureau d'Étude: Developing and Implementing a Wirelesss Communication Protocol
+*Design of PHY and MAC layers for a WSN regarding the application*
 
-
-
+The goal in this Bureau d'Etude was to design and implement an energy-efficient communication system and for the application we chose to focus on a non-intrusive WSN-based water detection project for underground pipelines networks. This application required the system to function in harsh environments (underground) with nodes mostly arranged linearly along the pipeline. We choose this application because it aligned perfectly with the objectives of the Bureau d'Etude and allowed us to take advantage of its results for our innovative project.
 
 # Analytical
 
