@@ -11,7 +11,19 @@ image: /assets/covers/energy.png
 
 # Descriptive Part
 
-The goal of this course was to...
+The goal of the security course was get a good understanding of the principles and challenges of security in various domains, the course was articulated around different aspects of security each focusing on unique challenges and methods to protect systems.
+
+In the cryptography course, we explored how to secure information through mathematical encoding techniques to ensure data integrity, confidentiality, and authentication (RSA, AES, TLS...). We covered theorical concepts and real-world cryptographic algorithms.
+
+In the course on side-channel attacks, we focused on how attackers can exploit unintentional information leaks (like power consumption or timing differences) to break cryptographic systems. This covered practical examples like "Flush and Reload" or "Prime and Probe" to know the risks and defenses in hardware systems.
+
+In communication protocol security, we learned the basics on how to design and verify secure protocols for data exchange. We got introduced to threats like replay and impersonation attacks. In addition, we got a small introduciton on formal methods (ProVerif...) to prove that protocols are mathematically secure. 
+
+The web application security module introduced us to vulnerabilities like SQL injection and cross-site scripting (the most common threats faced by websites).
+
+Finally, reverse engineering microarchitectures taught us how to analyze hardware systems to understand their design and identify potential weaknesses. All theses courses where complemented by practical labs to better understand the concepts.
+
+But that's not all, we also had a course and practical lab on quantum security that covered quantum security mechanisms like ...
 
 # Technical Part
 
