@@ -30,6 +30,29 @@ This course explores the principles and technologies behind powering connect obj
 
 # Technical Part
 
+## Energy Reflexions for the Inovative Project
+
+Our WSN-based non-intrusive water leak detection project relies on batteries for operation. Each node in the distributed network is designed to include a battery that lasts for years due to the impracticality of changing batteries, as the nodes are embedded in the underground pipe network. 
+
+This poses three critical requirements:
+
+1. Nodes must be highly energy efficient to maximize battery life.
+2. Nodes must support wireless recharging without physical intervention.
+3. Nodes must be capable of harvesting ambient energy to help battery power and improve longevity.
+
+These requirements drive the need for innovative energy solutions, combining efficient power management, wireless energy transfer, and ambient energy harvesting techniques.
+
+
+### Energy Efficiency
+
+
+### Wireless Charging Capabilities
+
+
+### Eneregy Harvesting
+
+
+
 ## Practical Lab Work
 
 ### Goal of the Practical Lab: Exploring Sustainable Power Solutions for Connected Objects
