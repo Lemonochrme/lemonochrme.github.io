@@ -45,12 +45,6 @@ Instead of sending the whole Initialization Vector we can store a static decimat
 
 AES encrypt that in blocks of 16 bytes, if the clear message size is not a multiple of 16 it is necessary to add padding to the end of the message. In our implemetation we use PKCS#7 padding, the value of each padded added byte is the number of bytes that are added. For example, if 5 bytes are needed, each of the 5 bytes will have the value 5.
 
-
-| Initialization Vector | Payload | PKCS#7 Padding |
-|-----------------------|---------|----------------|
-| 2 Bytes               | 254 Bytes | 256 – Sizeof(IV + Payload) Bytes |
-
-
 In optimal conditions as LoRa 256 Bytes is a multiple of 16, total overhead added by the cryptographic process is 2 Bytes.
 
 ### Implementation
