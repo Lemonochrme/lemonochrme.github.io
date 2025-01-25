@@ -255,6 +255,14 @@ I worked a lot with hypervisors and particularly bare-metal hypervisors at FentI
 
 On the other hand I was not particularly familiar with the Cloud/Open Stack part. This was a enriching experience but the last lab on Kubernetes was too short to be completed, I would have liked to learn more on K8S because a theses led at CNES is specifically oriented on this subject. The goal is to achieve decentralized computing on satelites networks using KLubernetes as a base line.
 
+## Service Architecture
+
+Through this course, I significantly improved my Java skills, which was a challenging experience. I also gained a better understanding of APIs, particularly REST APIs, which are very *(very)* useful in various situations. In addition, I now have a clearer view in how modern web services works, which is good to know as I enjoy learning how things work behind the scenes. Overall, while I do not want to continue in web development, I found this course interesting for my personal general knowledge.
+
+## Middleware
+
+- The notions were good to know, I didn't knew MQTT prior to this course and we finally implemented it in our inovative project (for the gateway to server comunication)
+
 # Skills Matrix
 
 | Skill Area | Level | Evaluation Method |
