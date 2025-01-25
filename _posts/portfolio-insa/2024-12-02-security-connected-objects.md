@@ -23,7 +23,7 @@ The web application security module introduced us to vulnerabilities like SQL in
 
 Finally, reverse engineering microarchitectures taught us how to analyze hardware systems to understand their design and identify potential weaknesses. All theses courses where complemented by practical labs to better understand the concepts.
 
-But that's not all, we also had a course and practical lab on quantum security that covered quantum security mechanisms like ...
+But that's not all, we also had a course and practical lab on quantum security that covered quantum security mechanisms like BB84.
 
 # Technical Part
 
@@ -69,24 +69,20 @@ Source code of the implementation: [light-encrypt](https://github.com/Lemonochrm
 In the demonstration above we can clearly see the entropy implemented by the IV, while the clear message is identical, the encrypted output is absolutely different. This mechanism effectively prevents replay attacks.
 
 
-## Security Features of the Interdisciplinary Project
+## Quantum Cryptography: An introduction to BB84
 
-Security is a crucial aspect of all projects involving some sort of communication, especially in a Wireless Sensor Network where data integrity and confidentiality are essential.
 
-### Context and Challenges
 
-To add a bit of context on the matter, our interdisciplinary project aim to detect water leaks using a distributed network of sensors (WSN), each equipped with an ESP32 and a LoRa module for communication. These sensors transmit a payload consisting of metrics (frequency and harmonic data, timestamps, etc...) and edge computing analysis preliminary results (output of small machine learning models). Our LoRa module (SX1278) operate on frequencies ranging from 410MHz to 525MHz and is designed for low power consumption and limited bandwidth. Without any security features each sensor node is vulerable to every attack imaginable (replay attacks, data tempering, eavesdropping...). Consequently it is *necessary* for the project to implement a security solution that protects data integrity and confidentiality without introducing too much overhead.
 
-### Solution
-
-We propose a lighweight security mechanism based on pre-shared symmetric keys that use AES-128 encryption: each sensor encrypts its data using AES in Cipher Block Chaining (CBC) mode with a unique and randomly generated Initialization Vector (IV) for every message. The IV is then transmitted with the actual message.
-
-### Implementation
-
-In order to implement AES on the microcontroller we first thought about implementing AES in bare-metal without library as its not a particularly complex algorithm but we found TinyAES (https://github.com/kokke/tiny-AES-c), a lightweigh cross platform library.
 
 
 # Analytical Part
+
+At first I found cryptography rather hard to understand, but after a bit of head scratching I now really like it. I began to enjoy solving cryptography challenges on my own on [CryptoHack](https://cryptohack.org/). For the course part I found I covered very various, cutting edge and interesting topics especially the quantum cryptography part. I would have liked to know and practice more, maybe through additional practical labs.
+
+We could immediately implement what we learned in our innovative project, which was very rewarding. This helped me to better understand concepts. From now on, I will always try to have security in mind when engaging in new projects.
+
+Overall this course has significantly improved my relation to security: I feel more confident in identifying and understanding security weaknesses. I look forward to continue learning in this field.
 
 
 
