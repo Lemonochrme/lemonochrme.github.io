@@ -71,6 +71,11 @@ In the demonstration above we can clearly see the entropy implemented by the IV,
 
 ## Quantum Cryptography: An introduction to BB84
 
+BB84 (Bennet and Brassard 1984) is a quantum key distribution system that enable two agents to securely share a key using quantim mechanics principles: it ensures security by detecting any eavesdropping attack attempts though the disturbance of quantum states.
+
+### Principle
+
+
 
 
 
@@ -93,14 +98,14 @@ Overall this course has significantly improved my relation to security: I feel m
 
 | Skill | AE | Evaluation method |
 | --- | --- | --- |
-| Understand the fundamentals of security | 4 | Portfolio |
-| Be able to identify security weaknesses in an IoT architecture | 3 | Portfolio |
-| Be able to assess the impact of exploiting a security vulnerability in an IoT architecture | 3 | Portfolio |
-| Be able to propose adequate security counter-measures | 3 | Portfolio |
-| Knowing the main issues in security for IoT | 3 | Reports/Portfolio |
-| Understand the terminology of security | 2 | Reports/Portfolio |
-| Being able to have a critical look at the design of a system from a security point of view | 2 | Reports/Portfolio |
-| Being able to understand a scientific article that explains a weakness or a security solution and to explain it | 2 | Reports/Portfolio |
+| Understand the fundamentals of security | 4 | Reports/Portfolio/Project |
+| Be able to identify security weaknesses in an IoT architecture | 3 | Reports/Portfolio/Project |
+| Be able to assess the impact of exploiting a security vulnerability in an IoT architecture | 3 | Reports/Portfolio/Project |
+| Be able to propose adequate security counter-measures | 3 | Reports/Portfolio/Project |
+| Knowing the main issues in security for IoT | 3 | Reports/Portfolio/Project |
+| Understand the terminology of security | 2 | Reports/Portfolio/Project |
+| Being able to have a critical look at the design of a system from a security point of view | 2 | Reports/Portfolio/Project |
+| Being able to understand a scientific article that explains a weakness or a security solution and to explain it | 2 | Reports/Portfolio/Project |
 
 1-level of application: follow-up of instructions or procedures  
 2-level analysis: improvement or optimization of solutions or proposals  

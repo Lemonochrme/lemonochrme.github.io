@@ -179,8 +179,6 @@ We also considered the assembly process during component selection, particularly
 *Image: From Left to Right: Top Plane, Bottom Plane and Focus on Dynamic Route Width*
 
 
-
-
 #### PCB Manufacturing
 
 We manufactured the PCB using JLCPCB as I am very familiar with the platform. After two weeks we received the PCB and all the electronic components.
@@ -196,15 +194,29 @@ Due to lack of time, we couldn't assemble the PCB during the project time. Howev
 
 # Analytical Part
 
+## AIME
+
+Microelectronics has always fascinated me. The clean room practical lab was truly interesting, and I enjoyed every part of it. I learned so many things, from synthesizing nanoparticles to wire bonding the die to the package: we truly participated in all the major steps to create the gaz sensor, and this was rewarding. I really experienced what I had been learning in theory for years. This experience not only improved my understanding of the physical principles behind pretty much every modern objects but also lit up my curiosity to always know more.
+
 ## Microcontroller and Open Source Hardware (MOSH)
 
-I strongly believe that Open Source and Open Hardware is the key to achieving sustainability, both in technology and the consumer industry. Open Source encourage accessible knowledge and accelerate innovation. Unlike proprietary solutions, Open Source gives everyone the tools to create, improve and share freely ensuring progress benefits everyone, not just a select few.
+I strongly believe that Open Source and Open Hardware is the key to achieving sustainability. Open Source allows accessible knowledge and accelerate innovation. Unlike proprietary solutions, Open Source gives everyone the tools to create, improve and share freely ensuring progress benefits everyone not just a select few.
 
 In out interdisciplinary innovative project, I worked on a non-intrusive cutting edge water leak detection system. We choose to make this project fully Open Source, from the hardware design to the software source code: everything is accessible to anyone on GitHub. By sharing it openly we ensure and everyone (researchers, developers, students...) can build on top our work  adapt it to their needs and create better solutions.
 
 Isaac Newton once said, *"If I have seen further it is by standing on the shoulders of giants."* What progress could he have made if science had been private and secret?
 
 I strongly support Open Source because it gives people the ability to learn and take control of the technology they use. The Internet gave free knowledge to everyone; Open Source and Open Hardware is only the logical continuation of this philosophy. A philosophy in which I believe.
+
+On the course side, it is quite obvious to remark that I trully appreciate the initiative to push Open Source on the front of the stage of this curriculum. but while I understand that not everyone comes from an electronics-oriented background, I would have liked to delve into more advanced topics. Nonetheless, I really enjoyed the course and took it as an opportunity to enhance my skills in microcontroller development and hardware design.  The only aspect I found a bit frustrating was the inaccessibility of the INSA LoRa Gateway (overload in traffic I think), but that was beyond everyone's control.
+
+### Electronic Lab and Sensors Introduction
+
+The electronic lab improved my technical understanding of the gaz sensor we created at the AIME. The LTSpice simulations part was particularly interesting as we could see in a visual manner the electrical behavior of the sensor. Overall it was interesting.
+
+For the Sensors Introduction course, it was a good refreshing lesson on metrology. As this was prior to the gas sensor integration, we could use what we learned effectively.
+
+
 
 # Skill Matrix
 
