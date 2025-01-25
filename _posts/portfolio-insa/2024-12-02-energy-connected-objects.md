@@ -49,9 +49,16 @@ These requirements drive the need for innovative energy solutions, combining eff
 ### Wireless Charging Capabilities
 
 
-### Eneregy Harvesting
 
+### Energy Harvesting
 
+#### Leveraging Temperature Difference: The Seebeck Effect
+
+![Image](/assets/posts-images/portfolio-insa/energy/harvesting-peltier.png)
+
+#### Vibration and Piezoelectricity
+
+![Image](/assets/posts-images/portfolio-insa/energy/harvesting-piezo.png)
 
 ## Practical Lab Work
 
