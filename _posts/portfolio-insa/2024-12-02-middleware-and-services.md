@@ -22,9 +22,13 @@ This "Grand Domaine" was separated into four different courses: Service Oriented
 
 ## Service Architecture
 
-Report on the first project detailing technical choices and presenting results: [Lab Report: Volunteering Application][1]
+Report on the first project detailing technical choices and presenting results: [Lab Report: Volunteering Application][3]
 
-[1]:/download/devops-report.pdf
+[3]:/download/service-architecture-td-report.pdf
+
+Report on the second project detailing technical choices and presenting results: [Lab Report: Volunteering Application][2]
+
+[2]:/download/microservice-lab-report.pdf
 
 Prior to this course, I had no background in Service Architecture or understanding of what it means. The main concepts like services and microservices were relatively easy to grasp, but the most challenging part of this course was using the Java in the different practical lab we followed.
 
@@ -251,7 +255,10 @@ In the practical lab we experimented with Edge Computing with the help of Kubern
 
 I was already familiar with virtualization and hypervisor as I already worked with theses technologies. At CNES we extensively use Docker to deploy CI pipelines.
 
-I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with [](XtratuM): a space qualified bare-metal hypervisor.
+I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with [XtratuM](https://www.fentiss.com/xtratum/): a space qualified bare-metal hypervisor.
+
+![XNG](/assets/posts-images/portfolio-insa/middleware-service/cloud/XNG.png)
+*Image: XNG (XtratuM Next Gen) is Used Extensively at CNES fo Flight Software*
 
 On the other hand I was not particularly familiar with the Cloud/Open Stack part. This was a enriching experience but the last lab on Kubernetes was too short to be completed, I would have liked to learn more on K8S because a theses led at CNES is specifically oriented on this subject. The goal is to achieve decentralized computing on satelites networks using KLubernetes as a base line.
 
@@ -261,7 +268,12 @@ Through this course, I significantly improved my Java skills, which was a challe
 
 ## Middleware
 
-- The notions were good to know, I didn't knew MQTT prior to this course and we finally implemented it in our inovative project (for the gateway to server comunication)
+The concepts we learned were very useful, before this course, I had no knowledge of MQTT. We ended up using it in our innovative project (to handle communication between the gateway and the server).
+
+## Software Engineering
+
+During my apprenticeship at CNES in the Flight Software department, I’ve gained a lot of experience and skills in software engineering as I’ve worked on implementing CI/CD DevOps chains using GitLab CI for flight software components, so I was already quite familiar with concepts like DevOps, CI/CD, and agile practices. Nonetheless, I recognize the utility of this course for other students!
+
 
 # Skills Matrix
 
