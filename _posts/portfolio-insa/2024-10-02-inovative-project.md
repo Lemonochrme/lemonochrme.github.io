@@ -70,7 +70,7 @@ Detecting water leaks isn't an easy task. the challenge mainly lies in the fact 
 
 To tackle this problem we used the Fast Fourier Transform that converts raw time-domain signals into the frequency domain, where leak signatures become more distinguishable.
 
-![Image](/assets/posts-images/portfolio-insa/project/leak-waveform.png)
+![Image](/assets/posts-images/portfolio-insa/project/leak-waveform.png){: .center}
 *Image: Unusable Waveform Containing Highly Valuable Data*
 
 
