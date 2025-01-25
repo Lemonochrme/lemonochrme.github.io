@@ -25,7 +25,7 @@ The LoRa Physical Layer (or LoRa PHY) operate just above the RF layer (ISM Bands
 > ISM Bands: 169 MHz, 433 MHz (Asia), 868 MHz (Europe), and 915 MHz (North America).
 
 
-![Image](/assets/posts-images/portfolio-insa/wsn/stack.png)
+![Image](/assets/posts-images/portfolio-insa/wsn/stack.png){: .center}
 
 ### Chirp Spread Spectrum Modulation (CSS)
 
@@ -36,15 +36,15 @@ Advantages:
 - Ability to transmit over long distances with low power levels.
 
 
-![white](/assets/posts-images/portfolio-insa/wsn/css.png)
+![white](/assets/posts-images/portfolio-insa/wsn/css.png){: .center}
 
 Chirp Spread Spectrum modulation uses "chirps" signals whose frequency varies linearly over time, enabling interference-resistant encoding.
 
-![Image](/assets/posts-images/portfolio-insa/wsn/css-signal.png)
+![Image](/assets/posts-images/portfolio-insa/wsn/css-signal.png){: .center}
 
 ### Spreading Factor
 
-![Image](/assets/posts-images/portfolio-insa/wsn/sf.png)
+![Image](/assets/posts-images/portfolio-insa/wsn/sf.png){: .center}
 
 Spreading Factors orthogonoality mearns that LoRa signals can cohexists on the same rf channel without interfering. I give a more detailed explanation of why this is possible in the 5g modulation post.
 
@@ -54,11 +54,11 @@ In order to communicate, the LoRa PHY layer make uses of symbols to transmit inf
 
 The Spreading Factor value has a direct influence on the possible range and data rate of the LoRa communication. The higher the SF (SF6 to SF12), the greater the range but the lower the data rate.
 
-![Image](/assets/posts-images/portfolio-insa/wsn/symbol.png)
+![Image](/assets/posts-images/portfolio-insa/wsn/symbol.png){: .center}
 
 ### Structure of a LoRa Frame
 
-![Image](/assets/posts-images/portfolio-insa/wsn/lora-frame.png)
+![Image](/assets/posts-images/portfolio-insa/wsn/lora-frame.png){: .center}
 
 | Preamble | Synchronization | Payload | CRC |
 |----------|-----------------|---------|-----|
@@ -68,7 +68,7 @@ The Spreading Factor value has a direct influence on the possible range and data
 
 ### Lora Demodulation: Correlation
 
-![Image](/assets/posts-images/portfolio-insa/wsn/correlation.png)
+![Image](/assets/posts-images/portfolio-insa/wsn/correlation.png){: .center}
 
 > Transmitter symbols must be the same as receiver symbols, in other words the Spreading Factor must match between RX and TX !
 

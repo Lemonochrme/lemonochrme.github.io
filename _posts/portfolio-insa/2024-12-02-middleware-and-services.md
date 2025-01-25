@@ -68,7 +68,7 @@ This portfolio uses a Continuous Integration and Continuous Deployment (CI/CD) a
 
 #### MQTT basics
 
-![alt text](/assets/posts-images/portfolio-insa/middleware-service/middleware/mqtt-architecture.png)
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/middleware/mqtt-architecture.png){: .center}
 
 MQTT (Message Queuing Telemetry Transport) is a communication protocol specifically designed to connect devices in an IoT system. MQTT uses a straightforward publish/subscribe architecture.
 

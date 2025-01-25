@@ -66,7 +66,6 @@ permalink: /resume/
 
 - **Development of a Processor in VHDL** (2023)  
   - Designed a RISC-V processor with a 5-stage pipeline using VHDL.  
-  - Implemented the processor on an FPGA for testing and validation.
 
 - **Non-Intrusive Water Leak Detection System** (2024)  
   - Implemented harmonic analysis and machine learning techniques for leak detection.

@@ -114,7 +114,7 @@ The goal is now to integrate the gas sensor into an IoT solution in order to pro
 
 ### IoT Breadboard Prototype
 
-![Image](/assets/posts-images/portfolio-insa/smart-devices/breadboard-prototype.png)
+![Image](/assets/posts-images/portfolio-insa/smart-devices/breadboard-prototype.png){: .center}
 *Images: Breadboard prototype including: ESP32, RN2483A LoRa Module, SSD1306 I2C Screen and MQ5 Gas Sensor*
 
 In this part, the goal was to:

@@ -62,7 +62,7 @@ IPv4 address space: $4,294,967,296$ uniquely identified devices.
 
 IPv6 address space: $340,282,366,920,938,463,463,374,607,431,768,211,456$ uniquely identified devices.
 
-![Image](/assets/posts-images/portfolio-insa/wireless-communication/iot-devices.png)
+![Image](/assets/posts-images/portfolio-insa/wireless-communication/iot-devices.png){: .center}
 *Image: IoT Devices Connected Estimation [Source](https://www.researchgate.net/figure/oT-Number-of-devices-worldwide-from-2015-to-2025-5_fig1_351075753)*
 
 
