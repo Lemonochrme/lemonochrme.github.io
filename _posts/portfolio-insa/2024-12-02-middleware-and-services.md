@@ -199,7 +199,7 @@ In order to better understand Cloud Computing principles, we experienced differe
 
 We deployed a web-based 2-tier Calculator application using Node.js microservices, with each microservice running on a separate VM. The microservice application architecture is described as follows:
 
-![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/calculator.png)
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/calculator.png){: .center}
 *Image: Calculator using Microservices Architecure*
 
 
@@ -310,17 +310,17 @@ During my apprenticeship at CNES in the Flight Software department, I’ve gaine
 | Skill Area | Level | Evaluation Method |
 | --- | --- | --- |
 | **Service Oriented Architecture** | AE | Evaluation method |
-| Know how to define a Service Oriented Architecture | 4 | Project |
+| Know how to define a Service Oriented Architecture | 3 | Project |
 | Deploy an SOA with web services | 4 | Project |
-| Deploy and configure an SOA using SOAP | 4 | Project |
+| Deploy and configure an SOA using SOAP | 2 | Project |
 | Deploy and configure an SOA using REST | 4 | Project |
-| Integrate a process manager in an SOA | 4 | Project |
+| Integrate a process manager in an SOA | 2 | Project |
 | **Middleware for the Internet of Things** | AE | Evaluation method |
-| Know how to situate the main standards for the Internet of Things | 4 | TP Report |
-| Deploy an architecture compliant to an IoT standard and implement a sensor network | 4 | TP Report |
-| Deploy and configure an IoT architecture using OM2M | 4 | TP Report |
-| Interact with the different resources of the architecture using REST services | 4 | TP Report |
-| Integrate a new technology into the deployed architecture | 4 | TP Report |
+| Know how to situate the main standards for the Internet of Things | 3 | TP Report |
+| Deploy an architecture compliant to an IoT standard and implement a sensor network | 2 | TP Report |
+| Deploy and configure an IoT architecture using OM2M | 2 | TP Report |
+| Interact with the different resources of the architecture using REST services | 2 | TP Report |
+| Integrate a new technology into the deployed architecture | 3 | TP Report |
 | **Adaptability: Cloud Computing** | AE | Evaluation method |
 | Understand the concept of cloud computing | 3 | TP Report |
 | Use an IaaS-type cloud service | 3 | TP Report |
