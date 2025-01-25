@@ -74,12 +74,6 @@ Even so, using DevOps in this area offers big benefits in efficiency, quality, a
 ![Image](/assets/posts-images/portfolio-insa/middleware-service/pipeline.png){: .center}
 
 
-### Tools and Development Cycle
-
-![Image](/assets/posts-images/portfolio-insa/middleware-service/tools.png){: .center}
-
-![Image](/assets/posts-images/portfolio-insa/middleware-service/cycle.png){: .center}
-
 ### Development Boards Server
 
 Using a development board server offers many benefits, especially for testing. With this server, boards are centrally available to the whole team, which helps reduce costs and make better use of resources. Additionally, the server integrates smoothly with Jenkins, making it easier to automate tests and manage the development pipeline. This setup provides an efficient approach to embedded software development by ensuring the necessary boards are always available and seamlessly integrated into testing and deployment processes.

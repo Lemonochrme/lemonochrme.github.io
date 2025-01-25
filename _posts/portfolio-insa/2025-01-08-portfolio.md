@@ -35,3 +35,11 @@ I'm Robin Marin-Muller, an engineering student passionate about exploring comple
 
 As far back as I can remember, I always wanted to become an engineer. This ambition led me to engage in a multitude of personal projects and experiments, allowing me to explore various fields and subjects. However, one area caught my attention in particular: electronics and computer science. These two passions shaped my academic choices and guided me to pursue studies in electronics and automatic control at INSA Toulouse, where I deepened my knowledge in the areas that initially sparked my interest. There, I was able to refine my skills and discover many other fascinating things.
 
+
+## Reflexion on the Relevance of the Portfolio
+
+Creating this portfolio has been an enriching exercices in organizing and reflecting on my academic journey. The format of the portfolio suited me very well: it felt natural and effective as I already was experienced with this way of presenting my work. However, I can't help but to question the necessity of being exhaustive in covering every single subjects. In my opinion focusing on the courses and projects that genuinely sparked my interest would result in a much more well crafted document. After all, as the saying goes: quality of quantity. Especially when trying to demonstrate skills, expertise and passion.
+
+That said, while the portfolio may feel a bit long to read when in an interview or professional exchanges, I think its true value lies elsewhere. I think this portfolio acts as a personnal archive: a detailed remined of ther work/projects I have accomplished. 
+
+Overall, this writing this portfolio has been very rewarding, It provided an opportunity to take a step back on my jouney so far and reflect on my academical achievements. While it may not be perfect in its current state *(it might never be)*, it represents a solid base that I will build on over time.
