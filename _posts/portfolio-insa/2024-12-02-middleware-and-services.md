@@ -58,12 +58,42 @@ The following principles are the same on all CI platforms. In the Service Archit
 
 ![Image](/assets/posts-images/portfolio-insa/middleware-service/gitlabci-yml.png)
 
+
+## Notes on Software Engineering Practices at CNES
+
+### Preamble
+
+Since the early days of computing, the industry has always worked to improve its processes to meet growing demands. Over time, different methods have been used, and recently, DevOps has become popular. DevOps is an approach that aims to speed up software delivery and make it more reliable by using practices like continuous integration, automated testing, and quick feedback. While DevOps is widely used in the software industry, its use in embedded software, especially for the space industry, is still limited because this type of development comes with unique challenges that need special methods.
+
+Even so, using DevOps in this area offers big benefits in efficiency, quality, and reliability for embedded software. By encouraging teamwork between development and operations teams, DevOps enables continuous integration and nightly regression testing, which helps catch errors early and speeds up delivery. It also promotes good practices like centralized documentation and code traceability. In the LV service, DevOps is already being used in several real projects: MMX, YODA, and SWARM. This presentation looks at the growing importance of DevOps in the space industry and its potential to improve the development of flight software.
+
+### Principle
+
+
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/pipeline.png){: .center}
+
+
+### Tools and Development Cycle
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/tools.png){: .center}
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/cycle.png){: .center}
+
+### Development Boards Server
+
+Using a development board server offers many benefits, especially for testing. With this server, boards are centrally available to the whole team, which helps reduce costs and make better use of resources. Additionally, the server integrates smoothly with Jenkins, making it easier to automate tests and manage the development pipeline. This setup provides an efficient approach to embedded software development by ensuring the necessary boards are always available and seamlessly integrated into testing and deployment processes.
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/development-board-server.png){: .center}
+
+
+
+
 ## Nota Bene
 
 This portfolio uses a Continuous Integration and Continuous Deployment (CI/CD) approach. In fact everytime I edit and push modifications, a GitHub Actions script is executed to automatically deploy the application online.
 
 ![alt text](/assets/posts-images/portfolio-insa/middleware-service/github-actions.png)
-
 
 ## Middleware
 
