@@ -36,6 +36,8 @@ Resource Constraints in Edge AI
 
 
 
+## Machine Learning for the Inovative Project
+
 
 
 # Analytical Part
