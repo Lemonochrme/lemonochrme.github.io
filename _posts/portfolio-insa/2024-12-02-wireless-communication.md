@@ -10,22 +10,13 @@ image: /assets/covers/energy.png
 
 ## Communication Protocols for LP-WPAN
 
+
+
 ## Emerging Networks (Software Defined Networks)
 
-### Objectives of This Course
+The objective of the Emerging Networks course was to provide with a good understanding of modern networking philosophy such as Software Defined Networking (SDN) and Network Function Virtualization (NFV). 
 
-- **Identify limitations** of some design choices that guided the creation of the historical Internet, particularly in supporting new network uses, such as:
-  - The networking of various connected devices.
-  - Use cases and applications related to the **Internet of Things (IoT)** or **Internet of Everything (IoE)**.
-
-- **Understand key network paradigms** that have emerged in recent years to address the communication needs of modern use cases.
-
-- **Develop skills in SDN (Software-Defined Networking):**
-  - Learn how to configure SDN equipment.
-  - Gain experience in developing network control applications for SDN infrastructure.
-
-- **Learn about LISP (Location ID Separation Protocol):**
-  - A leading solution advocating the separation between the identification of a node and its physical location.
+The course goal was to explore the basic principles, architectures, and protocols that differentiate theses concepts from traditional network infrastructures.
 
 # Technical Part
 
@@ -225,6 +216,6 @@ NFV truly is a step forward in network flexibility, but its reliance on software
 
 If we hypothetically scale the water detection system to cover all of France, managing the large amount of data from thousands of gateways (concentrators of the network's nodes, a single gateway can manage hundreds of nodes) becomes a challenge. Integrating SDN between the gateways and the servers could allow centralized control of data flow. SDN could for example prioritize critical leak alerts over monitoring and route data dynamically based on real-time network conditions.
 
-
-
 # Analytical Part
+
+- Good to know
