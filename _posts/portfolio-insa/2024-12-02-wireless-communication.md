@@ -10,13 +10,15 @@ image: /assets/covers/energy.png
 
 ## Communication Protocols for LP-WPAN
 
-
+Goals:
+- Explain the specificities of a wireless communication channel and assess the impact of these specificities on the protocol stack of a wireless communication system (particularly the upper layers).
+- Acquire knowledge of the protocols used in short-range, multi-hop wireless IoT networks, particularly the architecture promoted by the IETF for IoT (IPv6, 6LoWPAN, RPL, etc.).
 
 ## Emerging Networks (Software Defined Networks)
 
-The objective of the Emerging Networks course was to provide with a good understanding of modern networking philosophy such as Software Defined Networking (SDN) and Network Function Virtualization (NFV). 
-
-The course goal was to explore the basic principles, architectures, and protocols that differentiate theses concepts from traditional network infrastructures.
+Goal:
+- Assess the general benefits and main limitations of adopting SDN (and network softwarization) in an IoT application.
+- Understand, design, set-up and operate a basic/academic SDN based IoT Network.
 
 # Technical Part
 
