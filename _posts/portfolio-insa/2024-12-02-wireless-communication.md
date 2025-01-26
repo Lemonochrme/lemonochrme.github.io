@@ -76,5 +76,95 @@ One can argue that using IPv6 on a simple IoT network is overengineered but the 
 
 Even if fragmentation is considered by many to be very costful in term of ressources or medium utilization, IPv6 provide this feature.
 
+## Emerging Networks
+
+### Terminology
+
+**Data Plane:** The part of the network responsible for moving data (packets) from one device to another.
+
+**Control Plane:** The part of the network that decides how data should be handled, it determines the path packets should take and define the rules for the data plane to follow.
+
+**Flow:** A flow is a sequence of packets sharing common properties like source/destination IP or port.
+
+**Northbound Interface:** Communication between the SDN controller and applications allowing apps to request and control network behavior (E.g. Load balancing).
+
+**Southbound Interface:** Communication between the SDN controller and network devices to implement the instruction wanted by the controller.
+
+### Introduction to SDN
+
+Software Defined Networking is a modern response to traditional manually configured network infrastructures. SDN introduces a centralized and programmable control mechanism that manages the network behavior dynamically "à la volée". SDN separates the control and data planes. This new philosophy enable flexibility, scalability and efficiency. 
+
+### What makes SDN different from legacy computer networks?
+
+
+- Separation of Control and Data Planes: Traditional networks have the control and data planes integrated into devices like in a router, where the device both decides the best route for packets (control plane) and physically forwards those packets to the next device (data plane). SDN separates these planes: control logic is handled by a centralized \textit{controller}, while devices just moves packets around. 
+
+- Programmability: SDN provides programmable interfaces (E.g. OpenFlow) to dynamically manage network flows which is not even thinkable in traditional systems.
+
+- Flow-based Operations: Unlike destination-based routing in traditional systems SDN allows very flexible flow rule definition. We can apply specific rules to flows based on user defined criteria, not just destination (E.g. prioritizing video streaming over other activities).
+
+- Open Interfaces: SDN allows applications to easily communicate with the controller (northbound) and the controller to manage network devices (southbound) using standard protocols, thus enabling easy integration to different systems. 
+
+
+### Opportunities SDN Brings
+
+
+- Simplified Network Management: Centralized control reduces complexity, manual configurations thus reducing errors: this is like DevOps.
+
+- Dynamic Traffic Control: Real-time traffic optimization and customized control.
+
+- Flexibility: New network services, techniques or even paradigms can be deployed quickly: eveything is software and \textit{soft}ware is flexible by definition.
+
+- Cost Efficiency: Reduces dependence on proprietary solutions.
+
+- Innovation: SDN opens the networks systems to new players by breaking the "gatekeeping" monopoly of traditional hardware firms (E.g. Cisco). Instead of relying on proprietary protocols and devices, SDN \textbf{promotes open standards}, thus enabling competition and companies/researchers to experiment and contribute.
+
+### Main Challenges
+
+
+- Security and Reliability: Centralized controllers become a critical point of attack and controller failure can disrupt the entire network.
+    
+- Standardization: Lack of universally accepted protocols for northbound and southbound interfaces.
+
+### Personal Notes on SDN
+
+While SDN centralizes control to simplify network management and improve flexibility comparison can be made to the evolution of cloud computing. Initially, centralizing everything in the cloud seemed like the perfect solution, but the emergence of edge computing outlined the limitations of centralization like latency, reliability or scalability. In the same way, centralized SDN control may face similar limits. The future might then lie in a more decentralized "Edge SDN" approach, where some control functions are distributed closer to the edge to improve performance, resilience, and scalability.
+
+A parallel can also be made with cryptocurrencies like Bitcoin, which decentralize control across a network of nodes instead of relying on a single central authority. This approach prevents single points of failure and improves fault tolerance through distributed consensus mechanisms: a decentralized SDN architecture could divide control among multiple controllers operating at the edge, ensuring that the network stays operational if an individual controllers fails.
+
+**Nota Bene:** While looking for references I came accross this paper: *DistBlockSDN: A Distributed Secure Blockchain Based SDN-IoT Architecture with NFV Implementation for Smart Cities* by Anichur Rahman et al. that pretty much sum up what it thought so I re-thinked the wheel I guess.
+
+### Network Function Virtualization Introduction
+
+NFV refers to the virtualization of network functions (such as routing, firewalls, NAT, DPI, IDS, DHCP, and compression) by implementing them as independent software modules running on standard servers rather than relying on proprietary hardware.
+
+For example, instead of buying a physical firewall device a company can deploy a virtual firewall as software on an existing server, all the traffic will pass through it and be filtered if needed. This makes it very easy to update, scale, or move the firewall as needed saving costs and simplifying management.
+
+
+### Opportunities NFV Brings
+
+
+- Flexibility: Network functions can be modified or deployed dynamically without replacing hardware.
+
+- Cost Savings: Reduces capital and operational expenses by using standard servers instead of proprietary tomorrow obsolete hardware devices.
+
+- Scalability: Resources can be scaled up or down based on demand.
+
+- Rapid Deployment: New services can be launched faster since functions are software.
+
+- Simplified Management: Centralized automated operations.
+
+
+### Personal Notes on NFV
+
+NFV truly is a step forward in network flexibility, but its reliance on software introduces performance bottlenecks. Virtual firewalls, for instance, need to handle traffic at wire speed, which can be very challenging for standard server CPUs. I  was told that hardware is inherently faster, and I believe FPGAs could offer an excellent solution if general purpose FPGAs were widely adopted in server infrastructure. For now, the cost of FPGAs is still too high, thus a hybrid approach, using FPGAs for critical tasks and software for less demanding functions might be the tradeoff (maybe GPU is the key?).
+
+### Are SDN and/or NFV relevant for your semester project ?
+
+Our inovative project (see http://wal.ovh/) focuses on developing a WSN based water leak detection system for public water networks using acoustic and vibration sensors our goal is to identify specific spectral signatures emitted by leaks. The project relies on a distributed wireless sensor network with nodes communicating via LoRa. Scalability is at the heart of our project.
+
+If we hypothetically scale the water detection system to cover all of France, managing the large amount of data from thousands of gateways (concentrators of the network's nodes, a single gateway can manage hundreds of nodes) becomes a challenge. Integrating SDN between the gateways and the servers could allow centralized control of data flow. SDN could for example prioritize critical leak alerts over monitoring and route data dynamically based on real-time network conditions.
+
+
 
 # Analytical Part
