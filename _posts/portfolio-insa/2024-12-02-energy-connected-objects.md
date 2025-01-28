@@ -48,7 +48,7 @@ These requirements drive the need for innovative energy solutions, combining eff
 
 ### Wireless Charging Capabilities
 
-
+![Image](/assets/posts-images/portfolio-insa/energy/wireless-charging.png)
 
 ### Energy Harvesting
 
