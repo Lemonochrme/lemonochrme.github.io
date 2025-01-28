@@ -45,10 +45,13 @@ These requirements drive the need for innovative energy solutions, combining eff
 
 ### Energy Efficiency
 
+While energy harvesting remains a promising field of research, its implementation in our project is currently not feasible due to the inherent limitations of existing technologies and the specific characteristics of the pipelines in question.
 
-### Wireless Charging Capabilities
+### Wireless Charging
 
 ![Image](/assets/posts-images/portfolio-insa/energy/wireless-charging.png)
+
+One practical solution would be to recharge the nodes via induction when their battery levels become critically low. This approach would extend the lifespan of the nodes. This approach, however, comes with several challenges, such as penetrating multiple layers of material, precisely locating the node, and integrating a charging system directly onto the nodes.
 
 ### Energy Harvesting
 
@@ -59,6 +62,15 @@ These requirements drive the need for innovative energy solutions, combining eff
 #### Vibration and Piezoelectricity
 
 ![Image](/assets/posts-images/portfolio-insa/energy/harvesting-piezo.png)
+
+#### Solar Powering
+
+We can imagine powering the nodes with tiny solar cells at the surface. The cells would be directly connected to the node with thin electrical wires.  This solution has the potential to provide an extended (if not nearly unlimited) lifespan for the nodes.
+
+
+
+Although we were unfortunately unable to implement any solutions, we believe that, given more time, the first solution to attempt would be induction charging as its very interesting and to our knowledge induction charging through concrete has never been achieved.
+
 
 ## Practical Lab Work
 

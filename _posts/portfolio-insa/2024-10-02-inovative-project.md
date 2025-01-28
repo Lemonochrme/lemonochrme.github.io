@@ -13,6 +13,10 @@ Link to the source code repository: [GitHub Repository](https://github.com/what-
 
 The project promotion website is accessible here: [What-A-Leak](https://what-a-leak.github.io/)
 
+The project report can we accessed here: [Smart Water Leak Detection in Water Networks][42]
+
+[42]:/download/project-report.pdf
+
 # Descriptive Part
 
 ## Overview of the project
