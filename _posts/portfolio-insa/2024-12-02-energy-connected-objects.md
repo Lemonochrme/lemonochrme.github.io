@@ -30,19 +30,68 @@ This course explores the principles and technologies behind powering connect obj
 
 # Technical Part
 
+## Energy Reflexions for the Inovative Project
+
+Our WSN-based non-intrusive water leak detection project relies on batteries for operation. Each node in the distributed network is designed to include a battery that lasts for years due to the impracticality of changing batteries, as the nodes are embedded in the underground pipe network. 
+
+This poses three critical requirements:
+
+1. Nodes must be highly energy efficient to maximize battery life.
+2. Nodes must support wireless recharging without physical intervention.
+3. Nodes must be capable of harvesting ambient energy to help battery power and improve longevity.
+
+These requirements drive the need for innovative energy solutions, combining efficient power management, wireless energy transfer, and ambient energy harvesting techniques.
+
+
+### Energy Efficiency
+
+
+### Wireless Charging Capabilities
+
+
+
+### Energy Harvesting
+
+#### Leveraging Temperature Difference: The Seebeck Effect
+
+![Image](/assets/posts-images/portfolio-insa/energy/harvesting-peltier.png)
+
+#### Vibration and Piezoelectricity
+
+![Image](/assets/posts-images/portfolio-insa/energy/harvesting-piezo.png)
+
 ## Practical Lab Work
 
-### Goal of the Practical Lab: Exploring Sustainable Power Solutions for Connected Objects
+### Goal of the Practical Lab
 
-The goal of the practical lab was to understand how to power connected objects without relying on wires or batteries but by using wireless power transfer.
+The goal of the practical lab was to explore wireless power transfer for connected objects, specifically powering an LED without relying on wired connections or batteries, using ambient energy sources like Wi-Fi.
 
-### What We Did: Designing and Testing Energy Harvesting Systems
+### Modeling the System
 
-During the lab, we first delved into theoretical concepts through lectures, which provided a strong foundation on energy storage technologies and various harvesting techniques, such as capturing light, mechanical, thermal, and electromagnetic energy. This helped us see how these sources could be applied in IoT systems. In the practical sessions, I worked on designing a connected object emulator, characterizing electromagnetic energy harvesters, and testing the emulator’s performance using both ambient energy and wireless power transfer methods. Each step required careful attention to detail, from selecting the right components to solving challenges in optimization and integration.
+#### LED Power
 
-### What We Learned: Energy Efficiency and Autonomous Design
+We started by calculating how much power an LED needs. At full brightness, it required 44 mW, but even at its lowest functional level, we only needed 1.75 mW. This made us optimistic because these low requirements align well with what we could harvest wirelessly.
 
-Through this experience, we learned not only the technical aspects of energy harvesting and wireless power transfer but also the complexities of implementing these solutions in real systems. I gained an appreciation for the trade-offs between efficiency, cost, and environmental constraints. It became clear how critical it is to design systems that balance energy use and autonomy, especially in applications where maintenance or battery replacement is impractical. Overall, the lab emphasized that while these technologies offer exciting possibilities, they also require a nuanced and innovative approach to achieve effective and sustainable results.
+#### Capacitors and Energy Storage
+
+![Image](/assets/posts-images/portfolio-insa/energy/energy_card_schema.png){: .center}
+
+Next, we needed a way to store the energy we captured, so we looked at capacitors. After testing several options, we chose a 6.8 mF capacitor. It struck the right balance—low energy loss and enough capacity to keep the LED running smoothly.
+
+#### Frequency Selection
+
+The key was choosing the right frequency for energy transfer. Lower frequencies, like 868 MHz, turned out to be more efficient because they travel farther and lose less energy. We also used technologies like patch antennas to boost the signal and improve efficiency.
+
+![Image](/assets/posts-images/portfolio-insa/energy/energy_max_freq.png){: .center}
+*Image: Received Voltage Function of Frequency*
+
+
+### Testing the System
+
+Using GNURadio and an Analog Discovery 2, we tested how well we could power the LED at different frequencies and distances. We found that the 868 MHz range worked best, and our setup could light the LED from up to a meter away.
+
+
+
 
 
 

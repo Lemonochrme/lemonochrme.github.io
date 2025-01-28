@@ -6,6 +6,9 @@ categories: [Personnal]
 image: /assets/covers/energy.png
 ---
 
+![Image](/assets/posts-images/personnal/workout-app/Mockup.png)
+
+
 # Goal of the project
 I needed a journaling app to record my workouts and keep me motivated. As I didn't find any application that suited me well, I decided to develop my own mobile application: *Essentiel*. This app aims to provide a seamless and intuitive experience for users to log their workouts, track progress, and stay motivated on their fitness journey.
 
@@ -47,6 +50,15 @@ As the name of the application suggest it, the goal of the user interface is to 
   <tr>
     <td><img src="/assets/posts-images/personnal/workout-app/Profile.png" alt="Splash" style="max-width: 100%; height: auto;" /></td>
     <td><img src="/assets/posts-images/personnal/workout-app/Settings.png" alt="Introduction" style="max-width: 100%; height: auto;" /></td>
+  </tr>
+</table>
+
+## Congratulation after Workout Completion
+
+<table>
+  <tr>
+    <td><img src="/assets/posts-images/personnal/workout-app/congrats-male.png" alt="Congratualtion Male" style="max-width: 100%; height: auto;" /></td>
+    <td><img src="/assets/posts-images/personnal/workout-app/congrats-female.png" alt="Congratualtion Female" style="max-width: 100%; height: auto;" /></td>
   </tr>
 </table>
 

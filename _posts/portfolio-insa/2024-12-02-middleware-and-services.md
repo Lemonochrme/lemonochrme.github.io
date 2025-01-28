@@ -22,9 +22,13 @@ This "Grand Domaine" was separated into four different courses: Service Oriented
 
 ## Service Architecture
 
-Report on the first project detailing technical choices and presenting results: [Lab Report: Volunteering Application][1]
+Report on the first project detailing technical choices and presenting results: [Lab Report: Volunteering Application][3]
 
-[1]:/download/devops-report.pdf
+[3]:/download/service-architecture-td-report.pdf
+
+Report on the second project detailing technical choices and presenting results: [Lab Report: Volunteering Application][2]
+
+[2]:/download/microservice-lab-report.pdf
 
 Prior to this course, I had no background in Service Architecture or understanding of what it means. The main concepts like services and microservices were relatively easy to grasp, but the most challenging part of this course was using the Java in the different practical lab we followed.
 
@@ -54,12 +58,36 @@ The following principles are the same on all CI platforms. In the Service Archit
 
 ![Image](/assets/posts-images/portfolio-insa/middleware-service/gitlabci-yml.png)
 
+
+## Notes on Software Engineering Practices at CNES
+
+### Preamble
+
+Since the early days of computing, the industry has always worked to improve its processes to meet growing demands. Over time, different methods have been used, and recently, DevOps has become popular. DevOps is an approach that aims to speed up software delivery and make it more reliable by using practices like continuous integration, automated testing, and quick feedback. While DevOps is widely used in the software industry, its use in embedded software, especially for the space industry, is still limited because this type of development comes with unique challenges that need special methods.
+
+Even so, using DevOps in this area offers big benefits in efficiency, quality, and reliability for embedded software. By encouraging teamwork between development and operations teams, DevOps enables continuous integration and nightly regression testing, which helps catch errors early and speeds up delivery. It also promotes good practices like centralized documentation and code traceability. In the LV service, DevOps is already being used in several real projects: MMX, YODA, and SWARM. This presentation looks at the growing importance of DevOps in the space industry and its potential to improve the development of flight software.
+
+### Principle
+
+
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/pipeline.png){: .center}
+
+
+### Development Boards Server
+
+Using a development board server offers many benefits, especially for testing. With this server, boards are centrally available to the whole team, which helps reduce costs and make better use of resources. Additionally, the server integrates smoothly with Jenkins, making it easier to automate tests and manage the development pipeline. This setup provides an efficient approach to embedded software development by ensuring the necessary boards are always available and seamlessly integrated into testing and deployment processes.
+
+![Image](/assets/posts-images/portfolio-insa/middleware-service/development-board-server.png){: .center}
+
+
+
+
 ## Nota Bene
 
 This portfolio uses a Continuous Integration and Continuous Deployment (CI/CD) approach. In fact everytime I edit and push modifications, a GitHub Actions script is executed to automatically deploy the application online.
 
 ![alt text](/assets/posts-images/portfolio-insa/middleware-service/github-actions.png)
-
 
 ## Middleware
 
@@ -165,7 +193,7 @@ In order to better understand Cloud Computing principles, we experienced differe
 
 We deployed a web-based 2-tier Calculator application using Node.js microservices, with each microservice running on a separate VM. The microservice application architecture is described as follows:
 
-![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/calculator.png)
+![alt text](/assets/posts-images/portfolio-insa/middleware-service/cloud/calculator.png){: .center}
 *Image: Calculator using Microservices Architecure*
 
 
@@ -251,26 +279,42 @@ In the practical lab we experimented with Edge Computing with the help of Kubern
 
 I was already familiar with virtualization and hypervisor as I already worked with theses technologies. At CNES we extensively use Docker to deploy CI pipelines.
 
-I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with [](XtratuM): a space qualified bare-metal hypervisor.
+I worked a lot with hypervisors and particularly bare-metal hypervisors at FentISS (I did my abroad experience here in Valencia, Spain) where I worked with [XtratuM](https://www.fentiss.com/xtratum/): a space qualified bare-metal hypervisor.
+
+![XNG](/assets/posts-images/portfolio-insa/middleware-service/cloud/XNG.png)
+*Image: XNG (XtratuM Next Gen) is Used Extensively at CNES fo Flight Software*
 
 On the other hand I was not particularly familiar with the Cloud/Open Stack part. This was a enriching experience but the last lab on Kubernetes was too short to be completed, I would have liked to learn more on K8S because a theses led at CNES is specifically oriented on this subject. The goal is to achieve decentralized computing on satelites networks using KLubernetes as a base line.
+
+## Service Architecture
+
+Through this course, I significantly improved my Java skills, which was a challenging experience. I also gained a better understanding of APIs, particularly REST APIs, which are very *(very)* useful in various situations. In addition, I now have a clearer view in how modern web services works, which is good to know as I enjoy learning how things work behind the scenes. Overall, while I do not want to continue in web development, I found this course interesting for my personal general knowledge.
+
+## Middleware
+
+The concepts we learned were very useful, before this course, I had no knowledge of MQTT. We ended up using it in our innovative project (to handle communication between the gateway and the server).
+
+## Software Engineering
+
+During my apprenticeship at CNES in the Flight Software department, I’ve gained a lot of experience and skills in software engineering as I’ve worked on implementing CI/CD DevOps chains using GitLab CI for flight software components, so I was already quite familiar with concepts like DevOps, CI/CD, and agile practices. Nonetheless, I recognize the utility of this course for other students!
+
 
 # Skills Matrix
 
 | Skill Area | Level | Evaluation Method |
 | --- | --- | --- |
 | **Service Oriented Architecture** | AE | Evaluation method |
-| Know how to define a Service Oriented Architecture | 4 | Project |
+| Know how to define a Service Oriented Architecture | 3 | Project |
 | Deploy an SOA with web services | 4 | Project |
-| Deploy and configure an SOA using SOAP | 4 | Project |
+| Deploy and configure an SOA using SOAP | 2 | Project |
 | Deploy and configure an SOA using REST | 4 | Project |
-| Integrate a process manager in an SOA | 4 | Project |
+| Integrate a process manager in an SOA | 2 | Project |
 | **Middleware for the Internet of Things** | AE | Evaluation method |
-| Know how to situate the main standards for the Internet of Things | 4 | TP Report |
-| Deploy an architecture compliant to an IoT standard and implement a sensor network | 4 | TP Report |
-| Deploy and configure an IoT architecture using OM2M | 4 | TP Report |
-| Interact with the different resources of the architecture using REST services | 4 | TP Report |
-| Integrate a new technology into the deployed architecture | 4 | TP Report |
+| Know how to situate the main standards for the Internet of Things | 3 | TP Report |
+| Deploy an architecture compliant to an IoT standard and implement a sensor network | 2 | TP Report |
+| Deploy and configure an IoT architecture using OM2M | 2 | TP Report |
+| Interact with the different resources of the architecture using REST services | 2 | TP Report |
+| Integrate a new technology into the deployed architecture | 3 | TP Report |
 | **Adaptability: Cloud Computing** | AE | Evaluation method |
 | Understand the concept of cloud computing | 3 | TP Report |
 | Use an IaaS-type cloud service | 3 | TP Report |

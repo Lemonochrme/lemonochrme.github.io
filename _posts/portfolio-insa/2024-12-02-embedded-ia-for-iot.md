@@ -19,7 +19,7 @@ The goal of this course was to gain solid foundations in machine learning and IA
 
 Machine learning is a subset of the vast and electric world of Artificial Intelligence. It focuses on the development of algorithms that can learn from and make predictions on data.
 
-Machine Learning *for IoT* focuses on
+Machine Learning *for IoT* focuses on creating models that can operate efficiently on devices with limited resources, such as microcontrollers, to process and analyze data locally (on the edge).
 
 > Artificial Intelligence > Machine Learning > Deep Learning
 
@@ -30,20 +30,14 @@ Resource Constraints in Edge AI
 - Limited energy availability, necessitating energy-efficient algorithms and hardware.
 - Real-time processing requirements, demanding low-latency solutions.
 
+## Machine Learning Basics
+
+## Support Vector Machine (SVM) Explained
 
 
-## Data Preprocessing
 
-## Time Series
+## Machine Learning for the Inovative Project
 
-## Convolutional Neural Networks
 
-# Analytical Part
-
-## Data Preprocessing
-
-## Time Series
-
-## Convolutionnal Neural Networks
 
 # Analytical Part
