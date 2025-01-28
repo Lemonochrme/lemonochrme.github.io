@@ -57,7 +57,7 @@ $$
 y = wx + b
 $$
 
-where \(w\) is the slope, and \(b\) is the y-intercept. This principle generalizes to a hyperplane in higher dimensions, but for obvious reasons, a line is simpler to visualize (one can only dream of visualizing a 42-dimension hyperplane). The goal of SVM is to find the best \(w\) and \(b\) that maximizes the separation margin.
+where $w$ is the slope, and $b$ is the y-intercept. This principle generalizes to a hyperplane in higher dimensions, but for obvious reasons, a line is simpler to visualize (one can only dream of visualizing a 42-dimension hyperplane). The goal of SVM is to find the best $w$ and $b$ that maximizes the separation margin.
 
 ##### Margin Maximization
 
@@ -67,17 +67,17 @@ $$
 \text{Margin} = \frac{2}{\|w\|}
 $$
 
-where \(\|w\|\) is the amplitude (length) of the vector \(w\).
+where $\|w\|$ is the amplitude (length) of the vector $w$.
 
 ##### Constraint for Classification
 
-SVM ensures that every data point is on the correct side of the margin. For a data point \(x_i\) with a label \(y_i \in \{-1, 1\}\), the constraint is:
+SVM ensures that every data point is on the correct side of the margin. For a data point $x_i$ with a label $y_i \in \{-1, 1\}$, the constraint is:
 
 $$
 y_i \left( w \cdot x_i + b \right) \geq 1
 $$
 
-This means that points labeled \(+1\) (\(y_i = 1\)) are on one side of the hyperplane, and points labeled \(-1\) (\(y_i = -1\)) are on the other side.
+This means that points labeled $+1$ ($y_i = 1$) are on one side of the hyperplane, and points labeled $-1$ ($y_i = -1$) are on the other side.
 
 ##### Kernel when Things Go Non-linear
 
@@ -88,9 +88,9 @@ K(x_i, x_j) = \left( x_i \cdot x_j \right)^2
 $$
 
 **Summary**:
-- The hyperplane is defined as \(w \cdot x + b = 0\).
-- All points satisfy the condition \(y_i \left( w \cdot x_i + b \right) \geq 1\).
-- The margin \(\frac{2}{\|w\|}\) is maximized when training the model to obtain the best classification.
+- The hyperplane is defined as $w \cdot x + b = 0$.
+- All points satisfy the condition $y_i \left( w \cdot x_i + b \right) \geq 1$.
+- The margin $\frac{2}{\|w\|}$ is maximized when training the model to obtain the best classification.
 
 #### Implementation: Collect the Samples
 
