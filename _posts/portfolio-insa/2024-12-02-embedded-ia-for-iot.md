@@ -32,6 +32,8 @@ Resource Constraints in Edge AI
 
 ## Machine Learning for the Innovative Project
 
+To add a bit of context on the matter, our interdisciplinary project aim to detect water leaks using a distributed network of sensors (WSN), each equipped with an ESP32 and a LoRa module for communication. These sensors transmit a payload consisting of metrics (frequency and harmonic data, timestamps, etc…) and edge computing analysis preliminary results (output of small machine learning models). Our LoRa module (SX1278) operate on frequencies ranging from 410MHz to 525MHz and is designed for low power consumption and limited bandwidth. Without any security features each sensor node is vulerable to every attack imaginable (replay attacks, data tempering, eavesdropping…). Consequently it is necessary for the project to implement a security solution that protects data integrity and confidentiality without introducing too much overhead.
+
 ### Supervised Approach: Support Vector Machine
 
 **Link to the repository**: [GitHub Repository](https://github.com/what-a-leak/wal-machine-learning)
@@ -135,3 +137,6 @@ The model performs very well; it detects leaks even with very low amplitudes.
 
 # Analytical Part
 
+This course was a very valuable and enjoyable experience. From the start the content was well-organized and made the complex topics easy to understand, I found the practical labs on Jupyter Notebooks very interesting, well-structured and this helkped me quickly learn new concepts. Learning how to optimize AI models to run on microcontrollers was particularly useful because we wanted to implement the same edge machine learning principles to our water leak detection inovative project. The only small regret is that we didn't had the time to integrate and test the pruned/compressed model onto the development board during the labs. However, I plan to try it on my own as I have AI development board ([Luckfox Pico Mini](https://www.luckfox.com/Luckfox-Pico-Mini-A?search=Pico%20Mini%20B&description=true)) from previous projects.
+
+Overall, this course was very valuable. It gave me new skills, new interests, and the keys to apply machine learning techniques to personnal projects. I will keep learning and working on more projects in this field in the future.
