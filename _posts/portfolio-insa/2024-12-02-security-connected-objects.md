@@ -98,12 +98,17 @@ You can try the simulator below to test it by yourself. (Hint: Try `admin' OR '1
 
 BB84 (Bennet and Brassard 1984) is a quantum key distribution system that enable two agents to securely share a key using quantim mechanics principles: it ensures security by detecting any eavesdropping attack attempts though the disturbance of quantum states.
 
+### Qubit Bases Reminder:
 
-### Qubit Bases Reminder:  
+**Computational Basis:**  
+Classical bits 0 and 1 states:  
+$|0⟩$  
+$|1⟩$  
 
-Computational Basis: Classical bits 0 and 1 states:  $$|0⟩$$ $$|1⟩$$ 
-
-Diagonal Basis: States $$|+⟩ = \frac{1}{\sqrt{2}}(|0⟩ + |1⟩)$$  $$|-⟩ = \frac{1}{\sqrt{2}}(|0⟩ - |1⟩)$$
+**Diagonal Basis:**  
+States:  
+$|+⟩ = \frac{1}{\sqrt{2}}(|0⟩ + |1⟩)$  
+$|-⟩ = \frac{1}{\sqrt{2}}(|0⟩ - |1⟩)$
 
 ### BB84 Protocol Simulation
 
