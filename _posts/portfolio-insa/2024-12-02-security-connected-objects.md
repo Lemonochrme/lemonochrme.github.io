@@ -68,10 +68,40 @@ Source code of the implementation: [light-encrypt](https://github.com/Lemonochrm
 
 In the demonstration above we can clearly see the entropy implemented by the IV, while the clear message is identical, the encrypted output is absolutely different. This mechanism effectively prevents replay attacks.
 
+## SQL Injections
+
+SQL injection is a type of attack (maybe the most used on the web) where malicious SQL code is injected into a website input fields, exploiting vulnerabilities to manipulate the database, the attacker can for example log as admin or retreive confidencial data. 
+
+The expression `' OR '1'='1` is probably the blink led program of SQL injections attacks. It works by exploiting vulnerable user input fields. The logic of the query always return `TRUE`.
+
+For example, consider the following SQL query for user authentication:
+
+```sql
+SELECT * FROM users WHERE username = 'admin' AND password = 'password';
+```
+
+If an attacker inputs `admin' OR '1'='1` as the username, the query becomes:
+
+```sql
+SELECT * FROM users WHERE username = 'admin' OR '1'='1' AND password = 'password';
+```
+
+The `'1'='1'` part is always true, causing the query to return all rows from the `users` table, bypassing authentication. 
+
+You can try the simulator below to test it by yourself. (Hint: Try `admin' OR '1'='1` in the username input field)
+
+
+<embed src="{{ site.baseurl }}/simulations/sql-injection" width="100%" height="500px">
+
 
 ## Quantum Cryptography: An introduction to BB84
 
 BB84 (Bennet and Brassard 1984) is a quantum key distribution system that enable two agents to securely share a key using quantim mechanics principles: it ensures security by detecting any eavesdropping attack attempts though the disturbance of quantum states.
+
+### BB84 Protocol Simulation
+
+<embed src="{{ site.baseurl }}/simulations/bb84.html" width="100%" height="900px">
+
 
 ### Principle
 

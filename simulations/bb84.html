@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2.5em;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #121212;
+      margin-bottom: 30px;
+    }
+
+    .step {
+      margin-top: 20px;
+      padding: 10px;
+      border-left: 4px solid #ffffff;
+      background-color: #1e1e1e;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover {
+      background-color: #333333;
+    }
+
+    .step-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .output {
+      font-family: monospace;
+      white-space: pre-wrap;
+      background: #2b2b2b;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: #00aaff;
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0088cc;
+    }
+
+    .explanation {
+      font-size: 14px;
+      color: #aaaaaa;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p>Click the button below to see a step-by-step simulation of the BB84 quantum key exchange protocol.</p>
+    <button onclick="runBB84()">Run Simulation</button>
+
+    <div id="steps-container"></div>
+  </div>
+
+  <script>
+    function randomBits(length) {
+      return Array.from({ length }, () => Math.round(Math.random()));
+    }
+
+    function randomBases(length) {
+      return Array.from({ length }, () => (Math.random() < 0.5 ? "+" : "x"));
+    }
+
+    function encodeQubits(bits, bases) {
+      return bits.map((bit, i) => {
+        if (bases[i] === "+") return bit === 0 ? "|0⟩" : "|1⟩";
+        else return bit === 0 ? "|+⟩" : "|-⟩";
+      });
+    }
+
+    function measureQubits(qubits, bases) {
+      return qubits.map((qubit, i) => {
+        const actualBase = bases[i];
+        if (qubit === "|0⟩" || qubit === "|1⟩") {
+          return actualBase === "+" ? (qubit === "|0⟩" ? 0 : 1) : Math.round(Math.random());
+        } else {
+          return actualBase === "x" ? (qubit === "|+⟩" ? 0 : 1) : Math.round(Math.random());
+        }
+      });
+    }
+
+    function addStep(title, content, explanation) {
+      const stepsContainer = document.getElementById("steps-container");
+      const step = document.createElement("div");
+      step.className = "step";
+      step.innerHTML = `
+        <div class="step-title">${title}</div>
+        <div class="output">${content}</div>
+        <div class="explanation">${explanation}</div>
+      `;
+      stepsContainer.appendChild(step);
+    }
+
+    function runBB84() {
+      const stepsContainer = document.getElementById("steps-container");
+      stepsContainer.innerHTML = ""; // Clear previous results
+
+      // Step 1: Alice generates random bits and bases
+      const numBits = 10;
+      const aliceBits = randomBits(numBits);
+      const aliceBases = randomBases(numBits);
+      addStep(
+        "Step 1: Alice Generates Bits and Bases",
+        `Bits:  ${aliceBits.join(" ")}\nBases: ${aliceBases.join(" ")}`,
+        "Alice generates random bits and bases to prepare her qubits."
+      );
+
+      // Step 2: Alice encodes the qubits
+      const qubits = encodeQubits(aliceBits, aliceBases);
+      addStep(
+        "Step 2: Alice Encodes Qubits",
+        `Qubits Sent: ${qubits.join(" ")}`,
+        "Alice encodes her bits using her chosen bases. Each bit is transformed into a quantum state."
+      );
+
+      // Step 3: Bob chooses random bases and measures the qubits
+      const bobBases = randomBases(numBits);
+      const bobBits = measureQubits(qubits, bobBases);
+      addStep(
+        "Step 3: Bob Measures Qubits",
+        `Bases:  ${bobBases.join(" ")}\nBits:   ${bobBits.join(" ")}`,
+        "Bob chooses random bases to measure the qubits sent by Alice."
+      );
+
+      // Step 4: Alice and Bob compare their bases
+      const matchingIndices = aliceBases.map((base, i) => (base === bobBases[i] ? i : null)).filter(i => i !== null);
+      const finalKey = matchingIndices.map(i => aliceBits[i]);
+      addStep(
+        "Step 4: Compare Bases and Extract Key",
+        `Matching Indices: ${matchingIndices.join(" ")}\nFinal Key: ${finalKey.join(" ")}`,
+        "Alice and Bob publicly compare their bases and retain only the bits where their bases matched."
+      );
+
+      // Step 5: Eve detection (simplified)
+      addStep(
+        "Step 5: Eve Detection",
+        "No eavesdropper detected in this simulation.",
+        "If an eavesdropper (Eve) tried to intercept the qubits, she would introduce detectable errors."
+      );
+    }
+  </script>
+</body>
+</html>
