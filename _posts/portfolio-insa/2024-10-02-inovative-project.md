@@ -132,3 +132,12 @@ Perhaps the most satisfying part was seeing how our efforts paid. The hardware c
 2. Improvement or optimization of solutions or proposals
 3. Design of programs or definitions of specifications
 4. Definition of guidelines or strategies
+
+# En vrac (à ranger)
+
+## Vérification de la FFT par application numérique
+
+On génère un sinus à 5 kHz, on s'attend donc à avoir une amplide élevée aux alentours de cette fréquence sur le spectre d'amplitude.
+
+![Image](/assets/posts-images/portfolio-insa/inovative-project/i-like-maths.png)
+*Image: The maths are always right*
