@@ -58,6 +58,9 @@ $$
 ![image](https://github.com/user-attachments/assets/826ded21-67d0-4036-bd2b-da2be71363c7)
 
 
+# Simulation
+
+<embed src="{{ site.baseurl }}/simulations/pendulum.html" width="100%" height="600px">
 
 
 
