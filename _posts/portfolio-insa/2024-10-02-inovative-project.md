@@ -3,7 +3,7 @@ layout: post
 title: "Non-Intrusive Detection of Water Leaks in Pipeline Networks Using Vibration and Acoustic Sensors"
 date: 2024-10-02
 categories: [INSA]
-image: /assets/covers/pipe.png
+image: /assets/posts-images/portfolio-insa/project/render-mark-2.png
 ---
 
 

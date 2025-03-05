@@ -3,7 +3,7 @@ layout: post
 title: Embedded IA for IoT
 date: 2024-11-18
 categories: [INSA]
-image: /assets/covers/energy.png
+image: https://images.unsplash.com/photo-1639322537231-2f206e06af84?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 ---
 
 # Descriptive Part

@@ -3,7 +3,7 @@ layout: post
 title: Middleware and Services
 date: 2024-11-18
 categories: [INSA]
-image: /assets/covers/energy.png
+image: https://www.redhat.com/rhdc/managed-files/Middleware-data-streaming-diagram.svg
 ---
 
 # Descriptive Part
