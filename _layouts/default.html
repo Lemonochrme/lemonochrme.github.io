@@ -31,7 +31,7 @@
         <br><br>
 
         <!-- Animated Title -->
-        <h2 class="fade-in-title">➤ Hi, I'm Robin. — <span style="font-family: 'Courier New', Courier, monospace;">@Lemonochrome</span></h2>
+        <h2 class="fade-in-title">Hi, I'm Robin. — <span style="font-family: 'Courier New', Courier, monospace;">@Lemonochrome</span></h2>
 
         <!-- Animated Description -->
         <p class="fade-in-description">
@@ -40,10 +40,11 @@
 
         <div style="height: 42px;"></div>
 
-        <p style="color: white;">
-          <a href="mailto:marin-muller@insa-toulouse.fr">Email Me</a> |
-          <a href="http://github.com/Lemonochrme/" target="_blank">GitHub</a> | 
-          <a href="/resume/">View Curriculum Vitae</a>
+        <p class="fade-in-description">
+          <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email Me</a> |
+          <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> | 
+          <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
+          <a href="/resume/" class="hover-link">View Curriculum Vitae</a>
         </p>
 
         <div style="text-align: right;">
@@ -72,14 +73,14 @@
             animation: fadeInUp 1s ease-out forwards;
           }
 
-          /* Description Animation (delayed slightly for smoother effect) */
+          /* Description Animation */
           .fade-in-description {
             opacity: 0;
             animation: fadeInUp 1s ease-out forwards;
             animation-delay: 0.3s;
           }
 
-          /* Button Animation (delayed slightly more for sequence effect) */
+          /* Button Animation */
           .fade-in-button {
             opacity: 0;
             animation: fadeInUp 1s ease-out forwards;
@@ -102,6 +103,34 @@
           .btn-outline:hover {
             color: black;
             background-color: white;
+          }
+
+          /* Hover Effect for Links */
+          .hover-link {
+            color: white;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+          }
+
+          .hover-link::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+          }
+
+          .hover-link:hover {
+            color: #bbbbbb; /* Slight color change on hover */
+          }
+
+          .hover-link:hover::after {
+            width: 100%;
           }
         </style>
 
