@@ -3,7 +3,7 @@ layout: post
 title: Workout Journaling Application
 date: 2024-11-18
 categories: [Personnal]
-image: /assets/covers/energy.png
+image: /assets/posts-images/personnal/workout-app/Mockup.png
 ---
 
 ![Image](/assets/posts-images/personnal/workout-app/Mockup.png)

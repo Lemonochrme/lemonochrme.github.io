@@ -7,8 +7,12 @@ image: https://github.com/user-attachments/assets/fa5442fd-eb30-4976-98d5-264942
 
 ---
 
-# Introduction
+
+
+
 The project focuses on developing an autonomous flying wing, with the eventual goal of integrating a payload. While the payload specifics are still undecided, potential applications include **computer vision for mapping** and **biome recognition**. For now, the priority is on building the platform itself and making sure the flight control system works smoothly.
+
+# Introduction
 
 Key features of the project include:
 
