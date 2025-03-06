@@ -4,7 +4,7 @@ title: Autonomous Flying Wing
 date: 2024-09-29
 categories: [Personnal]
 image: https://github.com/user-attachments/assets/fa5442fd-eb30-4976-98d5-264942c3b7c3
-
+description: "Developing an autonomous flying wing with a focus on stable flight, autonomous navigation, and payload integration for applications like computer vision and biome recognition."
 ---
 
 

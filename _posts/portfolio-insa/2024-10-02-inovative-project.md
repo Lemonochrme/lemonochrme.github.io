@@ -4,6 +4,7 @@ title: "Non-Intrusive Detection of Water Leaks in Pipeline Networks Using Vibrat
 date: 2024-10-02
 categories: [INSA]
 image: /assets/posts-images/portfolio-insa/project/render-mark-2.png
+description: "A multidisciplinary project aimed at developing a non-intrusive system for detecting water leaks in public pipeline networks using vibration and acoustic sensors."
 ---
 
 

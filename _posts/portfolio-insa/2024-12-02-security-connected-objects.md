@@ -4,6 +4,7 @@ title: Security for Connected Objects
 date: 2024-11-18
 categories: [INSA]
 image: https://plus.unsplash.com/premium_photo-1674669009418-2643aa58b11b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+description: "An in-depth exploration of security principles and challenges in various domains, with practical applications in IoT and quantum cryptography."
 ---
 
 

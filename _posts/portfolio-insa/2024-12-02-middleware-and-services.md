@@ -4,6 +4,7 @@ title: Middleware and Services
 date: 2024-11-18
 categories: [INSA]
 image: https://www.redhat.com/rhdc/managed-files/Middleware-data-streaming-diagram.svg
+description: "This post covers the key concepts and practical experiences from the Middleware and Services course, including Service Oriented Architecture, Middleware, Software Engineering, and Cloud and Edge Computing."
 ---
 
 # Descriptive Part

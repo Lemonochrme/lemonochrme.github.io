@@ -4,6 +4,7 @@ title: Wireless Sensors Network
 date: 2024-11-18
 categories: [INSA]
 image: /assets/posts-images/portfolio-insa/wsn/css-signal.png
+description: "An in-depth exploration of Wireless Sensor Networks, focusing on LoRa communication protocol and MAC protocols for IoT applications."
 ---
 
 # Descriptive Part

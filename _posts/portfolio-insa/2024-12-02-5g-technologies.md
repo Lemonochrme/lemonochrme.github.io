@@ -4,6 +4,7 @@ title: 5G Technologies
 date: 2024-11-18
 categories: [INSA]
 image: https://images.unsplash.com/photo-1614157561595-dc25d28cfa85?q=80&w=1978&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+description: "An in-depth exploration of 5G modulation techniques, focusing on OFDM and QAM, their advantages, trade-offs, and challenges in modern mobile communications."
 ---
 
 # Descriptive Part

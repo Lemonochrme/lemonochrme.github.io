@@ -23,9 +23,13 @@ title: Projects Archive
             </div>
             <div class="project-info">
               <h3>{{ post.title }}</h3>
-              {% if post.description %}
-                <p class="description">{{ post.description | truncate: 150 }}</p>
-              {% endif %}
+              <p class="description">
+                {% if post.description %}
+                  {{ post.description | truncate: 150 }}
+                {% else %}
+                  {{ post.content | strip_html | truncate: 150 }}
+                {% endif %}
+              </p>
               {% if post.technologies %}
                 <div class="technologies">
                   {% for tech in post.technologies %}
@@ -58,9 +62,13 @@ title: Projects Archive
             </div>
             <div class="project-info">
               <h3>{{ post.title }}</h3>
-              {% if post.description %}
-                <p class="description">{{ post.description | truncate: 150 }}</p>
-              {% endif %}
+              <p class="description">
+                {% if post.description %}
+                  {{ post.description | truncate: 150 }}
+                {% else %}
+                  {{ post.content | strip_html | truncate: 150 }}
+                {% endif %}
+              </p>
               {% if post.technologies %}
                 <div class="technologies">
                   {% for tech in post.technologies %}

@@ -4,6 +4,7 @@ title: Workout Journaling Application
 date: 2024-11-18
 categories: [Personnal]
 image: /assets/posts-images/personnal/workout-app/Mockup.png
+description: "A mobile app to log workouts, track progress, and stay motivated. Designed with a minimalistic user interface and developed using React Native."
 ---
 
 ![Image](/assets/posts-images/personnal/workout-app/Mockup.png)

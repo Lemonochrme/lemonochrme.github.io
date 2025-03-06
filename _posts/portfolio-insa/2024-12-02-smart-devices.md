@@ -4,6 +4,7 @@ title: Smart Devices
 date: 2024-11-18
 categories: [INSA]
 image: https://images.unsplash.com/photo-1593937505566-64f33d148915?q=80&w=1924&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+description: "A comprehensive project on developing a nanoparticle-based gas sensor and integrating it into an IoT system."
 ---
 
 # Descriptive Part
