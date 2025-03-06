@@ -10,10 +10,10 @@ title: Projects Archive
   {% assign personalPosts = site.posts | where: "categories", "Personnal" %}
   {% assign personalPostsByYearMonth = personalPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
   {% for yearMonth in personalPostsByYearMonth %}
-    <h3 class="year-month">{{ yearMonth.name }}</h3>
+    <h3 class="year-month fade-in">{{ yearMonth.name }}</h3>
     <div class="projects-grid">
       {% for post in yearMonth.items %}
-        <div class="project-card">
+        <div class="project-card fade-in" style="animation-delay: {{ forloop.index | times: 0.15 }}s;">
           <a href="{{ post.url }}" class="project-link">
             <div class="project-image skeleton-wrapper">
               <div class="skeleton-loader"></div>
@@ -45,10 +45,10 @@ title: Projects Archive
   {% assign insaPosts = site.posts | where: "categories", "INSA" %}
   {% assign insaPostsByYearMonth = insaPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
   {% for yearMonth in insaPostsByYearMonth %}
-    <h3 class="year-month">{{ yearMonth.name }}</h3>
+    <h3 class="year-month fade-in">{{ yearMonth.name }}</h3>
     <div class="projects-grid">
       {% for post in yearMonth.items %}
-        <div class="project-card">
+        <div class="project-card fade-in" style="animation-delay: {{ forloop.index | times: 0.15 }}s;">
           <a href="{{ post.url }}" class="project-link">
             <div class="project-image skeleton-wrapper">
               <div class="skeleton-loader"></div>
@@ -79,21 +79,10 @@ title: Projects Archive
 
 <!-- CSS Styling -->
 <style>
-  .portfolio-title {
-    font-size: 2.5rem;
-    margin-top: 40px;
-    color: #ffffff;
-  }
-
-  .year-month {
-    margin-top: 20px;
-    font-size: 1.75rem;
-    color: #f1f1f1;
-  }
-
+  /* General Styling */
   body {
-    background-color: #000; /* Set background to black */
-    color: #f1f1f1; /* Light text for contrast */
+    background-color: #000; /* Dark mode */
+    color: #f1f1f1;
   }
 
   .projects-container {
@@ -102,12 +91,19 @@ title: Projects Archive
     padding: 20px;
   }
 
-  .year-month {
+  .portfolio-title {
+    font-size: 2.5rem;
     margin-top: 40px;
-    font-size: 2rem;
-    color: #f1f1f1; /* Light text */
+    color: #ffffff;
   }
 
+  .year-month {
+    font-size: 1.75rem;
+    color: #f1f1f1;
+    margin-top: 40px;
+  }
+
+  /* Grid and Card Styling */
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -116,13 +112,13 @@ title: Projects Archive
   }
 
   .project-card {
-    background: rgba(255, 255, 255, 0.1); /* Translucent background */
+    background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px); /* Glass effect */
+    backdrop-filter: blur(10px);
     border-radius: 16px;
     overflow: hidden;
     padding: 20px;
-    transition: background-color 0.3s ease; /* Smooth background color transition */
+    transition: background-color 0.3s ease-in-out;
   }
 
   .project-card:hover {
@@ -144,7 +140,7 @@ title: Projects Archive
     height: 142px;
     overflow: hidden;
     border-radius: 12px;
-    background: #2b2b2b; /* Fallback for dark mode */
+    background: #2b2b2b;
   }
 
   .skeleton-loader {
@@ -164,7 +160,7 @@ title: Projects Archive
     }
   }
 
-  /* Hide image until fully loaded */
+  /* Image Fade-in Effect */
   .thumbnail {
     width: 100%;
     height: 142px; 
@@ -175,6 +171,23 @@ title: Projects Archive
     transition: opacity 0.3s ease-in-out;
   }
 
+  /* Animation for Fade-in */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease-in-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 </style>
 
 <!-- JavaScript -->
