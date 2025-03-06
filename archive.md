@@ -15,9 +15,10 @@ title: Projects Archive
       {% for post in yearMonth.items %}
         <div class="project-card">
           <a href="{{ post.url }}" class="project-link">
-            <div class="project-image">
+            <div class="project-image skeleton-wrapper">
+              <div class="skeleton-loader"></div>
               {% if post.image %}
-                <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail">
+                <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
               {% endif %}
             </div>
             <div class="project-info">
@@ -49,9 +50,10 @@ title: Projects Archive
       {% for post in yearMonth.items %}
         <div class="project-card">
           <a href="{{ post.url }}" class="project-link">
-            <div class="project-image">
+            <div class="project-image skeleton-wrapper">
+              <div class="skeleton-loader"></div>
               {% if post.image %}
-                <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail">
+                <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
               {% endif %}
             </div>
             <div class="project-info">
@@ -73,8 +75,6 @@ title: Projects Archive
     </div>
   {% endfor %}
 
-
-  
 </div>
 
 <!-- CSS Styling -->
@@ -137,42 +137,53 @@ title: Projects Archive
     position: relative;
   }
 
-  .project-image img.thumbnail {
-      width: 100%;
-      height: 142px; 
-      display: block;
-      border-radius: 12px;
-      object-fit: cover;
-  }
-
-  .project-info {
-    padding: 15px;
-  }
-
-  .project-info h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: #ffffff;
-  }
-
-  .description {
-    margin: 10px 0;
-    font-size: 1rem;
-    color: #d3d3d3;
-  }
-
-  .technologies {
-    margin-bottom: 10px;
-  }
-
-  .tech-badge {
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #f1f1f1;
-    font-size: 0.875rem;
-    padding: 5px 10px;
+  /* Skeleton Loader Effect */
+  .skeleton-wrapper {
+    position: relative;
+    width: 100%;
+    height: 142px;
+    overflow: hidden;
     border-radius: 12px;
-    display: inline-block;
-    margin-right: 5px;
-    margin-bottom: 5px;
+    background: #2b2b2b; /* Fallback for dark mode */
   }
+
+  .skeleton-loader {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite linear;
+  }
+
+  @keyframes skeleton-loading {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Hide image until fully loaded */
+  .thumbnail {
+    width: 100%;
+    height: 142px; 
+    display: block;
+    border-radius: 12px;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
 </style>
+
+<!-- JavaScript -->
+<script>
+  function removeSkeleton(img) {
+    img.style.opacity = "1"; // Fade in image
+    const skeleton = img.parentElement.querySelector('.skeleton-loader');
+    if (skeleton) {
+      skeleton.remove(); // Remove skeleton when image loads
+    }
+  }
+</script>
