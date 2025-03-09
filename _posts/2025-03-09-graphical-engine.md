@@ -3,7 +3,7 @@ layout: post
 title: Simple Graphical Engine
 date: 2025-03-09
 categories: [Personnal]
-image: https://github.com/user-attachments/assets/fa5442fd-eb30-4976-98d5-264942c3b7c3
+image: ![image](https://github.com/user-attachments/assets/c1fdff2a-5b24-4e05-b2a4-176d6f3d0826)
 description: "Developping a simple minimal graphical engine in C using Xlib."
 ---
 
@@ -87,4 +87,61 @@ for (int i = 0; i < 500; i++) {
 ![image](https://github.com/user-attachments/assets/4afc9794-d975-45a4-81b5-cc1883c4500e)
 
 
+## Draw Text
 
+In order to draw text onscreen we have to define the font using a 8 bit bitmap for each characters :
+
+```c
+const uint8_t font[26][8] = {
+    { // A
+        0b00111100,
+        0b01000010,
+        0b10000001,
+        0b10000001,
+        0b11111111,
+        0b10000001,
+        0b10000001,
+        0b10000001
+    },
+}
+```
+
+We can now write a function to draw the individual characters using the `put_pixel` function created earlier :
+
+```c
+void draw_char(int x, int y, char c, unsigned int color) {
+    int index = c - 'A'; 
+
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (font[index][i] & (0b10000000 >> j)) {
+                put_pixel(x + j, y + i, color);
+            }
+        }
+    }
+}
+```
+
+```c
+    draw_char(1280/2, 720/2 - 100, 'H', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 90, 'E', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 80, 'L', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 70, 'L', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 60, 'L', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 50, 'O', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 30, 'W', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 20, 'O', 0xFFFFFF);
+    draw_char(1280/2, 720/2 - 10, 'R', 0xFFFFFF);
+    draw_char(1280/2, 720/2, 'L', 0xFFFFFF);
+    draw_char(1280/2, 720/2 + 10, 'D', 0xFFFFFF);
+```
+
+Result :
+
+![image](https://github.com/user-attachments/assets/16c134a4-87ca-4a77-841f-bdc68416fbf4)
+
+
+Next Steps :
+- Double buffering to avoid flicklering
+- Geometrical shapes
+- Creation of a Z-buffer to handle depth
