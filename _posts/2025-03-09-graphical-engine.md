@@ -3,7 +3,7 @@ layout: post
 title: Simple Graphical Engine
 date: 2025-03-09
 categories: [Personnal]
-image: ![image](https://github.com/user-attachments/assets/c1fdff2a-5b24-4e05-b2a4-176d6f3d0826)
+image: https://github.com/user-attachments/assets/c1fdff2a-5b24-4e05-b2a4-176d6f3d0826
 description: "Developping a simple minimal graphical engine in C using Xlib."
 ---
 

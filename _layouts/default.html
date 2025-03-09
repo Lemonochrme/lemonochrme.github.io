@@ -54,6 +54,17 @@
           </a>
         </div>
 
+        <div style="height: 120px;"></div>
+
+        <!-- Last Post Section -->
+        <h2 class="fade-in-title">Latest Post</h2>
+        {% assign last_post = site.posts | first %}
+        <div class="fade-in-description">
+          <h3><a href="{{ last_post.url }}">{{ last_post.title }}</a></h3>
+          <p>{{ last_post.description }}</p>
+          <img src="{{ last_post.image }}" alt="{{ last_post.title }}" style="width: 100%; height: auto; margin-top: 10px;">
+        </div>
+
         <style>
           /* General Fade-in Animation */
           @keyframes fadeInUp {
@@ -73,6 +84,7 @@
             animation: fadeInUp 1s ease-out forwards;
           }
 
+          
           /* Description Animation */
           .fade-in-description {
             opacity: 0;
