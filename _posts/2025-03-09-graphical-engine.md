@@ -69,4 +69,22 @@ What is a framebuffer? A framebuffer is simply an array in memory where each ele
 - Manipulating the pixels directly.
 - Copying this buffer to the screen using XImage.
 
+## Implementation
+
+The implementation of the framebuffer is rather simple :
+- Declaration of a framebuffer array `unsigned int framebuffer[WIN_WIDTH * WIN_HEIGHT]` so we can store the individual pixels before displaying them onscreen.
+- Creation of a `put_pixel(x, y, color)` function so we can directly modify pixels in the framebuffer.
+- Using XImage for displaying the image stored in RAM.
+
+We can then use the `put_pixel` function to draw a line for example :
+
+```c
+for (int i = 0; i < 500; i++) {
+    put_pixel(100 + i, 100 + i, 0xFFFFFF);
+}
+```
+
+![image](https://github.com/user-attachments/assets/4afc9794-d975-45a4-81b5-cc1883c4500e)
+
+
 
