@@ -4,9 +4,6 @@ title: Gallery
 ---
  
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beautiful Photo Gallery</title>
     <style>
         /* General Page Styles */
         body {
@@ -43,7 +40,7 @@ title: Gallery
 
         .photo-card img {
             width: 100%;
-            height: 250px;
+            height: 100%;
             object-fit: cover;
             display: block;
         }
