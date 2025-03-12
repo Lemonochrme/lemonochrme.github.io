@@ -3,34 +3,26 @@ layout: default
 title: Gallery
 ---
  
-WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP WIP 
-
-Work in progress...
-
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Photo Gallery</title>
+    <title>Beautiful Photo Gallery</title>
     <style>
+        /* General Page Styles */
+        body {
+            color: #fff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
         .gallery-container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        .gallery-title {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        /* Responsive Grid Layout */
-        .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-            padding: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
         }
 
         /* Photo Card */
@@ -40,17 +32,26 @@ Work in progress...
             border-radius: 16px;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
             transition: transform 0.3s ease-in-out;
         }
 
         .photo-card:hover {
-            transform: scale(1.05);
+            border-color: #7cc6fe; 
+            transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
         }
 
         /* Skeleton Loader */
         .skeleton {
             width: 100%;
-            height: 200px;
+            height: 250px;
             background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
             background-size: 200% 100%;
             animation: skeleton-loading 1.5s infinite linear;
@@ -61,68 +62,121 @@ Work in progress...
             100% { background-position: -200% 0; }
         }
 
-        /* Image Styling */
-        .photo {
+        /* Lightbox */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 200px;
-            object-fit: cover;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out;
         }
 
-        .fade-in {
+        .lightbox.active {
             opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .gallery-container {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="gallery-container">
-        <h1 class="gallery-title">Modern Photo Gallery</h1>
-        <div class="gallery-grid">
-            <!-- Images will be added dynamically using JavaScript -->
-        </div>
+    <div class="gallery-container" id="gallery">
+        <!-- Images will be inserted dynamically -->
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="close-btn" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="">
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const galleryGrid = document.querySelector(".gallery-grid");
+        const gallery = document.getElementById('gallery');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
 
-            const unsplashUrls = [
-                "https://picsum.photos/400/300?random=1",
-                "https://picsum.photos/400/300?random=2",
-                "https://picsum.photos/400/300?random=3",
-                "https://picsum.photos/400/300?random=4",
-                "https://picsum.photos/400/300?random=5",
-                "https://picsum.photos/400/300?random=6",
-                "https://picsum.photos/400/300?random=7",
-                "https://picsum.photos/400/300?random=8",
-                "https://picsum.photos/400/300?random=9"
-            ];
+        // Sample Image URLs 
+        const imageUrls = [
+            'https://picsum.photos/1280/720?random=1',
+            'https://picsum.photos/1280/720?random=2',
+            'https://picsum.photos/1280/720?random=3',
+            'https://picsum.photos/1280/720?random=4',
+            'https://picsum.photos/1280/720?random=5',
+            'https://picsum.photos/1280/720?random=6',
+            'https://picsum.photos/1280/720?random=7',
+            'https://picsum.photos/1280/720?random=8'
+        ];
 
-            unsplashUrls.forEach(url => {
-                const card = document.createElement("div");
-                card.classList.add("photo-card");
 
-                // Skeleton loader
-                const skeleton = document.createElement("div");
-                skeleton.classList.add("skeleton");
 
-                // Image
-                const img = document.createElement("img");
-                img.classList.add("photo");
+        // Load Images with Skeleton Effect
+        function loadGallery() {
+            imageUrls.forEach(url => {
+                const card = document.createElement('div');
+                card.classList.add('photo-card');
+
+                const skeleton = document.createElement('div');
+                skeleton.classList.add('skeleton');
+
+                const img = document.createElement('img');
                 img.src = url;
                 img.alt = "Gallery Image";
+                img.style.display = "none"; // Hide until loaded
+
+                // Show image when loaded
                 img.onload = () => {
-                    img.classList.add("fade-in");
-                    skeleton.remove(); // Remove skeleton once loaded
+                    skeleton.remove();
+                    img.style.display = "block";
                 };
 
                 card.appendChild(skeleton);
                 card.appendChild(img);
-                galleryGrid.appendChild(card);
+                gallery.appendChild(card);
+
+                // Lightbox Functionality
+                card.addEventListener('click', () => {
+                    lightbox.classList.add('active');
+                    lightboxImg.src = img.src;
+                });
             });
-        });
+        }
+
+        // Close Lightbox
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+        }
+
+        // Load Gallery on Page Load
+        window.onload = loadGallery;
     </script>
 
 </body>
