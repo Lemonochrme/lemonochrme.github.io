@@ -140,6 +140,19 @@ Result :
 
 ![image](https://github.com/user-attachments/assets/16c134a4-87ca-4a77-841f-bdc68416fbf4)
 
+## Integrating full ASCII bitmap font
+
+While the font I made was a good start, it  limited to the 26 characters of alphabet in uppercase. The goal is to implement a full off the shelf  8 bit bitmap font contained all the usefull character. For that I used dhepper's [font8x8_basic](https://github.com/dhepper/font8x8/blob/master/font8x8_basic.h) and integrate it in my project.
+
+![image](https://github.com/user-attachments/assets/2b60900c-bc02-4b02-afc7-be2e6e0cdccd)
+
+## Circles using Bresenham algorithm
+
+
+
+![image](https://github.com/user-attachments/assets/91a0c2fa-4f6d-4cb1-bc8e-0078d84330c1)
+
+
 
 Next Steps :
 - Double buffering to avoid flicklering
