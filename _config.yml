@@ -45,5 +45,7 @@ nav:
     url: /archive
   - title: About
     url: /about
-  - title: Gallery
-    url: /gallery
+  - title: Devlog
+    url: /devlog
+  # - title: Gallery
+  #   url: /gallery
