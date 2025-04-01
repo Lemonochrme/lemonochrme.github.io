@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark-poole">
+<html lang="en" data-theme="dark-pool">
   {% include head.html %}
   <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>
@@ -16,12 +16,56 @@
       <header class="masthead">
         <h3 class="masthead-title">
           <a href="{{ site.baseurl }}/" title="Home" style="display: inline-block; vertical-align: middle;">
-            <img src="{{ site.baseurl }}/assets/light.png" alt="Lemonochrome Logo" style="width: 100px; height: auto; vertical-align: middle;" />
+            <img id="logo" src="{{ site.baseurl }}/assets/logo-light.png" alt="Lemonochrome Logo" style="width: 100px; height: auto; vertical-align: middle;" />
           </a>
           <nav class="nav">
             {% for nav in site.nav %}
-            <small><a href="{{ nav.url }}">{{ nav.title }}</a></small>
+            <small>
+              <a href="{{ nav.url }}" class="hover-link fade-in-link">{{ nav.title }}</a>
+            </small>
             {% endfor %}
+            
+            <small>
+              <button id="theme-toggle" style="background: none; border: none; color: inherit; cursor: pointer; font: inherit;">
+              <span id="theme-icon">☀️</span>
+              </button>
+            </small>
+            <script>
+              const themeToggle = document.getElementById('theme-toggle');
+              const themeIcon = document.getElementById('theme-icon');
+
+              themeToggle.addEventListener('click', () => {
+              const html = document.documentElement;
+              const currentTheme = html.getAttribute('data-theme');
+              const newTheme = currentTheme === 'dark-pool' ? 'light' : 'dark-pool';
+              html.setAttribute('data-theme', newTheme);
+              localStorage.setItem('theme', newTheme);
+              themeIcon.textContent = newTheme === 'dark-pool' ? '☀️' : '🌙';
+              });
+
+              // Load theme from localStorage on page load
+              document.addEventListener('DOMContentLoaded', () => {
+              const savedTheme = localStorage.getItem('theme');
+              if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+                themeIcon.textContent = savedTheme === 'dark-pool' ? '☀️' : '🌙';
+              }
+              });
+
+              const logo = document.getElementById('logo');
+              const updateLogo = () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                logo.src = currentTheme === 'dark-pool' 
+                  ? '{{ site.baseurl }}/assets/logo-light.png' 
+                  : '{{ site.baseurl }}/assets/logo-dark.png';
+              };
+
+              // Update logo on theme toggle
+              themeToggle.addEventListener('click', updateLogo);
+
+              // Update logo on page load
+              document.addEventListener('DOMContentLoaded', updateLogo);
+            </script>
           </nav>
         </h3>
       </header>
@@ -66,7 +110,7 @@
         </div>
 
         <style>
-          /* General Fade-in Animation */
+          /* === Fade-in Animations === */
           @keyframes fadeInUp {
             0% {
               opacity: 0;
@@ -78,34 +122,36 @@
             }
           }
 
-          /* Title Animation */
           .fade-in-title {
             opacity: 0;
             animation: fadeInUp 1s ease-out forwards;
           }
 
-          
-          /* Description Animation */
           .fade-in-description {
             opacity: 0;
             animation: fadeInUp 1s ease-out forwards;
             animation-delay: 0.3s;
           }
 
-          /* Button Animation */
+          .fade-in-link {
+              opacity: 0;
+              animation: fadeInUp 1s ease-out forwards;
+              animation-delay: 0.3s;
+          }
+
           .fade-in-button {
             opacity: 0;
             animation: fadeInUp 1s ease-out forwards;
             animation-delay: 0.6s;
           }
 
-          /* Button Styling */
+          /* === Button Styling === */
           .btn-outline {
             display: inline-block;
             padding: 10px 20px;
             font-size: 20px;
-            color: white;
-            border: 2px solid white;
+            color: var(--link-color);
+            border: 2px solid var(--link-color);
             text-decoration: none;
             transition: background-color 0.4s, color 0.3s;
             position: relative;
@@ -113,13 +159,13 @@
           }
 
           .btn-outline:hover {
-            color: black;
-            background-color: white;
+            color: var(--body-bg); /* texte devient couleur de fond (blanc ou noir) */
+            background-color: var(--link-color); /* fond devient la couleur du lien */
           }
 
-          /* Hover Effect for Links */
+          /* === Hover Link Styling === */
           .hover-link {
-            color: white;
+            color: var(--link-color);
             text-decoration: none;
             position: relative;
             transition: color 0.3s ease;
@@ -130,7 +176,7 @@
             display: block;
             width: 0;
             height: 2px;
-            background: white;
+            background: var(--link-color);
             transition: width 0.3s ease;
             position: absolute;
             left: 0;
@@ -138,12 +184,41 @@
           }
 
           .hover-link:hover {
-            color: #bbbbbb; /* Slight color change on hover */
+            color: var(--link-hover-color);
           }
 
           .hover-link:hover::after {
             width: 100%;
           }
+
+          /* === General Body and Content === */
+          body {
+            background-color: var(--body-bg);
+            color: var(--body-color);
+            font-family: system-ui, sans-serif;
+          }
+
+          .container {
+            padding: 20px;
+          }
+
+          /* === Headings === */
+          h1, h2, h3, h4, h5, h6 {
+            color: var(--heading-color);
+          }
+
+          /* === Borders, code blocks, etc. === */
+          code {
+            background-color: var(--code-bg);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+          }
+
+          hr {
+            border-color: var(--border-color);
+          }
+
         </style>
 
         <div style="height: 200px;"></div>
@@ -156,7 +231,7 @@
       </main>
     </div>
 
-    <footer class="footer" style="background-color: #000; color: white; text-align: center; padding: 10px 0; width: 100%;">
+    <footer class="footer" style="text-align: center; padding: 10px 0; width: 100%;">
       <small>
         &copy;
         <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: '%Y' }}</time>. All rights reserved.

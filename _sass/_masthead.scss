@@ -27,4 +27,18 @@
   float: right;
   line-height: 1.25rem;
   word-spacing: 1rem;
+  font-weight: bold;
+}
+
+.fade-in-link {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+.hover-link {
+  color: var(--link-color);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
 }

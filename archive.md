@@ -89,8 +89,6 @@ title: Projects Archive
 <style>
   /* General Styling */
   body {
-    background-color: #000; /* Dark mode */
-    color: #f1f1f1;
   }
 
   .projects-container {
@@ -102,12 +100,10 @@ title: Projects Archive
   .portfolio-title {
     font-size: 2.5rem;
     margin-top: 40px;
-    color: #ffffff;
   }
 
   .year-month {
     font-size: 1.75rem;
-    color: #f1f1f1;
     margin-top: 40px;
   }
 
