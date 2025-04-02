@@ -49,3 +49,26 @@ void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n) {
 
 }
 ```
+
+## 02/04/2025
+Enoncé :
+> You are given a 0-indexed integer array nums. Return the maximum value over all triplets of indices (i, j, k) such that i < j < k. If all such triplets have a negative value, return 0. The value of a triplet of indices (i, j, k) is equal to (nums[i] - nums[j]) * nums[k].
+
+Ma solution :
+```
+long long maximumTripletValue(int* nums, int numsSize) {
+    long long max = INT_MIN;
+    for (int i = 0; i < numsSize; i++) {
+        for (int j = i + 1; j < numsSize; j++) {
+            for (int k = j + 1; k < numsSize; k++) {
+                long long val = (long long)(nums[i] - nums[j]) * nums[k]; 
+                if (val > max) {
+                    max = val;
+                }
+            }
+        }
+    }
+
+    return max > 0 ? max : 0;
+}
+```
