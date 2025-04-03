@@ -72,3 +72,7 @@ long long maximumTripletValue(int* nums, int numsSize) {
     return max > 0 ? max : 0;
 }
 ```
+
+## 03/04/2025
+Même énoncé mais on doit réduire la complexité de O(n^3) à au plus O(n^2). Dans le cas contraire : "Time Limit Exceeded".
+
