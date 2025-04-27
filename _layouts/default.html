@@ -27,7 +27,7 @@
             
             <small>
               <button id="theme-toggle" style="background: none; border: none; color: inherit; cursor: pointer; font: inherit;">
-              <span id="theme-icon">☀️</span>
+              <span id="theme-icon" class="hover-cool">✧</span>
               </button>
             </small>
             <script>
@@ -40,7 +40,7 @@
               const newTheme = currentTheme === 'dark-pool' ? 'light' : 'dark-pool';
               html.setAttribute('data-theme', newTheme);
               localStorage.setItem('theme', newTheme);
-              themeIcon.textContent = newTheme === 'dark-pool' ? '☀️' : '🌙';
+              themeIcon.textContent = newTheme === 'dark-pool' ? '✧' : '✧';
               });
 
               // Load theme from localStorage on page load
@@ -48,7 +48,7 @@
               const savedTheme = localStorage.getItem('theme');
               if (savedTheme) {
                 document.documentElement.setAttribute('data-theme', savedTheme);
-                themeIcon.textContent = savedTheme === 'dark-pool' ? '☀️' : '🌙';
+                themeIcon.textContent = savedTheme === 'dark-pool' ? '✧' : '✧';
               }
               });
 
@@ -75,7 +75,7 @@
         <br><br>
 
         <!-- Animated Title -->
-        <h2 class="fade-in-title">Hi, I'm Robin. — <span style="font-family: 'Courier New', Courier, monospace;">@Lemonochrome</span></h2>
+        <p class="fade-in-title">Robin Marin--Muller — <span style="font-family: 'Courier New', Courier, monospace;">@Lemonochrome</span></>
 
         <!-- Animated Description -->
         <p class="fade-in-description">
@@ -98,16 +98,14 @@
           </a>
         </div>
 
-        <div style="height: 120px;"></div>
-
         <!-- Last Post Section -->
-        <h2 class="fade-in-title">Latest Post</h2>
+        <!-- <h2 class="fade-in-title">Latest Post</h2>
         {% assign last_post = site.posts | first %}
         <div class="fade-in-description">
           <h3><a href="{{ last_post.url }}">{{ last_post.title }}</a></h3>
           <p>{{ last_post.description }}</p>
           <img src="{{ last_post.image }}" alt="{{ last_post.title }}" style="width: 100%; height: auto; margin-top: 10px;">
-        </div>
+        </div> -->
 
         <style>
           /* === Fade-in Animations === */
@@ -191,11 +189,20 @@
             width: 100%;
           }
 
+          .hover-cool {
+            display: inline-block;
+            transition: transform 0.3s ease;
+            font-size: larger;
+          }
+
+          .hover-cool:hover {
+            transform: rotate(360deg);
+          }
+
           /* === General Body and Content === */
           body {
             background-color: var(--body-bg);
             color: var(--body-color);
-            font-family: system-ui, sans-serif;
           }
 
           .container {
@@ -235,8 +242,6 @@
       <small>
         &copy;
         <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: '%Y' }}</time>. All rights reserved.
-        <br />
-        marin-muller@insa-toulouse.fr
       </small>
     </footer>
   </body>
