@@ -15,28 +15,30 @@ title: Projects Archive
       {% for post in yearMonth.items %}
         <div class="project-card fade-in" style="animation-delay: {{ forloop.index | times: 0.15 }}s;">
           <a href="{{ post.url }}" class="project-link">
-            <div class="project-image skeleton-wrapper">
-              <div class="skeleton-loader"></div>
-              {% if post.image %}
-                <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
-              {% endif %}
-            </div>
-            <div class="project-info">
-              <h3>{{ post.title }}</h3>
-              <p class="description">
-                {% if post.description %}
-                  {{ post.description | truncate: 150 }}
-                {% else %}
-                  {{ post.content | strip_html | truncate: 150 }}
+            <div class="project-content">
+              <div class="project-image skeleton-wrapper">
+                <div class="skeleton-loader"></div>
+                {% if post.image %}
+                  <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
                 {% endif %}
-              </p>
-              {% if post.technologies %}
-                <div class="technologies">
-                  {% for tech in post.technologies %}
-                    <span class="tech-badge">{{ tech }}</span>
-                  {% endfor %}
-                </div>
-              {% endif %}
+              </div>
+              <div class="project-info">
+                <h3>{{ post.title }}</h3>
+                <p class="description">
+                  {% if post.description %}
+                    {{ post.description | truncate: 150 }}
+                  {% else %}
+                    {{ post.content | strip_html | truncate: 150 }}
+                  {% endif %}
+                </p>
+                {% if post.technologies %}
+                  <div class="technologies">
+                    {% for tech in post.technologies %}
+                      <span class="tech-badge">{{ tech }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
             </div>
           </a>
         </div>
@@ -54,28 +56,30 @@ title: Projects Archive
       {% for post in yearMonth.items %}
         <div class="project-card fade-in" style="animation-delay: {{ forloop.index | times: 0.15 }}s;">
           <a href="{{ post.url }}" class="project-link">
-            <div class="project-image skeleton-wrapper">
-              <div class="skeleton-loader"></div>
-              {% if post.image %}
-                <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
-              {% endif %}
-            </div>
-            <div class="project-info">
-              <h3>{{ post.title }}</h3>
-              <p class="description">
-                {% if post.description %}
-                  {{ post.description | truncate: 150 }}
-                {% else %}
-                  {{ post.content | strip_html | truncate: 150 }}
+            <div class="project-content">
+              <div class="project-image skeleton-wrapper">
+                <div class="skeleton-loader"></div>
+                {% if post.image %}
+                  <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
                 {% endif %}
-              </p>
-              {% if post.technologies %}
-                <div class="technologies">
-                  {% for tech in post.technologies %}
-                    <span class="tech-badge">{{ tech }}</span>
-                  {% endfor %}
-                </div>
-              {% endif %}
+              </div>
+              <div class="project-info">
+                <h3>{{ post.title }}</h3>
+                <p class="description">
+                  {% if post.description %}
+                    {{ post.description | truncate: 150 }}
+                  {% else %}
+                    {{ post.content | strip_html | truncate: 150 }}
+                  {% endif %}
+                </p>
+                {% if post.technologies %}
+                  <div class="technologies">
+                    {% for tech in post.technologies %}
+                      <span class="tech-badge">{{ tech }}</span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
             </div>
           </a>
         </div>
@@ -110,19 +114,22 @@ title: Projects Archive
   /* Grid and Card Styling */
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
     margin-top: 20px;
   }
 
   .project-card {
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-color);
     backdrop-filter: blur(10px);
     border-radius: 16px;
     overflow: hidden;
     padding: 20px;
     transition: background-color 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 20px;
   }
 
   .project-card:hover {
@@ -135,16 +142,24 @@ title: Projects Archive
     color: inherit;
     display: block;
     position: relative;
+    width: 100%;
+  }
+
+  .project-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
   }
 
   /* Skeleton Loader Effect */
   .skeleton-wrapper {
     position: relative;
-    width: 100%;
-    height: 142px;
+    width: 150px;
+    height: 150px;
     overflow: hidden;
     border-radius: 12px;
     background: #2b2b2b;
+    flex-shrink: 0;
   }
 
   .skeleton-loader {
@@ -166,8 +181,8 @@ title: Projects Archive
 
   /* Image Fade-in Effect */
   .thumbnail {
-    width: 100%;
-    height: 142px; 
+    width: 150px;
+    height: 150px; 
     display: block;
     border-radius: 12px;
     object-fit: cover;
@@ -204,3 +219,4 @@ title: Projects Archive
     }
   }
 </script>
+

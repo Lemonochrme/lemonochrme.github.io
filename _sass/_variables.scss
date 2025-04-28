@@ -36,6 +36,10 @@
   --body-color: var(--gray-700);
   --body-bg: #fff;
   
+
+  --border-color-light: rgba(0, 0, 0, 0.4); /* Noir pour thème clair */
+  --border-color-dark: rgba(255, 255, 255, 0.4); /* Blanc pour thème sombre */
+
   
   // --body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
   //   "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
@@ -90,6 +94,7 @@
   --link-hover-color: var(--dark-poole-link-hover);
   --border-color: rgba(255, 255, 255, 0.15);
   --code-bg: var(--gray-900);
+  --border-color: var(--border-color-dark);
 }
 // Light theme
 [data-theme="light"] {
@@ -100,4 +105,5 @@
   --link-hover-color: var(--link-hover-color);
   --border-color: var(--gray-300);
   --code-bg: var(--gray-000);
+  --border-color: var(--border-color-light);
 }
