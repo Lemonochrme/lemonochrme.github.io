@@ -6,40 +6,23 @@ title: Projects Archive
 <div class="projects-container">
 
   <!-- Personal Portfolio Section -->
-  <h2 class="portfolio-title">❖ Personal Portfolio</h2>
+  <p class="portfolio-title">✧ Personal Portfolio</p>
   {% assign personalPosts = site.posts | where: "categories", "Personnal" %}
   {% assign personalPostsByYearMonth = personalPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
   {% for yearMonth in personalPostsByYearMonth %}
-    <h3 class="year-month fade-in">{{ yearMonth.name }}</h3>
-    <div class="projects-grid">
+    <p class="year-month fade-in">{{ yearMonth.name }}</p>
+    <div class="projects-list">
       {% for post in yearMonth.items %}
-        <div class="project-card fade-in" style="animation-delay: {{ forloop.index | times: 0.15 }}s;">
+        <div class="project-item fade-in" style="animation-delay: {{ forloop.index | times: 0.1 }}s;">
           <a href="{{ post.url }}" class="project-link">
-            <div class="project-content">
-              <div class="project-image skeleton-wrapper">
-                <div class="skeleton-loader"></div>
-                {% if post.image %}
-                  <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
-                {% endif %}
-              </div>
-              <div class="project-info">
-                <h3>{{ post.title }}</h3>
-                <p class="description">
-                  {% if post.description %}
-                    {{ post.description | truncate: 150 }}
-                  {% else %}
-                    {{ post.content | strip_html | truncate: 150 }}
-                  {% endif %}
-                </p>
-                {% if post.technologies %}
-                  <div class="technologies">
-                    {% for tech in post.technologies %}
-                      <span class="tech-badge">{{ tech }}</span>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-              </div>
-            </div>
+            <h3 class="project-title">{{ post.title }}</h3>
+            <p class="project-description">
+              {% if post.description %}
+                {{ post.description | truncate: 150 }}
+              {% else %}
+                {{ post.content | strip_html | truncate: 150 }}
+              {% endif %}
+            </p>
           </a>
         </div>
       {% endfor %}
@@ -47,40 +30,23 @@ title: Projects Archive
   {% endfor %}
 
   <!-- INSA Portfolio Section -->
-  <h2 class="portfolio-title">❖ INSA Portfolio</h2>
+  <p class="portfolio-title">✧ INSA Portfolio</p>
   {% assign insaPosts = site.posts | where: "categories", "INSA" %}
   {% assign insaPostsByYearMonth = insaPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
   {% for yearMonth in insaPostsByYearMonth %}
-    <h3 class="year-month fade-in">{{ yearMonth.name }}</h3>
-    <div class="projects-grid">
+    <p class="year-month fade-in">{{ yearMonth.name }}</p>
+    <div class="projects-list">
       {% for post in yearMonth.items %}
-        <div class="project-card fade-in" style="animation-delay: {{ forloop.index | times: 0.15 }}s;">
+        <div class="project-item fade-in" style="animation-delay: {{ forloop.index | times: 0.1 }}s;">
           <a href="{{ post.url }}" class="project-link">
-            <div class="project-content">
-              <div class="project-image skeleton-wrapper">
-                <div class="skeleton-loader"></div>
-                {% if post.image %}
-                  <img src="{{ post.image }}" alt="{{ post.title }} image" class="thumbnail" onload="removeSkeleton(this)">
-                {% endif %}
-              </div>
-              <div class="project-info">
-                <h3>{{ post.title }}</h3>
-                <p class="description">
-                  {% if post.description %}
-                    {{ post.description | truncate: 150 }}
-                  {% else %}
-                    {{ post.content | strip_html | truncate: 150 }}
-                  {% endif %}
-                </p>
-                {% if post.technologies %}
-                  <div class="technologies">
-                    {% for tech in post.technologies %}
-                      <span class="tech-badge">{{ tech }}</span>
-                    {% endfor %}
-                  </div>
-                {% endif %}
-              </div>
-            </div>
+            <h3 class="project-title">{{ post.title }}</h3>
+            <p class="project-description">
+              {% if post.description %}
+                {{ post.description | truncate: 150 }}
+              {% else %}
+                {{ post.content | strip_html | truncate: 150 }}
+              {% endif %}
+            </p>
           </a>
         </div>
       {% endfor %}
@@ -91,110 +57,66 @@ title: Projects Archive
 
 <!-- CSS Styling -->
 <style>
-  /* General Styling */
-  body {
-  }
-
+  /* General */
   .projects-container {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
   }
 
   .portfolio-title {
-    font-size: 2.5rem;
-    margin-top: 40px;
+    font-size: 2rem;
+    margin-top: 20px;
   }
 
   .year-month {
-    font-size: 1.75rem;
-    margin-top: 40px;
+    font-size: 1.5rem;
+    margin-top: 30px;
   }
 
-  /* Grid and Card Styling */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr;
+  /* Projects List */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
     margin-top: 20px;
   }
 
-  .project-card {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--border-color);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    overflow: hidden;
-    padding: 20px;
-    transition: background-color 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  .project-item {
+    padding: 15px 20px;
+    border: 1px solid var(--border-color, #444);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.02);
+    transition: background-color 0.3s, border-color 0.3s;
   }
 
-  .project-card:hover {
-    border-color: #7cc6fe; 
-    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+  .project-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: #7cc6fe;
   }
 
   .project-link {
     text-decoration: none;
     color: inherit;
     display: block;
-    position: relative;
-    width: 100%;
   }
 
-  .project-content {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+  .project-title {
+    font-size: 1.4rem;
+    margin: 0 0 8px;
+    font-weight: 600;
   }
 
-  /* Skeleton Loader Effect */
-  .skeleton-wrapper {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-    border-radius: 12px;
-    background: #2b2b2b;
-    flex-shrink: 0;
+  .project-description {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
-  .skeleton-loader {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
-    background-size: 200% 100%;
-    animation: skeleton-loading 1.5s infinite linear;
-  }
-
-  @keyframes skeleton-loading {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-
-  /* Image Fade-in Effect */
-  .thumbnail {
-    width: 150px;
-    height: 150px; 
-    display: block;
-    border-radius: 12px;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  /* Animation for Fade-in */
+  /* Fade-in Animation */
   .fade-in {
     opacity: 0;
     transform: translateY(20px);
-    animation: fadeInUp 0.6s ease-in-out forwards;
+    animation: fadeInUp 0.6s ease forwards;
   }
 
   @keyframes fadeInUp {
@@ -207,16 +129,19 @@ title: Projects Archive
       transform: translateY(0);
     }
   }
-</style>
 
-<!-- JavaScript -->
-<script>
-  function removeSkeleton(img) {
-    img.style.opacity = "1"; // Fade in image
-    const skeleton = img.parentElement.querySelector('.skeleton-loader');
-    if (skeleton) {
-      skeleton.remove(); // Remove skeleton when image loads
+  /* Responsive */
+  @media (max-width: 600px) {
+    .projects-container {
+      padding: 15px;
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+    }
+
+    .project-description {
+      font-size: 0.95rem;
     }
   }
-</script>
-
+</style>

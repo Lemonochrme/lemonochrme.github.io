@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark-pool">
+<!-- Minimalist Project List -->
+<div class=""
   {% include head.html %}
   <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>
@@ -27,7 +27,7 @@
             
             <small>
               <button id="theme-toggle" style="background: none; border: none; color: inherit; cursor: pointer; font: inherit;">
-              <span id="theme-icon" class="hover-cool">✧</span>
+              <span id="theme-icon" class="hover-cool">✷</span>
               </button>
             </small>
             <script>
@@ -40,7 +40,7 @@
               const newTheme = currentTheme === 'dark-pool' ? 'light' : 'dark-pool';
               html.setAttribute('data-theme', newTheme);
               localStorage.setItem('theme', newTheme);
-              themeIcon.textContent = newTheme === 'dark-pool' ? '✧' : '✧';
+              themeIcon.textContent = newTheme === 'dark-pool' ? '✷' : '✷';
               });
 
               // Load theme from localStorage on page load
@@ -48,7 +48,7 @@
               const savedTheme = localStorage.getItem('theme');
               if (savedTheme) {
                 document.documentElement.setAttribute('data-theme', savedTheme);
-                themeIcon.textContent = savedTheme === 'dark-pool' ? '✧' : '✧';
+                themeIcon.textContent = savedTheme === 'dark-pool' ? '✷' : '✷';
               }
               });
 
@@ -76,7 +76,7 @@
 
         <!-- Animated Title -->
         <p class="fade-in-title" style="text-align: center; font-size: 2em;">
-          Robin Marin-Muller
+          Robin Marin–Muller
         </p>
         <p class="fade-in-title" style="text-align: center; font-size: 1em;">@Lemonochrome</p>
 
