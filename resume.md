@@ -15,7 +15,6 @@ body {
 main {
   max-width: 900px;
   margin: auto;
-  padding: 4rem 0;
 }
 
 section {

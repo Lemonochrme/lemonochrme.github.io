@@ -21,7 +21,7 @@
           <nav class="nav">
             {% for nav in site.nav %}
             <small>
-              <a href="{{ nav.url }}" class="hover-link fade-in-link">{{ nav.title }}</a>
+              <a href="{{ nav.url }}" class="hover-link">{{ nav.title }}</a>
             </small>
             {% endfor %}
             
@@ -82,10 +82,11 @@
 
         <!-- Animated Description -->
         <p class="fade-in-description">
-          I'm an engineering student in Control Engineering, Computer Science, and Electronics at INSA Toulouse. Passionate about many things, here you will find my personal and academical projects where I experiment with what I learn daily.
+          I'm an engineering student in Control Engineering, Computer Science, and Electronics at INSA Toulouse. Passionate about many things, here you will find my personal and academic projects where I experiment with what I learn daily.
         </p>
 
-        <div style="height: 42px;"></div>
+        <p class="fade-in-description" style="text-align: center;">♢</p>
+
 
         <p class="fade-in-description">
           <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email Me</a> |
@@ -97,7 +98,7 @@
         <div style="text-align: right;">
           <!-- Animated Button -->
           <a href="archive" class="btn-outline fade-in-button">
-            Discover the Projects
+            ✦ Discover the Projects
           </a>
         </div>
 
@@ -208,9 +209,6 @@
             color: var(--body-color);
           }
 
-          .container {
-            padding: 20px;
-          }
 
           /* === Headings === */
           h1, h2, h3, h4, h5, h6 {
