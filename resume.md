@@ -177,9 +177,8 @@ document.addEventListener("DOMContentLoaded", () => {
       <li><strong>RISC V Microprocessor (VHDL)</strong> – 5-stage pipeline, 68→168 MHz
         <div class="job-title">Design a 5-stage pipelined RISC-V microprocessor in VHDL using  using Vivado. Implemented ALU, dual-port register file, and memory subsystems. Optimized clock frequency and managed data hazards.</div>
       </li>
-      <li><strong>IoT Gas Sensor</strong> – Nano-sensor + LoRa + PCB + ESP32
-        <div class="job-title">Fabricated a nanoparticle-based gas sensor. Developed signal conditioning circuits, integrated it with an ESP32 and LoRaWAN communication, and designed a full PCB for low-power IoT application.</div>
-      </li>
+      <li><strong>WO3 Gas Sensor</strong> – WO3 Nanoparticles sensor + LoRa + PCB + ESP32
+        <div class="job-title">Synthesized WO3 nanoparticles using basic chemistry techniques. Coated a polysilicon substrate with photosensitive resin to protect the functional circuit, followed by acid etching to remove unwanted conductive parts. Cleaned the substrate and applied nanoparticle powder using electrophoresis, ensuring even coating on the conductive combs. Cut individual silicon dies from the wafer and wire-bonded them to the package using ultrasonic bonding. Characterized the gas sensor's resistance and integrated it with an ESP32 and LoRaWAN communication. Designed a full PCB for low-power IoT applications.</div>    </li>
       <li><strong>Water Leak Detection</strong> – FFT + SVM + LoRa, full PCB + ML
         <div class="job-title">Designed PCB and embedded C software for leak detection system using acoustic/vibrational signals, FFT analysis, and SVM classification, combined with LoRa communication for remote monitoring.</div>
       </li>
