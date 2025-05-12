@@ -135,8 +135,8 @@ document.addEventListener("DOMContentLoaded", () => {
   <section>
     <h2>✦ Education</h2>
     <ul>
-      <li><strong>INSA Toulouse</strong> – Automation, Electronics, CS <span class="job-period">2022–Present</span>
-        <div class="job-title">Specialization in Automation, Electronics, and Computer Science</div>
+      <li><strong>INSA Toulouse</strong> – Automation and Electronics <span class="job-period">2022–Present</span>
+        <div class="job-title">Specialization in Automatic Control, Electronics, and Computer Science</div>
       </li>
       <li><strong>DUT GEII</strong> – Embedded Systems Option <span class="job-period">2020–2022</span>
         <div class="job-title">University Diploma in Electrical Engineering and Industrial Computing</div>
@@ -153,14 +153,14 @@ document.addEventListener("DOMContentLoaded", () => {
   <section>
     <h2>✦ Professional Experience</h2>
     <ul>
-      <li><strong>CNES</strong>, Embedded Software Engineer <span class="job-period">2022–Present</span>
-        <div class="job-title">Developed and tested embedded software for space applications. Automated the embedded software development pipeline for satellite systems.</div>
+      <li><strong>CNES</strong>, Embedded Software Engineer Apprentice <span class="job-period">2022–Present</span>
+        <div class="job-title">Designed, implemented and tested embedded flight software modules for spacecraft systems within the <a href="https://cnes.fr/projets/kosmos" target="_blank">CNES KOSMOS framework</a>. Prototyped PUS Services 23–25 (File Management, CFDP Integration, Transfer Coordination) in a partitioned <a href="https://www.fentiss.com/xtratum/" target="_blank">XNG</a> hypervisor based RTEMS environment. Contributed to the automation and verification of embedded software CI pipelines. Investigated file-based data handling strategies for onboard image storage and transfer using CCSDS CFDP in real-time systems.</div>
       </li>
       <li><strong>FentISS</strong>, Software Engineer Intern <span class="job-period">2024</span>
-        <div class="job-title">Worked on XtratuM hypervisor and SKE simulator. Optimized simulator execution by tuning Linux kernel parameters.</div>
+        <div class="job-title">Worked on performance tuning of the SKE simulator for XtratuM hypervisor environments under Linux. Analyzed and optimized scheduling and CPU affinity (chrt, taskset, cpupower). Quantified execution time and jitter under controlled CPU load scenarios. Implemented a Q-learning technique to discover optimal kernel and process configurations.</div>
       </li>
       <li><strong>Ikalogic</strong>, C++ Intern <span class="job-period">2022</span>
-        <div class="job-title">Developed embedded NXP LP55S69 C++ software for a logic analyzer tool.</div>
+        <div class="job-title">Developed firmware for a 4-channel logic analyzer based on an NXP LPC55S69 microcontroller (Cortex-M33). Designed and integrated FreeRTOS-based multithreaded architecture, I2C-controlled LED HMI, software-regulated voltage threshold (via PWM + low-pass filter), USB bulk transfer communication, and a low-latency DMA pipeline between CPLD input and USB output using a ping-pong buffer architecture. Validated system performance up to 25 MHz with custom Qt-based USB testing application.</div>
       </li>
       <li><strong>Thales</strong>, Observation Intern <span class="job-period">2017</span>
         <div class="job-title">Observed production chain and business engineering processes.</div>
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <h2>✦ Academic Projects</h2>
     <ul>
       <li><strong>Thrust Vectoring Module</strong> – Model rocketry
-        <div class="job-title">Developed a module to control thrust direction for model rockets.</div>
+        <div class="job-title">Developed a prototype to control thrust direction for model rockets. </div>
       </li>
       <li><strong>RISC V Microprocessor (VHDL)</strong> – 5-stage pipeline, 68→168 MHz
         <div class="job-title">Design a 5-stage pipelined RISC-V microprocessor in VHDL using  using Vivado. Implemented ALU, dual-port register file, and memory subsystems. Optimized clock frequency and managed data hazards.</div>
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <li><strong>WO3 Gas Sensor</strong> – WO3 Nanoparticles sensor + LoRa + PCB + ESP32
         <div class="job-title">Synthesized WO3 nanoparticles using basic chemistry techniques. Coated a polysilicon substrate with photosensitive resin to protect the functional circuit, followed by acid etching to remove unwanted conductive parts. Cleaned the substrate and applied nanoparticle powder using electrophoresis, ensuring even coating on the conductive combs. Cut individual silicon dies from the wafer and wire-bonded them to the package using ultrasonic bonding. Characterized the gas sensor's resistance and integrated it with an ESP32 and LoRaWAN communication. Designed a full PCB for low-power IoT applications.</div>    </li>
       <li><strong>Water Leak Detection</strong> – FFT + SVM + LoRa, full PCB + ML
-        <div class="job-title">Designed PCB and embedded C software for leak detection system using acoustic/vibrational signals, FFT analysis, and SVM classification, combined with LoRa communication for remote monitoring.</div>
+        <div class="job-title">Designed and implemented a full end-to-end embedded system for water leak detection in public water networks, using acoustic and vibrational sensors. Developed custom PCBs (2 iterations), embedded firmware (FreeRTOS), FFT-based signal processing, data compression for LoRa transmission, and an SVM-based classification pipeline. Achieved reliable detection under lab constraints.</div>
       </li>
     </ul>
   </section>
@@ -191,7 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <li><strong>DIY Drone</strong> <span class="job-period">2016</span>
         <div class="job-title">Built and programmed a custom drone for hobby purposes.</div>
       </li>
-      <li><strong>Autonomous Flying Wing</strong> <span class="job-period">2024–Present</span> – Real-time mapping
+      <li><strong>Autonomous Flying Wing</strong> <span class="job-period">2024–Present</span> – Real-time terrain mapping
         <div class="job-title">Currently developing an autonomous flying wing system for real-time terrain mapping and reconnaissance. Utilizing the RV1103 platform, powered by a single-core ARM Cortex-A7 32-bit processor associated with 0.5 TOPS NPU. Integrating embedded AI for onboard data processing. </div>
       </li>
       <li><strong>Habit Tracking App</strong> <span class="job-period">2025–Present</span> – Flutter
@@ -203,24 +203,39 @@ document.addEventListener("DOMContentLoaded", () => {
     </ul>
   </section>
 
-  <section>
-    <h2>✦ Technical Skills</h2>
-    <div class="skill-list">
-      <div><strong>Software Engineering</strong><br>C/C++, Java, Python, Git, GitLab CI/CD, Docker, Jenkins, TensorFlow, Scikit-learn, NumPy</div>
-      <div><strong>Electrical Engineering</strong><br>PCB Design (Altium, KiCAD), LTSpice, VHDL, STM32, ESP32, ATmega328p, NXP LPC55, Zynq 7000</div>
-      <div><strong>Automatic Control</strong><br>MATLAB, Simulink, PID Control, Non-linear Systems, Kalman Filters</div>
-      <div><strong>Miscellaneous</strong><br>LaTeX, Blender, Adobe Suite, Figma, Manim, OpenStack, IoT Networks, Fusion360, 3D Printing, Raspberry Pi, LoRa, React Native, Jekyll, Vanilla HTML/CSS/JS, I use arch BTW</div>
+<section>
+  <h2>✦ Technical Skills</h2>
+  <div class="skill-list">
+    <div><strong>Embedded Systems</strong><br>
+      C (embedded profile), C++, RTEMS, FreeRTOS, OSAL, XNG Hypervisor, ARINC653, LEON3/LEON4, Zynq 7000, STM32, embedded Linux, partitioned architectures, hardware abstraction layers (HAL).
     </div>
-  </section>
+    <div><strong>Space Systems Software</strong><br>
+      ECSS PUS-C Services, CCSDS CFDP, onboard file-based data handling, TC/TM routing, libpus integration in partitioned systems. CNES KOSMOS framework and real-time software execution on XNG hypervisor (bare-metal), under ARINC-653-compliant Time and Space Partitioning.
+    </div>
+    <div><strong>Software Engineering</strong><br>
+      Git, CMake, Make, GitLab CI, Jenkins, Docker, Python, Bash scripting, cross-compilation (bare-metal), debugging in gdb and xsct.
+    </div>
+    <div><strong>Control & Signal Processing</strong><br>
+      MATLAB/Simulink, PID tuning, non-linear dynamics, Kalman filters, signal denoising, control law implementation on embedded targets.
+    </div>
+    <div><strong>Hardware & FPGA</strong><br>
+      KiCAD, Altium Designer, LTSpice, VHDL (basic), MicroBlaze, ARM Cortex-M, soldering/debugging, bus protocols (I2C, SPI, UART, USB).
+    </div>
+    <div><strong>Scientific & Dev Tools</strong><br>
+      LaTeX (professional documents), Markdown, Fusion360, Blender, Python scientific stack (NumPy, SciPy, matplotlib), Gantt & UML tools (Mermaid Chart, Draw.io).
+    </div>
+  </div>
+</section>
 
   <section>
     <h2>✦ Personal Profile</h2>
     <ul>
       <li><strong>Sports:</strong> Calisthenics, Climbing, Mountaineering, Ski/Snowboard</li>
       <li><strong>Music:</strong> Academical clarinet (10 years), self-taught piano</li>
-      <li><strong>Languages:</strong> French (Native), English (Expert), Spanish (B1), Italian (A2), Latin</li>
+      <li><strong>Languages:</strong> French (Native), English (Expert), Spanish (B1), Italian (A2), Latin (reading knowledge)</li>
       <li><strong>Nationality:</strong> French and Swiss</li>
       <li><strong>Interests:</strong> History, Paleohistory, Climatology, Bioevolution, Opensource and Everything that flies</li>
+      <li>❖ <strong>Ethos:</strong> Precise, creative, and autonomy-driven. </li>
     </ul>
   </section>
 </main>

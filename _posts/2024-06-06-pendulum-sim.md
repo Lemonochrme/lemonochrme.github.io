@@ -7,59 +7,86 @@ image: https://github.com/user-attachments/assets/10754d80-acd4-4255-85b6-763170
 description: "Ce projet présente une simulation de pendule en Python utilisant Pygame, avec implémentation d'un contrôleur PID et optimisation par machine learning."
 ---
 
-Ce projet à pour but de renforcer mes compétences dans une multitude de domaines distincts, de manière évident nous allons aborder un problème de physique classique ce qui est un bon moyen de me remémorer certaines notions importantes, la programmation en Python ne devrait pas être trop compliquée mais j'aimerais apprendre à utiliser la bibliothèque Pygame que je ne connais pas encore. Une fois ces deux objectifs simples atteints nous pourrons nous concentrer sur des notions plus avancées tout en ayant un cadre ludique pour efféctuer les expérimentations. Nous allons améliorer la simulation du pendule de deux manière, d'une part par l'implémentation d'un contrôlleur PID afin d'asservir d'angle du pendule et finnalement une implémentation d'un algorithme de machine learning pour optimiser les paramètres du PID. Ce projet, simple de prime abord s'avèrera être un excellent moyen consollider mes compétences dans des domaines qui m'intérressent particulièrement.
+## Objectifs du projet
+
+Ce projet a pour but de renforcer mes compétences dans plusieurs domaines complémentaires. Nous allons aborder un problème classique de physique — une excellente occasion de me remémorer certaines notions fondamentales — tout en développant une simulation en Python. La programmation en elle-même ne devrait pas poser de grandes difficultés, mais j’en profiterai pour découvrir et apprendre à utiliser la bibliothèque **Pygame**, que je ne maîtrise pas encore.
+
+Une fois ces premiers objectifs atteints, je pourrai me concentrer sur des aspects plus avancés, avec un cadre ludique et interactif pour mener différentes expérimentations. Le projet consistera notamment à **améliorer la simulation du pendule** de deux façons :
+
+1. En implémentant un **contrôleur PID** pour asservir l’angle du pendule.
+2. En utilisant un **algorithme de machine learning** pour optimiser les paramètres du PID.
+
+Ce projet, simple en apparence, s’avérera donc un excellent moyen de consolider mes compétences dans des domaines qui m’intéressent particulièrement, tout en m’amusant.
 
 
-## Qu'est ce qu'un pendule et comment le modéliser ?
+## Qu’est-ce qu’un pendule, et comment le modéliser ?
 
 ### Préambule
 
-Isaac Newton, dans ses *Principes Mathématiques de la Philosophie Naturelle*, définit le pendule simple comme suit : « A simple pendulum is an imaginary pendulum consisting of a heavy particle called the bob, suspended from a point by means of a rod or string without weight. » On peut dès lors en extraire les caractéristiques : un pendule simple est composé d'une masse dite ponctuelle (on suppose que les changements d'orientation et les déformations sont négligeables), attachée à un fil ou à un axe imaginaire dépourvu de poids.
+Dans ses *Principes mathématiques de la philosophie naturelle*, Isaac Newton définit le pendule simple comme suit :
+
+> « A simple pendulum is an imaginary pendulum consisting of a heavy particle called the bob, suspended from a point by means of a rod or string without weight. »
+
+On peut en déduire les caractéristiques suivantes : un **pendule simple** est constitué d'une masse ponctuelle (c’est-à-dire qu’on néglige sa taille, son orientation, et toute déformation), suspendue à un fil ou à un axe idéal, sans masse.
 
 ### Mise en équation
 
-Appliquons la seconde loi de Newton à notre problème. Dans un premier temps, identifions les forces qui agissent sur le pendule. Ce dernier est soumis à deux forces principales : 
+Appliquons la **seconde loi de Newton** à ce système.
 
-1. La force gravitationnelle $ F_g = mg $, qui agit vers le bas.
-2. La force de tension exercée par le fil ou l'axe, qui maintient la masse sur un arc de cercle et s'oppose au mouvement radial.
+Le pendule est soumis à deux forces principales :
 
-Pour analyser le mouvement, nous projetons la force gravitationnelle dans la direction tangentielle à la trajectoire du pendule, ce qui donne :
+1. La **force gravitationnelle** \( F_g = mg \), dirigée vers le bas.
+2. La **force de tension** du fil, qui contraint la masse à se déplacer sur un arc de cercle.
+
+Pour étudier le mouvement, on projette la force gravitationnelle dans la direction **tangentielle** à la trajectoire du pendule :
 
 $$
 F_t = -mg \sin(\theta)
 $$
 
-D'après la seconde loi de Newton :
+D’après la seconde loi de Newton :
 
 $$
 F_t = ma_t
 $$
 
-où $ a_t $ est l'accélération tangentielle, liée à l'accélération angulaire $ \ddot{\theta} $ par $ a_t = l\ddot{\theta} $, avec $ l $ la longueur du fil. Ainsi, nous avons :
+L’accélération tangentielle \( a_t \) est liée à l’accélération angulaire \( \ddot{\theta} \) par :
+
+$$
+a_t = l\ddot{\theta}
+$$
+
+où \( l \) est la longueur du fil. En remplaçant, on obtient :
 
 $$
 -mg\sin(\theta) = ml\ddot{\theta}
 $$
 
-D'où :
+D’où l’équation différentielle du pendule simple :
 
 $$
 \ddot{\theta} = -\frac{g}{l} \sin(\theta)
 $$
 
-![image](https://github.com/user-attachments/assets/1e95c3c2-cb97-4015-9c28-05c35a468090)
+![image](https://github.com/user-attachments/assets/1e95c3c2-cb97-4015-9c28-05c35a468090)  
+*Solution de l’équation du pendule : oscillations sinusoïdales*
 
-
-Le système en l'état ne perd pas d'énergie, ajoutons de la dissipation (frottements), pour ce faire il nous suffit de soustraire un terme proportionnel à la vitesse angulaire $\dot{\theta}$ appelons le $b$ :
+Dans ce modèle, aucune énergie n’est perdue. Pour rendre la simulation plus réaliste, ajoutons un **terme de dissipation** (par exemple, des frottements) proportionnel à la vitesse angulaire \( \dot{\theta} \), noté \( b \) :
 
 $$
 \ddot{\theta} = -\frac{g}{l} \sin(\theta) - b\dot{\theta}
 $$
 
-![image](https://github.com/user-attachments/assets/826ded21-67d0-4036-bd2b-da2be71363c7)
+![image](https://github.com/user-attachments/assets/826ded21-67d0-4036-bd2b-da2be71363c7)  
+*Solution avec dissipation : oscillations amorties*
 
 
-# Simulation
+## Simulations en Python
+
+
+
+
+
 
 <embed src="{{ site.baseurl }}/simulations/pendulum.html" width="100%" height="600px">
 
