@@ -102,15 +102,13 @@ We also used **Fusion 360** and **SimScale (CFD)** to model airflow and detect p
 
 The **U-Blox GPS module** provided post-flight location data. We decoded NMEA RMC strings to extract latitude, longitude, and speed.
 
-Despite flying indoors during some tests, the GPS accuracy was within ~2 meters.
+Despite testing indoors during some tests, the GPS accuracy was within ~2 meters.
 
 
 
 ## Results and Lessons
 
-This was our first experience with real-time control on an embedded system. We succeeded in building a complete prototype, and while the control loop was simple, the system worked during bench tests.
-
-At the time, I had very limited knowledge of advanced control theory techniques such as PID controllers or Kalman filters. Most of the control logic was implemented using basic feedback and simple filtering.
+This was our first experience with real-time control on an embedded system. We succeeded in building a complete prototype. At the time, I had very limited knowledge of advanced control theory techniques such as PID controllers or Kalman filters. Most of the control logic was implemented using basic feedback and simple filtering.
 
 **Main challenges:**
 
@@ -131,3 +129,4 @@ With more time and experience, we would:
 - Use faster actuators or gimballed motors.
 - Log higher-frequency IMU data for better analysis.
 - Test in more controlled outdoor conditions.
+- MATLAB simulation driven design.
