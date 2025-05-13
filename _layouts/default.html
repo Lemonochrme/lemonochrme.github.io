@@ -49,6 +49,10 @@
               if (savedTheme) {
                 document.documentElement.setAttribute('data-theme', savedTheme);
                 themeIcon.textContent = savedTheme === 'dark-pool' ? '✷' : '✷';
+              } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeIcon.textContent = '✷';
               }
               });
 
