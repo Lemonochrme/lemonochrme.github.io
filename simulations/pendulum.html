@@ -1,41 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pendulum Simulation with PID Control</title>
     <style>
         body {
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Georgia', serif;
             margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: auto;
+            line-height: 1.6;
         }
 
         h1 {
-            margin-top: 20px;
-            font-size: 2.5em;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid #111;
+            padding-bottom: 0.3em;
+            margin: 2rem 0;
+            font-size: 2.2rem;
             text-align: center;
         }
 
         .container {
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #121212;
-            margin-bottom: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 2rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            border: 1px solid #e0e0e0;
         }
 
         canvas {
@@ -45,67 +36,64 @@
         }
 
         .controls {
-            margin-top: 20px;
+            margin-top: 2rem;
             display: flex;
-            justify-content: center;
-            gap: 15px;
+            gap: 1rem;
             width: 100%;
+            justify-content: center;
         }
 
         button {
-            background-color: #00aaff;
-            color: #ffffff;
-            border: none;
-            padding: 12px 20px;
-            font-size: 16px;
+            background: transparent;
+            color: #111;
+            border: 1px solid #111;
+            padding: 0.8rem 1.5rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            width: 100%;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         button:hover {
-            background-color: #0088cc;
+            background: #111;
+            color: #fff;
         }
 
         button:active {
-            background-color: #006699;
             transform: translateY(1px);
         }
 
         .toggled {
-            background-color: transparent !important;
-            color: #ffffff;
-            box-shadow: inset 0 0 0 2px #ffffff;
+            background-color: #111 !important;
+            color: #fff;
         }
 
         .metrics {
-            margin-top: 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 10px;
+            margin-top: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
             width: 100%;
-            max-width: 600px;
-            font-size: 14px;
+            font-size: 0.9rem;
         }
 
         .metrics div {
-            background-color: #1e1e1e;
-            padding: 10px;
-            border-radius: 5px;
-            flex: 1;
+            padding: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
             text-align: center;
+            background: #fff;
         }
 
         .output {
             font-family: monospace;
             white-space: pre-wrap;
-            background: #2b2b2b;
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-            margin-top: 20px;
+            padding: 1rem;
+            border-radius: 2px;
+            margin-top: 1rem;
+            border: 1px solid #e0e0e0;
         }
     </style>
 </head>
@@ -181,7 +169,8 @@
             const y = origin_y + l * Math.cos(theta);
 
             // Draw horizontal axis
-            ctx.strokeStyle = 'white';
+            ctx.strokeStyle = '#111'; // Ligne du pendule
+            ctx.fillStyle = '#111'; // Masse du pendule
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(100, origin_y);
@@ -200,7 +189,7 @@
             ctx.lineWidth = 4;
             for (let i = 0; i < trail.length - 1; i++) {
                 const alpha = (i / trail.length) * fadeFactor;
-                ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.strokeStyle = `rgba(17, 17, 17, ${alpha})`;
                 ctx.beginPath();
                 ctx.moveTo(trail[i].x, trail[i].y);
                 ctx.lineTo(trail[i + 1].x, trail[i + 1].y);
@@ -208,7 +197,7 @@
             }
 
             // Draw pendulum rod
-            ctx.strokeStyle = 'white';
+            ctx.strokeStyle = 'black';
             ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(origin_x, origin_y);
@@ -216,7 +205,7 @@
             ctx.stroke();
 
             // Draw pendulum bob
-            ctx.fillStyle = 'white';
+            ctx.fillStyle = 'black';
             ctx.beginPath();
             ctx.arc(x, y, 10, 0, Math.PI * 2);
             ctx.fill();
@@ -275,4 +264,3 @@
         loop();
     </script>
 </body>
-</html>

@@ -43,8 +43,8 @@ version: 3.0.0
 nav:
   - title: Posts
     url: /archive
-  - title: Projects
-    url: /projects
+  #- title: Projects
+  #  url: /projects
   - title: About
     url: /about
   - title: Resume

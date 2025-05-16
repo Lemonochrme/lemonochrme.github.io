@@ -6,7 +6,7 @@ title: Projects Archive
 <div class="projects-container">
 
   <!-- Personal Portfolio Section -->
-  <p class="portfolio-title">✧ Personal Portfolio</p>
+  <p class="portfolio-title">Personal Portfolio</p>
   {% assign personalPosts = site.posts | where: "categories", "Personnal" %}
   {% assign personalPostsByYearMonth = personalPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
   {% for yearMonth in personalPostsByYearMonth %}
@@ -30,7 +30,7 @@ title: Projects Archive
   {% endfor %}
 
   <!-- INSA Portfolio Section -->
-  <p class="portfolio-title">✧ INSA Portfolio</p>
+  <p class="portfolio-title"> INSA Portfolio</p>
   {% assign insaPosts = site.posts | where: "categories", "INSA" %}
   {% assign insaPostsByYearMonth = insaPosts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
   {% for yearMonth in insaPostsByYearMonth %}
