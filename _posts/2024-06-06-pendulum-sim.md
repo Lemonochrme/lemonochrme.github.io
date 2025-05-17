@@ -32,7 +32,7 @@ Appliquons la **seconde loi de Newton** à ce système.
 
 Le pendule est soumis à deux forces principales :
 
-1. La **force gravitationnelle** \( F_g = mg \), dirigée vers le bas.
+1. La **force gravitationnelle** $F_g = mg$, dirigée vers le bas.
 2. La **force de tension** du fil, qui contraint la masse à se déplacer sur un arc de cercle.
 
 Pour étudier le mouvement, on projette la force gravitationnelle dans la direction **tangentielle** à la trajectoire du pendule :
@@ -47,17 +47,19 @@ $$
 F_t = ma_t
 $$
 
-L’accélération tangentielle \( a_t \) est liée à l’accélération angulaire \( \ddot{\theta} \) par :
+L’accélération tangentielle $a_t$ est liée à l’accélération angulaire $\ddot{\theta}$ par :
 
 $$
 a_t = l\ddot{\theta}
 $$
 
-où \( l \) est la longueur du fil. En remplaçant, on obtient :
+où $l$ est la longueur du fil. En remplaçant, on obtient :
 
 $$
 -mg\sin(\theta) = ml\ddot{\theta}
 $$
+
+![alt text](/assets/posts-images/personnal/pendulum/visualisation.png)
 
 D’où l’équation différentielle du pendule simple :
 
@@ -68,7 +70,7 @@ $$
 ![image](https://github.com/user-attachments/assets/1e95c3c2-cb97-4015-9c28-05c35a468090)  
 *Solution de l’équation du pendule : oscillations sinusoïdales*
 
-Dans ce modèle, aucune énergie n’est perdue. Pour rendre la simulation plus réaliste, ajoutons un **terme de dissipation** (par exemple, des frottements) proportionnel à la vitesse angulaire \( \dot{\theta} \), noté \( b \) :
+Dans ce modèle, aucune énergie n’est perdue. Pour rendre la simulation plus réaliste, ajoutons un **terme de dissipation** (par exemple, des frottements) proportionnel à la vitesse angulaire $\dot{\theta}$, noté $b$ :
 
 $$
 \ddot{\theta} = -\frac{g}{l} \sin(\theta) - b\dot{\theta}
