@@ -33,3 +33,5 @@ Modifying this file allows for tune the system for our specific use case for exa
 We can check that the camera is working via  network video stream : 
 
 ![alt text](/assets/posts-images/personnal/edge-ai/network-camera-view.png)
+
+Work in progress...
