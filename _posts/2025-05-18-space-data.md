@@ -9,8 +9,6 @@ description: "Overview of space data, how to capture it, process it and value it
 
 I assisted to the CNES “Data from Space” training that provided a comprehensive overview of Earth observation and mission data from how to capture the data to how to store the datasets on earth passing by all the processing and more. I took a lot of written notes during this training and the following is a structured and enhanced report based on my notes.
 
-I assisted to the CNES “Data from Space” training that provided a comprehensive overview of Earth observation and mission data—from how to capture the data to how to store the datasets on Earth, covering all the processing steps in between. I took extensive notes during this training, and the following is a structured and enhanced report based on these notes.
-
 ## Satellite Orbits and Sensor Types
 
 ### Orbital Regimes
