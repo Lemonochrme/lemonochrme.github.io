@@ -41,12 +41,20 @@
           <!-- ALL JS Combined -->
           <script>
             document.addEventListener('DOMContentLoaded', () => {
-              // Burger toggle
-              const burger = document.querySelector('.burger');
-              const nav = document.querySelector('.nav');
-              burger.addEventListener('click', () => {
+                // Burger toggle
+                const burger = document.querySelector('.burger');
+                const nav = document.querySelector('.nav');
+                burger.addEventListener('click', (e) => {
                 nav.classList.toggle('show');
-              });
+                e.stopPropagation();
+                });
+
+                // Hide nav when clicking outside
+                document.addEventListener('click', (e) => {
+                if (nav.classList.contains('show') && !nav.contains(e.target) && !burger.contains(e.target)) {
+                  nav.classList.remove('show');
+                }
+                });
 
               // Theme toggle
               const themeToggle = document.getElementById('theme-toggle');

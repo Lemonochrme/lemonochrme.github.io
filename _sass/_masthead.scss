@@ -87,33 +87,102 @@
   .nav {
     display: none;
     flex-direction: column;
-    background-color: white;
+    text-align: right;
     position: absolute;
-    top: 60px; /* adjust based on header height */
+    top: 70px;
     right: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 1rem;
     z-index: 1000;
+    background: white;
+    animation: slideDownNav 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav.show {
     display: flex;
+    animation: fadeInNav 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .burger {
     display: inline-block;
-    float: right;
-    margin-left: auto;
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
+    margin-left: 0;
+    z-index: 1100;
+    transition: transform 0.2s;
+  }
+
+  .burger:active {
+    transform: scale(0.9) rotate(-10deg);
   }
 
   .masthead-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    animation: fadeInTitle 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav small {
     margin-bottom: 0.5rem;
+    animation: fadeInSmall 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav a,
+  .nav .hover-link {
+    opacity: 0;
+    animation: fadeInLinkMobile 0.6s forwards;
+    animation-delay: 0.2s;
+  }
+
+  .nav.show a,
+  .nav.show .hover-link {
+    animation: fadeInLinkMobile 0.6s forwards;
+  }
+}
+
+/* Animations */
+@keyframes slideDownNav {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInNav {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+@keyframes fadeInSmall {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLinkMobile {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
