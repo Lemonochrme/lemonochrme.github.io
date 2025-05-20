@@ -7,9 +7,7 @@ image: https://github.com/user-attachments/assets/d548796d-1f05-4e89-9b72-6fb4c7
 description: "Overview of space data, how to capture it, process it and value it."
 ---
 
-# Data from Space: Key Technical Insights from CNES Training
-
-The CNES **“Data from Space”** training provides a comprehensive overview of Earth observation and space mission data, from how satellites operate to how vast datasets are managed on the ground. This post distills the key technical concepts covered in the training – spanning satellite sensor types and orbits, prominent space missions, data applications for Earth and beyond, ground segment operations, data processing levels and quality, remote sensing techniques, and the infrastructure and big-data solutions enabling modern space data exploitation. The tone remains neutral and professional, aiming to be accessible to an international technical audience.
+I assisted to the CNES “Data from Space” training that provided a comprehensive overview of Earth observation and mission data from how to capture the data to how to store the datasets on earth passing by all the processing and more. I took a lot of written notes during this training and the following is a structured and enhanced report based on my notes.
 
 ## Satellite Orbits and Sensor Types
 
