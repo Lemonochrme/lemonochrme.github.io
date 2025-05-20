@@ -79,28 +79,52 @@
         <br><br>
 
         <!-- Animated Title -->
-        <p class="fade-in-title" style="text-align: center; font-size: 2em;">
+        <p class="fade-in-main-title">
           Robin Marin–Muller
         </p>
         <p class="fade-in-title" style="text-align: center; font-size: 1em;">@Lemonochrome</p>
 
+        <p class="fade-in-description" style="text-align: center;">
+          <span class="contact-desktop">
+            <!-- ➤ -->
+            <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email Me</a> |
+            <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> | 
+            <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
+            <a href="/resume/" class="hover-link">View Curriculum Vitae</a>
+          </span>
+          <span class="contact-mobile" style="display:none;">
+            <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email</a> |
+            <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> | 
+            <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
+            <a href="/resume/" class="hover-link">View CV</a>
+          </span>
+          
+            <style>
+            @media (max-width: 720px) {
+              .contact-desktop { display: none !important; font-style: italic; margin: 0 0.5rem;}
+              .contact-mobile { display: inline !important; font-style: italic; margin: 0 0.5rem;}
+              .fade-in-description {
+              text-align: center !important;
+              }
+            }
+            @media (min-width: 721px) {
+              .contact-desktop { display: inline !important; font-style: italic; margin: 0 0.5rem;}
+              .contact-mobile { display: none !important; font-style: italic; margin: 0 0.5rem;}
+            }
+            </style>
+        </p>
+
         <!-- Animated Description -->
         <p class="fade-in-description">
-        I like to understand how complex systems work: signals, control, electronics, firmware, architecture, and the scientific principles behind them. These are some of the systems I’ve designed, built, and analysed as an engineering student at INSA Toulouse.
+        I like to understand how complex systems work: signals, control, electronics, firmware, architecture, and the scientific principles behind them. Here are some of the systems I’ve designed, built, and analysed as an engineering student at INSA Toulouse.
         </p>
 
         <!-- <p class="fade-in-description" style="text-align: center;">❦</p> -->
 
 
-        <p class="fade-in-description">
-          ➤
-          <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email Me</a> |
-          <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> | 
-          <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
-          <a href="/resume/" class="hover-link">View Curriculum Vitae</a>
-        </p>
+        
 
-        <div style="text-align: right;">
+        <div class="button-container">
           <!-- Animated Button -->
           <a href="archive" class="btn-outline fade-in-button">
             ✦ Discover the Projects
@@ -132,6 +156,27 @@
           .fade-in-title {
             opacity: 0;
             animation: fadeInUp 1s ease-out forwards;
+          }
+
+          .fade-in-main-title {
+            opacity: 0;
+            animation: fadeInUp 1.42s ease-out forwards;
+            text-align: center; 
+            font-size: 2em;
+          }
+
+          .button-container {
+            text-align: right;
+          }
+
+          @media (max-width: 720px) {
+            .fade-in-main-title {
+              font-size: 1.4em;
+            }
+            
+            .button-container {
+            text-align: center;
+            }
           }
 
           .fade-in-description {

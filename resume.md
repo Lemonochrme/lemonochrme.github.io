@@ -65,6 +65,12 @@ li {
   font-size: 2em;
 }
 
+@media (max-width: 720px) {
+  .cool-title {
+    font-size: 1.4em;
+  }
+}
+
 .resume-header h1 {
   margin-bottom: 0.5rem;
 }
@@ -221,8 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
     <div><strong>Hardware & FPGA</strong><br>
       KiCAD, Altium Designer, LTSpice, VHDL (basic), MicroBlaze, ARM Cortex-M, soldering/debugging, bus protocols (I2C, SPI, UART, USB).
     </div>
-    <div><strong>Scientific & Dev Tools</strong><br>
-      LaTeX (professional documents), Markdown, Fusion360, Blender, Python scientific stack (NumPy, SciPy, matplotlib), Gantt & UML tools (Mermaid Chart, Draw.io).
+    <div><strong>Miscellaneous</strong><br>
+      LaTeX (professional documents), Markdown, Fusion360, 3D Printing, Blender, Python scientific stack (NumPy, SciPy, matplotlib), Draw.io.
     </div>
   </div>
 </section>
