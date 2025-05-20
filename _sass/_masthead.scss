@@ -70,3 +70,72 @@
 .hover-link:hover::after {
   width: 100%;
 }
+
+/* Burger icon hidden by default */
+.burger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--link-color);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Mobile nav toggle */
+@media (max-width: 720px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    position: absolute;
+    top: 60px; /* adjust based on header height */
+    right: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    z-index: 1000;
+  }
+
+  .nav.show {
+    display: flex;
+  }
+
+  .burger {
+    display: inline-block;
+    float: right;
+    margin-left: auto;
+  }
+
+  .masthead-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav small {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Default (light theme) */
+@media (max-width: 720px) {
+  .nav {
+    background-color: white;
+    color: black;
+  }
+}
+
+/* Dark theme override */
+html[data-theme="dark-pool"] .nav {
+  background-color: #000000;
+  color: white;
+}
+
+html[data-theme="dark-pool"] .nav a,
+html[data-theme="dark-pool"] .hover-link {
+  color: white;
+}
+
+html[data-theme="dark-pool"] .hover-link::after {
+  background: white;
+}
