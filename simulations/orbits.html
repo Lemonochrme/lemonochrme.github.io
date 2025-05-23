@@ -129,20 +129,20 @@ directionalLight.position.set(100000, 100000, 100000);
 scene.add(directionalLight);
 scene.add(new THREE.AmbientLight(0x888888));
 
-const atmosphereGeometry = new THREE.SphereGeometry(earthRadius * 1.1, 64, 64);
+const atmosphereGeometry = new THREE.SphereGeometry(earthRadius * 1.2, 64, 64);
 const atmosphereMaterial = new THREE.ShaderMaterial({
   vertexShader: `
     varying float vIntensity;
     void main() {
       vec3 vNormal = normalize(normalMatrix * normal);
-      vIntensity = pow(0.6 - dot(vNormal, vec3(0,0,1)), 2.0);
+      vIntensity = pow(0.60 - dot(vNormal, vec3(0,0,1)), 2.0);
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
   fragmentShader: `
     varying float vIntensity;
     void main() {
-      gl_FragColor = vec4(0.3, 0.6, 1.0, vIntensity * 0.45);
+      gl_FragColor = vec4(0.2, 0.6, 1.0, vIntensity * 0.45);
     }
   `,
   blending: THREE.AdditiveBlending,
