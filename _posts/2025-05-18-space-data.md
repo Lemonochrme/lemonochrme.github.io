@@ -17,6 +17,11 @@ I assisted to the CNES “Data from Space” training that provided a comprehens
     <embed src="{{ site.baseurl }}/simulations/orbits.html" width="100%" height="400px" style="border-radius:16px;"/>
 </div>
 
+
+>LEO: 200-2000 km altitude 90 min orbit
+>MEO: 5000-20000 km altitude 12 hr orbit
+>GEO: 35786 km altitude 24 hr orbit
+
 Satellites are placed in different orbits depending on mission needs. The three primary orbit categories are:
 
 * **Low Earth Orbit (LEO)**:

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8""" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   html, body {
@@ -12,15 +12,28 @@
     color: #fff;
     font-family: sans-serif;
   }
-  #info {
-    position: absolute; top: 10px; left: 10px; width: 300px;
+  #controls {
+    position: absolute; top: 10px; right: 10px;
     background: rgba(0,0,0,0.5);
     padding: 10px;
     border-radius: 6px;
-    font-size: 12px;
-    user-select: none;
-    pointer-events: none;
-    z-index: 10;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  #controls button {
+    font-size: 14px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background: #1e90ff;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  #controls button:hover {
+    background: #63b3ed;
   }
   canvas {
     display: block;
@@ -34,25 +47,23 @@
 </style>
 </head>
 <body>
-<div id="info">
-  <p><strong>LEO:</strong> ~200-2000 km altitude ~90 min orbit</p>
-  <p><strong>MEO:</strong> ~5000-20000 km altitude ~12 hr orbit</p>
-  <p><strong>GEO:</strong> ~35786 km altitude 24 hr orbit</p>
+<div id="controls">
+  <button id="focus-leo">LEO POV</button>
+  <button id="focus-meo">MEO POV</button>
+  <button id="focus-geo">GEO POV</button>
+  <button id="reset-view">Reset View</button>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
 <script>
 const scene = new THREE.Scene();
-
 const camera = new THREE.PerspectiveCamera(45, 1, 1, 1e7);
 const earthRadius = 6371;
-
-camera.position.set(0, earthRadius * 4, earthRadius * 6);
+camera.position.set(0, earthRadius * 4, earthRadius * 12);
 camera.lookAt(0, 0, 0);
 
-const renderer = new THREE.WebGLRenderer({antialias:true});
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 document.body.appendChild(renderer.domElement);
-
 function resize() {
   const width = document.documentElement.clientWidth;
   const height = document.documentElement.clientHeight;
@@ -63,77 +74,52 @@ function resize() {
 resize();
 window.addEventListener('resize', resize);
 
-const earthGeometry = new THREE.SphereGeometry(earthRadius, 64, 64);
-
-// Shaders personnalisés pour la Terre
-const earthVertexShader = [
-    'varying float intensity;',
-    'varying float diffuse;',
-    'uniform vec3 lightSourcePos;',
-    'uniform vec3 camPos;',
-    'void main() {',
-        'vec3 vNormal = normalize(normalMatrix * normal);',
-        'vec4 viewLightPos = modelViewMatrix * vec4(lightSourcePos, 1.0);',
-        'vec4 vViewPosition4 = modelViewMatrix * vec4(position, 1.0);',
-        'vec3 lightDir = normalize(viewLightPos.xyz - vViewPosition4.xyz);',
-        'diffuse = max(dot(lightDir, vNormal), 0.0);',
-        'vec4 viewCamPos = viewMatrix * vec4(camPos, 1.0);',
-        'vec3 camPosToVertexDir = normalize(viewCamPos.xyz - vViewPosition4.xyz);',
-        'intensity = pow(max(0.0, 0.7 - dot(vNormal, camPosToVertexDir)), 12.0) * diffuse;',
-        'gl_Position = projectionMatrix * vViewPosition4;',
-    '}'
-].join('\n');
-
-const earthFragmentShader = [
-    'varying float intensity;',
-    'varying float diffuse;',
-    'void main() {',
-        'vec3 baseColor = vec3(0.1, 0.3, 0.7);',
-        'vec3 glow = vec3(0.3, 0.6, 1.0) * intensity * 0.5;',
-        'vec3 color = baseColor * (0.3 + 0.7 * diffuse) + glow;', // base visible partout, diffuse éclaire, glow en surbrillance
-        'color = clamp(color, 0.0, 1.0);',
-        'gl_FragColor = vec4(color, 1.0);',
-    '}'
-].join('\n');
-
-// --- Atmosphere (glow) mesh ---
-const atmosphereVertexShader = [
-    'varying float vIntensity;',
-    'void main() {',
-        'vec3 vNormal = normalize(normalMatrix * normal);',
-        'vIntensity = pow(0.6 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.0);',
-        'gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
-    '}'
-].join('\n');
-
-const atmosphereFragmentShader = [
-    'varying float vIntensity;',
-    'void main() {',
-        'vec3 glowColor = vec3(0.3, 0.6, 1.0);',
-        'gl_FragColor = vec4(glowColor, vIntensity * 0.45);',
-    '}'
-].join('\n');
-
-// Add atmosphere mesh
-const atmosphereGeometry = new THREE.SphereGeometry(earthRadius * 1.06, 64, 64);
-const atmosphereMaterial = new THREE.ShaderMaterial({
-    vertexShader: atmosphereVertexShader,
-    fragmentShader: atmosphereFragmentShader,
-    blending: THREE.AdditiveBlending,
-    side: THREE.BackSide,
-    transparent: true,
-    depthWrite: false
+const earthGeometry = new THREE.SphereGeometry(earthRadius, 256, 256);
+const loader = new THREE.TextureLoader();
+loader.load('Srtm_ramp2.world.21600x10800.lowres.jpg', texture => {
+  applyHeightmap(texture);
 });
-const atmosphere = new THREE.Mesh(atmosphereGeometry, atmosphereMaterial);
-scene.add(atmosphere);
 
-const earthMaterial = new THREE.ShaderMaterial({
-  uniforms: {
-    lightSourcePos: { value: new THREE.Vector3(100000, 100000, 100000) },
-    camPos: { value: camera.position.clone() }
-  },
-  vertexShader: earthVertexShader,
-  fragmentShader: earthFragmentShader
+function applyHeightmap(texture) {
+  const canvas = document.createElement('canvas');
+  const width = texture.image.width;
+  const height = texture.image.height;
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(texture.image, 0, 0);
+  const imageData = ctx.getImageData(0, 0, width, height).data;
+
+  const positionAttr = earthGeometry.attributes.position;
+  const colorAttr = new THREE.BufferAttribute(new Float32Array(positionAttr.count * 3), 3);
+
+  for (let i = 0; i < positionAttr.count; i++) {
+    const vertex = new THREE.Vector3().fromBufferAttribute(positionAttr, i).normalize();
+    const lat = 0.5 - Math.asin(vertex.y) / Math.PI;
+    const lon = 0.5 + Math.atan2(vertex.z, vertex.x) / (2 * Math.PI);
+    const x = Math.floor(lon * width);
+    const y = Math.floor(lat * height);
+    const idx = (y * width + x) * 4;
+    const brightness = imageData[idx] / 255;
+    const elevation = brightness * 300;
+    vertex.multiplyScalar(earthRadius + elevation);
+    positionAttr.setXYZ(i, vertex.x, vertex.y, vertex.z);
+
+    const color = new THREE.Color();
+    if (brightness < 0.0472) color.set(0x1E90FF);
+    else if (brightness < 0.32) color.set(0x228022);
+    else color.set(0xFFFFFF);
+    colorAttr.setXYZ(i, color.r, color.g, color.b);
+  }
+
+  earthGeometry.setAttribute('color', colorAttr);
+  positionAttr.needsUpdate = true;
+  earthGeometry.computeVertexNormals();
+}
+
+const earthMaterial = new THREE.MeshPhongMaterial({
+  vertexColors: true,
+  flatShading: false
 });
 const earth = new THREE.Mesh(earthGeometry, earthMaterial);
 scene.add(earth);
@@ -141,95 +127,139 @@ scene.add(earth);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
 directionalLight.position.set(100000, 100000, 100000);
 scene.add(directionalLight);
+scene.add(new THREE.AmbientLight(0x888888));
 
-const ambientLight = new THREE.AmbientLight(0x888888);
-scene.add(ambientLight);
+const atmosphereGeometry = new THREE.SphereGeometry(earthRadius * 1.1, 64, 64);
+const atmosphereMaterial = new THREE.ShaderMaterial({
+  vertexShader: `
+    varying float vIntensity;
+    void main() {
+      vec3 vNormal = normalize(normalMatrix * normal);
+      vIntensity = pow(0.6 - dot(vNormal, vec3(0,0,1)), 2.0);
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    varying float vIntensity;
+    void main() {
+      gl_FragColor = vec4(0.3, 0.6, 1.0, vIntensity * 0.45);
+    }
+  `,
+  blending: THREE.AdditiveBlending,
+  side: THREE.BackSide,
+  transparent: true,
+  depthWrite: false
+});
+scene.add(new THREE.Mesh(atmosphereGeometry, atmosphereMaterial));
 
-function createOrbit(radius, color=0xffffff) {
+// Orbit definitions
+const orbits = {
+  LEO: { radius: earthRadius + 1200, color: 0xffffff, rotation: { x: Math.PI / 2, y: 0, z: 0 }, speed: 0.02 },
+  MEO: { radius: earthRadius + 15000, color: 0xffffff, rotation: { x: Math.PI / 4, y: 0, z: 0 }, speed: 0.01 },
+  GEO: { radius: earthRadius + 35786, color: 0xffffff, rotation: { x: 0, y: 0, z: 0 }, speed: 0.001 } // matches Earth
+};
+
+// Satellite colors (different from orbit colors)
+const satelliteColors = {
+  LEO: 0x00bfff,   // DeepSkyBlue
+  MEO: 0x00bfff,   // DeepSkyBlue
+  GEO: 0x00bfff    // DeepSkyBlue
+};
+
+const satellites = [];
+
+function createOrbit(radius, color, rotation) {
   const segments = 128;
   const points = [];
-  for(let i=0; i<=segments; i++) {
+  for (let i = 0; i <= segments; i++) {
     const theta = (i / segments) * 2 * Math.PI;
     points.push(new THREE.Vector3(radius * Math.cos(theta), 0, radius * Math.sin(theta)));
   }
   const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  const material = new THREE.LineBasicMaterial({ color: color });
+  const material = new THREE.LineBasicMaterial({ color });
   const orbit = new THREE.LineLoop(geometry, material);
-  orbit.rotation.x = Math.PI / 2;
-  return orbit;
+  orbit.rotation.set(rotation.x, rotation.y, rotation.z);
+  scene.add(orbit);
 }
 
-const orbits = {
-  LEO: earthRadius + 1200,
-  MEO: earthRadius + 15000,
-  GEO: earthRadius + 35786,
-};
-
-const orbitLEO = createOrbit(orbits.LEO, 0x00ff00);
-const orbitMEO = createOrbit(orbits.MEO, 0xffff00);
-const orbitGEO = createOrbit(orbits.GEO, 0xff0000);
-
-scene.add(orbitLEO);
-scene.add(orbitMEO);
-scene.add(orbitGEO);
-
-function createSatellite(color=0xffffff, size=200) {
-  const geom = new THREE.SphereGeometry(size, 16, 16);
-  const mat = new THREE.MeshStandardMaterial({color: color});
-  return new THREE.Mesh(geom, mat);
+function createSatellite(radius, color, rotation, speed, syncWithEarth = false) {
+  const geometry = new THREE.SphereGeometry(320, 16, 16);
+  const material = new THREE.MeshBasicMaterial({ color });
+  const satellite = new THREE.Mesh(geometry, material);
+  satellite.userData = {
+    radius,
+    rotation: new THREE.Euler(rotation.x, rotation.y, rotation.z),
+    angle: 0,
+    speed,
+    syncWithEarth
+  };
+  scene.add(satellite);
+  satellites.push(satellite);
 }
 
-const satLEO = createSatellite(0x00ff00, 300);
-const satMEO = createSatellite(0xffff00, 400);
-const satGEO = createSatellite(0xff0000, 500);
+// Add orbits and satellites with different colors
+const orbitKeys = Object.keys(orbits);
+orbitKeys.forEach((key, i) => {
+  const { radius, color, rotation, speed } = orbits[key];
+  createOrbit(radius, color, rotation);
+  createSatellite(radius, satelliteColors[key], rotation, speed, i === 2); // GEO syncs with Earth
+});
 
-scene.add(satLEO);
-scene.add(satMEO);
-scene.add(satGEO);
+// Camera focus logic
+let satPOV = null; // null or 0 (LEO), 1 (MEO), 2 (GEO)
+// Ajustez l'offset pour chaque orbite (LEO doit être plus petit)
+const cameraOffsets = [800, 2000, 4000]; // LEO, MEO, GEO
 
-const periods = {
-  LEO: 90 * 60,
-  MEO: 12 * 3600,
-  GEO: 24 * 3600,
+document.getElementById('focus-leo').onclick = () => { satPOV = 0; };
+document.getElementById('focus-meo').onclick = () => { satPOV = 1; };
+document.getElementById('focus-geo').onclick = () => { satPOV = 2; };
+document.getElementById('reset-view').onclick = () => {
+  satPOV = null;
+  camera.position.set(0, earthRadius * 4, earthRadius * 12);
+  camera.lookAt(0, 0, 0);
 };
+
+function setCameraToSatellite(satIndex) {
+  const sat = satellites[satIndex];
+  if (!sat) return;
+  // Satellite position
+  const satPos = sat.position.clone();
+  // Direction from satellite to Earth's center
+  const toEarth = satPos.clone().negate().normalize();
+  // Utilisez un offset spécifique à chaque orbite
+  const camOffset = cameraOffsets[satIndex] || 2000;
+  // Camera position: a bit behind the satellite, looking forward
+  const camPos = satPos.clone().add(toEarth.clone().multiplyScalar(camOffset));
+  camera.position.copy(camPos);
+  camera.lookAt(0, 0, 0); // look at Earth's center from satellite
+}
 
 const clock = new THREE.Clock();
-
 function animate() {
-    requestAnimationFrame(animate);
-    const elapsed = clock.getElapsedTime();
+  requestAnimationFrame(animate);
+  const delta = clock.getDelta();
 
-    // Camera rotation around Earth
-    const camRadius = earthRadius * 6;
-    const camSpeed = 0.1; // radians per second
-    camera.position.x = camRadius * Math.sin(camSpeed * elapsed);
-    camera.position.z = camRadius * Math.cos(camSpeed * elapsed);
-    camera.position.y = earthRadius * 2.5;
-    camera.lookAt(0, 0, 0);
+  // Earth rotation
+  earth.rotation.y -= 0.001;
 
-    // Animate satellites along their orbits
-    const angleLEO = (elapsed / periods.LEO) * 2 * Math.PI;
-    const angleMEO = (elapsed / periods.MEO) * 2 * Math.PI;
-    const angleGEO = (elapsed / periods.GEO) * 2 * Math.PI;
+  // Satellite updates
+  satellites.forEach(sat => {
+    sat.userData.angle += sat.userData.syncWithEarth ? 0.001 : sat.userData.speed;
+    const angle = sat.userData.angle;
+    const radius = sat.userData.radius;
+    const x = radius * Math.cos(angle);
+    const z = radius * Math.sin(angle);
+    const position = new THREE.Vector3(x, 0, z).applyEuler(sat.userData.rotation);
+    sat.position.copy(position);
+  });
 
-    satLEO.position.set(orbits.LEO * Math.cos(angleLEO), 0, orbits.LEO * Math.sin(angleLEO));
-    satMEO.position.set(orbits.MEO * Math.cos(angleMEO), 0, orbits.MEO * Math.sin(angleMEO));
-    satGEO.position.set(orbits.GEO * Math.cos(angleGEO), 0, orbits.GEO * Math.sin(angleGEO));
+  // Camera POV
+  if (satPOV !== null && satellites[satPOV]) {
+    setCameraToSatellite(satPOV);
+  }
 
-    // Optionally, rotate satellites for visual effect
-    satLEO.rotation.y += 0.03;
-    satMEO.rotation.y += 0.02;
-    satGEO.rotation.y += 0.01;
-
-    earth.rotation.y += 0.001;
-
-    earthMaterial.uniforms.lightSourcePos.value.copy(directionalLight.position);
-    earthMaterial.uniforms.camPos.value.copy(camera.position);
-
-    renderer.render(scene, camera);
+  renderer.render(scene, camera);
 }
-
-
 animate();
 </script>
 </body>
