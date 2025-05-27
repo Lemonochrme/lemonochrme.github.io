@@ -7,7 +7,7 @@ image: https://github.com/user-attachments/assets/fa5442fd-eb30-4976-98d5-264942
 description: "Developing an autonomous flying wing with a focus on stable flight, autonomous navigation, and payload integration for applications like computer vision and biome recognition."
 ---
 
-
+> Work in progress, this post is currently being written and will be completed soon.
 
 
 The project focuses on developing an autonomous flying wing, with the eventual goal of integrating a payload. While the payload specifics are still undecided, potential applications include **computer vision for mapping** and **biome recognition**. For now, the priority is on building the platform itself and making sure the flight control system works smoothly.
@@ -58,5 +58,8 @@ while simulation is running:
     
     if flyingWing is close to the target waypoint:
         move to next waypoint
-
 ```
+
+# Hardware
+
+![desc](/assets/posts-images/personnal/uav-flight-computer/CNA_0388.jpg)

@@ -7,6 +7,8 @@ image: https://github.com/user-attachments/assets/d548796d-1f05-4e89-9b72-6fb4c7
 description: "Overview of space data, how to capture it, process it and value it."
 ---
 
+> Work in progress, this post is currently being written and will be completed soon.
+
 I assisted to the CNES “Data from Space” training that provided a comprehensive overview of Earth observation and mission data from how to capture the data to how to store the datasets on earth passing by all the processing and more. I took a lot of written notes during this training and the following is a structured and enhanced report based on my notes.
 
 ## Satellite Orbits and Sensor Types

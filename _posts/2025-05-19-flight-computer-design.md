@@ -7,6 +7,8 @@ image: https://github.com/user-attachments/assets/d548796d-1f05-4e89-9b72-6fb4c7
 description: "Hardware prototype of a compact flight computer for an autonomous flying wing, integrating GNSS, IMU, LoRa, ELRS, and environmental sensors."
 ---
 
+> Work in progress, this post is currently being written and will be completed soon.
+
 This post is part of a bigger project: building an autonomous flying wing. Here, I’m focusing on the development of a first prototype of the flight computer.
 
 # Goals

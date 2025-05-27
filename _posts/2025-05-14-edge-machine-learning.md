@@ -7,6 +7,8 @@ image: https://github.com/user-attachments/assets/d548796d-1f05-4e89-9b72-6fb4c7
 description: "Deploying Real-Time Biome Classification on a RV1103 : An Edge AI Pipeline under Linux."
 ---
 
+> Work in progress, this post is currently being written and will be completed soon.
+
 The goal of this project is to classify biomes (forest, urban, water, etc.) using a camera and a small embedded computer. Why? Because I have a Luckfox Pico board with an RV1103 SoC and a CSI camera lying around, and I want to learn how to build real-time edge AI systems. Later, this could be useful as a vision module for my autonomous flying wing project.
 
 The RV1103 is a System-on-Chip (SoC) that includes a single-core ARM Cortex-A7 processor and a built-in NPU (Neural Processing Unit) capable of 0.5 TOPS (Tera Operation per Seconds). This makes it suitable for lightweight AI inference on the edge, without needing a cloud connection. It runs Linux and supports common interfaces like CSI for camera input, making it a good low-power platform for experimentation.
