@@ -64,6 +64,27 @@ However, the CM5 only has two CSI camera inputs. This means I had to reduce the 
 
 NDVI = (NIR - RED) / (NIR + RED)
 
+# Hardware Dev Platform and System Performance
+
+## Hardware Setup: CM5 and IO Board
+I received the Raspberry Pi Compute Module 5 (CM5) along with the official IO Board for development. The IO Board makes it easier to test and develop on the CM5: it gives access to USB, HDMI, CSI, and power without designing a custom carrier board yet.
+
+I flashed the 32 GB eMMC on the CM5 with Raspberry Pi OS Lite (64-bit). I chose the Lite version because it has no desktop environment and uses less memory. It’s better suited for embedded use where I want to run only what’s needed, nothing more.
+
+After flashing, I connected via SSH over Wifi and started configuring the system for headless operation and testing.
+
+## System Performance
+
+Before building the full image processing pipeline, I tested the onboard compute module (Raspberry Pi CM5 – 4 GB RAM, 32 GB eMMC) to get a better sense of what it can handle in terms of CPU and memory performance.
+
+I used sysbench to simulate realistic workloads. For CPU, the system completed over 10,900 operations per second using all four cores. For memory, the measured bandwidth was 3650 MiB/sec, which is far beyond what I need for two image buffers and spectral calculations.
+
+Temperature under load stayed very low, around 42.8°C, with no active cooling. This is well within thermal safety margins for a sealed, embedded application.
+
+To simulate image processing, I ran a JPEG compression on a 1920×1080 grayscale image using ImageMagick. It completed in 52 ms, which means I can easily process and save frames at around 10 Hz if needed.
+
+These results confirm that the CM5 has more than enough capacity for real-time multispectral capture and analysis, even with basic image alignment and NDVI computation onboard.
+
 # Designing the Onboard Intrument Computer
 
 There are still a lot of open questions. I’m not sure yet how well the image alignment will hold in flight. I ordered the components and will begin testing upon delivery. But the general structure is there, and I think it’s worth trying.
