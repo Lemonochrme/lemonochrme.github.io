@@ -59,8 +59,6 @@ $$
 -mg\sin(\theta) = ml\ddot{\theta}
 $$
 
-![alt text](/assets/posts-images/personnal/pendulum/visualisation.png)
-
 D’où l’équation différentielle du pendule simple :
 
 $$
