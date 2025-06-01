@@ -138,7 +138,7 @@ pwdn-gpios  = <&gpio 27 GPIO_ACTIVE_HIGH>;
 Here’s the most important lesson I learned:
 **Never trust that an I²C module is safe to connect directly to a Raspberry Pi.**
 
-I connected an IMU module (LSM6DS33) to GPIO2 (SDA1) and GPIO3 (SCL1). It worked — but I later found that the module **has pull-ups to 5V (VIN)** on SDA/SCL. That’s a problem.
+I connected an IMU module (LSM6DS33) to GPIO2 (SDA1) and GPIO3 (SCL1). It worked, but I later found that the module **has pull-ups to 5V (VIN)** on SDA/SCL. That’s a problem.
 
 The **CM5 GPIOs are 3.3V-only**. Applying 5V via pull-ups can stress or damage the SoC’s internal ESD protection diodes. While 10kΩ resistors limited the current to \~170 µA and avoided instant failure, **this is still out-of-spec and risky**.
 
@@ -154,5 +154,3 @@ I powered the module with 3.3V, this restored safe operation.
 * Always assign clean GPIOs for camera control.
 * CSI1 is usable with proper I²C and GPIO mapping.
 * Raspberry Pi GPIOs are fragile: never put 5V on them.
-
-This experience has shaped how I approach interfacing and protection in my custom board designs. Mistakes were made, but I caught them early enough to avoid hardware damage.
