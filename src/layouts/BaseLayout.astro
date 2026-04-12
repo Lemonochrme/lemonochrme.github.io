@@ -1,0 +1,44 @@
+---
+import Head from '../components/Head.astro';
+import Masthead from '../components/Masthead.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.scss';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  isHome?: boolean;
+}
+
+const { title, description, image, isHome = false } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <Head title={title} description={description} image={image} />
+  <!-- Prevent flash of wrong theme -->
+  <script is:inline>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      document.documentElement.setAttribute('data-theme', saved || 'light');
+    })();
+  </script>
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script is:inline>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <div class="container content" style="flex: 1;">
+      <Masthead />
+      <main>
+        <slot />
+      </main>
+    </div>
+    <Footer isHome={isHome} />
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description, image } = Astro.props;
+const siteTitle = 'Lemonochrome - Portfolio';
+const fullTitle = title ? `${title} · ${siteTitle}` : siteTitle;
+const siteUrl = 'https://lemonochrome.fr';
+---
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{fullTitle}</title>
+
+  {description && <meta name="description" content={description} />}
+  {image && <meta property="og:image" content={image} />}
+  <meta property="og:title" content={fullTitle} />
+  {description && <meta property="og:description" content={description} />}
+  <meta property="og:type" content="website" />
+
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/apple-touch-icon-precomposed.png" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="alternate" type="application/rss+xml" title={siteTitle} href="/rss.xml" />
+</head>

@@ -1,0 +1,14 @@
+---
+interface Props {
+  isHome?: boolean;
+}
+const { isHome } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="footer" style="text-align: center; padding: 10px 0; width: 100%;">
+  <small>
+    &copy; <time datetime={`${year}`}>{year}</time>. All rights reserved.
+    <div style="text-align: center; font-size: 0.7em; color: var(--border-color); margin-top: 16px;"></div>
+    {isHome && <span>C'est véritablement utile puisque c'est joli.</span>}
+  </small>
+</footer>

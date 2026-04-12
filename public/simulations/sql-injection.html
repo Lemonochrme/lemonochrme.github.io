@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #000000;
+      color: #ffffff;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: auto;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2.5em;
+      text-align: center;
+    }
+
+    .container {
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #121212;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"], input[type="password"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ffffff;
+      border-radius: 5px;
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #00aaff;
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #0088cc;
+    }
+
+    .output {
+      font-family: monospace;
+      white-space: pre-wrap;
+      background: #2b2b2b;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
+    .explanation {
+      font-size: 14px;
+      color: #aaaaaa;
+      margin-top: 20px;
+    }
+
+    .step {
+      margin-top: 20px;
+      padding: 10px;
+      border-left: 4px solid #ffffff;
+      background-color: #1e1e1e;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover {
+      background-color: #333333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Login Form</h2>
+    <p>Try logging in with valid credentials or test an SQL injection attack!</p>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Enter username" />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Enter password" />
+
+    <button onclick="simulateLogin()">Login</button>
+
+    <div id="output" class="output"></div>
+    <div id="explanation" class="explanation"></div>
+  </div>
+
+  <script>
+    // Simulated database
+    const database = [
+      { username: "admin", password: "admin123" },
+      { username: "user", password: "password" },
+    ];
+
+    function simulateLogin() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+
+      // Simulated SQL query
+      const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+
+      let output = `SQL Query: ${query}\n\n`;
+      let explanation = "";
+
+      // Simulate SQL injection vulnerability
+      if (username.includes("'") || password.includes("'")) {
+        // Extract the injection
+        output += `🚨 SQL Injection Detected!\n`;
+        explanation = `The input allows an attacker to inject malicious SQL code.\n`;
+        if (
+          username === "admin' OR '1'='1" ||
+          password === "' OR '1'='1"
+        ) {
+          output += "Bypassing authentication... Login successful as 'admin'.\n";
+          explanation += `The condition 'OR '1'='1' always evaluates to TRUE, bypassing the login check.`;
+        } else {
+          output += "SQL injection attempt failed. No match found.\n";
+          explanation += "This SQL injection attack was not sufficient to bypass authentication.";
+        }
+      } else {
+        // Check for valid user
+        const user = database.find(
+          (u) => u.username === username && u.password === password
+        );
+        if (user) {
+          output += `✅ Login successful. Welcome, ${user.username}!\n`;
+          explanation = `The input matched a valid user in the database. No SQL injection was used.`;
+        } else {
+          output += `❌ Login failed. Invalid username or password.\n`;
+          explanation = `The input did not match any user in the database.`;
+        }
+      }
+
+      document.getElementById("output").textContent = output;
+      document.getElementById("explanation").textContent = explanation;
+    }
+  </script>
+</body>
+</html>
