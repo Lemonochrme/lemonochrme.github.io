@@ -1,0 +1,61 @@
+---
+title: English
+date: 2024-11-18
+categories: [INSA]
+image: https://images.unsplash.com/photo-1565022536102-f7645c84354a?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
+description: "This post outlines the key aspects and learnings from the English communication course at INSA, focusing on presentation structure, speaking skills, and pronunciation."
+---
+
+# Descriptive Part
+
+The goal of this course was to improve our communication skills in the English language, this covered oral communication through bimensual presentation but also writing and listening skills. The course was thought to complete the Innovative Project course on all the communication aspects: sprint presentations, slides and project report.
+
+# Technical Part
+
+The technical aspect of this course forcused on improving and building effective and usefull communication techniques, specifilcally for science communication and presentation.
+
+## Structure of a Good Presentation
+
+A good portion of the course emphasize on the structure and good practices of a proper presentation (slideshow for example). We learnt how to make clear and concise slides with respect to English particularities like the following :
+
+- In English we dont stick the ':' character between spaces but just after the word (e.g `This is a list:`)
+- When prensenting sunames should not be in capital letters like in French (e.g. `Robin Marin--Muller` and not `Robin MARIN--MULLER`) additionnally, we should always start with the name and then the surname. 
+
+## Speaking Skills and Body Language
+
+In terms of speaking skills we learned the importance of body language when prensenting in front of an audience. For example :
+
+- Keeping a confident stance (Do not "dance" (move too much) during the prensetation)
+- Avoid putting hands in pockets
+- Avoid pointing at screen with hand, use pointer instead
+- Keep eye contact with the audience but do not fix anyone in particular: pick three locations in the room (right, middle, left) and look alternatively at each location. This technique engages the audience and result in impactful presentation.
+- Avoid filled word and try to limit "euh" usage
+
+
+## Pronunciation and Oratory Skills
+
+Words in English are pretty much very different than French words when looking at the pronunciation. Even if words *does* spell the same, the stress and other pronunciation components may differ greaty.
+
+**For example, the word** "present" differs in pronunciation and stress depending on its meaning:  
+
+- In English:  
+  - As a noun: **PRES-ent** (stress on the first syllable).  
+  - As a verb: **pre-SENT** (stress on the second syllable).  
+
+- In French: The word "présent" is pronounced with a nasal vowel and consistent stress, regardless of its grammatical function.  
+
+
+![Image](/assets/posts-images/portfolio-insa/english/image.png)
+
+
+
+
+
+
+# Analytical
+
+Communication skills are essentials, communication skills in English even more. It is a necessity for me to master oratory skills as I want to pursue my academical journey in the reseach field. 
+
+On one hand, this course was a good opportunity to practice oral presentation skills, It was particularly appreciated because in my oppinion, the curriculum lack this part (presentations, oral skills practice) in other courses. Practicing every two weeks really improved my science communication skills as I could correct errors based on the feedback given at the end of each project sprint presentation.
+
+

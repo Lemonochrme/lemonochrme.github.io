@@ -5,6 +5,10 @@ _site
 .sass-cache
 .jekyll-cache
 
+# Astro build output
+dist/
+.astro/
+
 # Numerous always-ignore extensions
 *.diff
 *.err
