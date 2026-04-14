@@ -2,22 +2,14 @@
 import { getCollection } from 'astro:content';
 import Default from '../layouts/Default.astro';
 
-// Get page number from URL - default is page 1
-const POSTS_PER_PAGE = 5;
-
 const allPosts = (await getCollection('posts'))
   .filter(p => !p.id.startsWith('insa-'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
-const posts = allPosts.slice(0, POSTS_PER_PAGE);
+const latest = allPosts[0];
 
 function formatDate(d: Date) {
-  return d.toLocaleDateString('en-GB', {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  });
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 }
 
 function truncate(str: string, max: number) {
@@ -26,39 +18,189 @@ function truncate(str: string, max: number) {
 ---
 
 <Default title="Home" isHome>
-  <div class="posts">
-    {posts.map((post) => (
-      <article class="post">
-        <a href={`/posts/${post.slug}`} class="post-link">
-          <h1 class="post-title">{post.data.title}</h1>
-          <time datetime={post.data.date.toISOString()} class="post-date">
-            {formatDate(post.data.date)}
-          </time>
-          <p>
-            {post.data.description
-              ? truncate(post.data.description, 400)
-              : truncate(post.body, 400)}
-          </p>
-        </a>
-      </article>
-    ))}
+
+  <!-- Hero -->
+  <p class="hero-name">Robin Marin–Muller</p>
+  <p class="hero-handle">@Lemonochrome</p>
+
+  <p class="hero-links">
+    <span class="contact-desktop">
+      <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email Me</a> |
+      <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> |
+      <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
+      <a href="/resume/" class="hover-link">View Curriculum Vitae</a>
+    </span>
+    <span class="contact-mobile">
+      <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email</a> |
+      <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> |
+      <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
+      <a href="/resume/" class="hover-link">CV</a>
+    </span>
+  </p>
+
+  <p class="hero-desc">
+    I like to understand how complex systems work: signals, control, electronics, firmware,
+    architecture, and the scientific principles behind them. Here are some of the systems
+    I've designed, built, and analysed as an engineering student at INSA Toulouse.
+  </p>
+
+  <div class="hero-actions">
+    <a href="/archive" class="btn-outline hero-btn">✦ Discover the Projects</a>
   </div>
 
-  {totalPages > 1 && (
-    <div class="pagination">
-      <a class="pagination-item older" href="/page/2">&larr; Older</a>
-      <span class="pagination-item newer">Newer &rarr;</span>
-    </div>
+  <!-- Latest post -->
+  {latest && (
+    <section class="latest-section">
+      <div class="latest-header">
+        <span class="latest-label">Latest</span>
+        <span class="latest-rule"></span>
+      </div>
+      <a href={`/posts/${latest.slug}`} class="latest-link">
+        <h2 class="latest-title">{latest.data.title}</h2>
+        <time datetime={latest.data.date.toISOString()} class="latest-date">
+          {formatDate(latest.data.date)}
+        </time>
+        {latest.data.description && (
+          <p class="latest-desc">{truncate(latest.data.description, 200)}</p>
+        )}
+      </a>
+    </section>
   )}
 
   <style>
-    .post-link {
+    /* ── Keyframe ── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Hero ── */
+    .hero-name {
+      opacity: 0;
+      animation: fadeInUp 1.2s ease-out forwards;
+      animation-delay: 0s;
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-handle {
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.15s;
+      text-align: center;
+      font-size: 1em;
+      color: var(--gray-600);
+      margin-top: 0;
+    }
+
+    .hero-links {
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.35s;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .hero-desc {
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.55s;
+    }
+
+    .hero-actions {
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 0.75s;
+      text-align: right;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 720px) {
+      .hero-name  { font-size: 1.4em; }
+      .hero-actions { text-align: center; }
+      .contact-desktop { display: none !important; }
+      .contact-mobile  { display: inline !important; }
+    }
+
+    .contact-desktop { display: inline; font-style: italic; }
+    .contact-mobile  { display: none;   font-style: italic; }
+
+    /* ── Button ── */
+    .btn-outline {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 1rem;
+      color: var(--link-color);
+      border: 1.5px solid var(--link-color);
+      text-decoration: none;
+      transition: background-color 0.35s, color 0.25s;
+    }
+    .btn-outline:hover {
+      color: var(--body-bg);
+      background-color: var(--link-color);
+    }
+
+    /* ── Latest post ── */
+    .latest-section {
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+      animation-delay: 1.05s;
+      margin-top: 3rem;
+    }
+
+    .latest-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .latest-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-600);
+      white-space: nowrap;
+    }
+
+    .latest-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+    }
+
+    .latest-link {
+      display: block;
       text-decoration: none;
       color: inherit;
     }
-    .post-link:hover {
-      text-decoration: underline;
+
+    .latest-title {
+      font-size: 1.3rem;
+      font-weight: 420;
+      margin: 0 0 0.3rem;
+      color: var(--heading-color);
+      transition: opacity 0.2s;
+    }
+    .latest-link:hover .latest-title {
+      opacity: 0.65;
+    }
+
+    .latest-date {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      margin-bottom: 0.6rem;
+    }
+
+    .latest-desc {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--body-color);
+      line-height: 1.6;
     }
   </style>
-</Default>
 
+</Default>
