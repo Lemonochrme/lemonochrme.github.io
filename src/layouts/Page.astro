@@ -1,0 +1,16 @@
+---
+import Default from './Default.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Default title={title} description={description}>
+  <article class="page">
+    <slot />
+  </article>
+</Default>

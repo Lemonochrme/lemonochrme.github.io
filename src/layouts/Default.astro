@@ -1,0 +1,50 @@
+---
+import Head from '../components/Head.astro';
+import Masthead from '../components/Masthead.astro';
+import ThemeScript from '../components/ThemeScript.astro';
+import '../styles/global.scss';
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  isHome?: boolean;
+}
+
+const { title, description, image, isHome = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <ThemeScript />
+  <Head title={title} description={description} image={image} />
+
+  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script is:inline>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        }
+      };
+    </script>
+
+    <div class="container content" style="flex: 1;">
+      <Masthead />
+      <main>
+        {isHome && <><br /><br /></>}
+        <slot />
+      </main>
+    </div>
+
+    <div class="container">
+      <footer>
+        <small>
+          &copy; {new Date().getFullYear()} Robin Marin-Muller &middot;
+          Built with <a href="https://astro.build">Astro</a>
+        </small>
+      </footer>
+    </div>
+  </body>
+</html>

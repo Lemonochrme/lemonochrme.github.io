@@ -1,0 +1,79 @@
+---
+import { getCollection } from 'astro:content';
+import Default from '../../layouts/Default.astro';
+
+export async function getStaticPaths() {
+  const POSTS_PER_PAGE = 5;
+
+  const allPosts = (await getCollection('posts'))
+    .filter(p => !p.id.startsWith('insa-'))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const pageNum = i + 2; // start from page 2
+    return {
+      params: { page: String(pageNum) },
+      props: {
+        posts: allPosts.slice(pageNum * POSTS_PER_PAGE - POSTS_PER_PAGE, pageNum * POSTS_PER_PAGE),
+        currentPage: pageNum,
+        totalPages,
+      },
+    };
+  });
+}
+
+const { posts, currentPage, totalPages } = Astro.props;
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function truncate(str: string, max: number) {
+  return str.length > max ? str.slice(0, max) + '…' : str;
+}
+---
+
+<Default title={`Page ${currentPage}`}>
+  <div class="posts">
+    {posts.map((post: any) => (
+      <article class="post">
+        <a href={`/posts/${post.slug}`} class="post-link">
+          <h1 class="post-title">{post.data.title}</h1>
+          <time datetime={post.data.date.toISOString()} class="post-date">
+            {formatDate(post.data.date)}
+          </time>
+          <p>
+            {post.data.description
+              ? truncate(post.data.description, 400)
+              : truncate(post.body, 400)}
+          </p>
+        </a>
+      </article>
+    ))}
+  </div>
+
+  <div class="pagination">
+    {currentPage < totalPages ? (
+      <a class="pagination-item older" href={`/page/${currentPage + 1}`}>&larr; Older</a>
+    ) : (
+      <span class="pagination-item older">&larr; Older</span>
+    )}
+    {currentPage > 1 ? (
+      <a class="pagination-item newer" href={currentPage === 2 ? '/' : `/page/${currentPage - 1}`}>Newer &rarr;</a>
+    ) : (
+      <span class="pagination-item newer">Newer &rarr;</span>
+    )}
+  </div>
+
+  <style>
+    .post-link {
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</Default>

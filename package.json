@@ -1,0 +1,16 @@
+{
+  "name": "lemonochrome-portfolio",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.7.10",
+    "@astrojs/mdx": "^4.3.0",
+    "sass": "^1.86.3"
+  }
+}

@@ -1,0 +1,197 @@
+.masthead {
+  padding-top: var(--spacer);
+  padding-bottom: var(--spacer);
+  margin-bottom: var(--spacer-3);
+}
+
+.masthead-title {
+  margin-bottom: 0;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  small {
+    font-weight: 400;
+  }
+}
+
+.nav {
+  float: right;
+  line-height: 1.25rem;
+  word-spacing: 1rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.fade-in-link {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+.hover-link {
+  color: var(--link-color);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.hover-link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: var(--link-color);
+  transition: width 0.3s ease;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+}
+
+.hover-link:hover {
+  color: var(--link-hover-color);
+}
+
+.hover-link:hover::after {
+  width: 100%;
+}
+
+.hover-cool {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.hover-cool:hover {
+  transform: rotate(45deg);
+}
+
+.burger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--link-color);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+@media (max-width: 720px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    text-align: right;
+    position: absolute;
+    top: 70px;
+    right: 10px;
+    padding: 1rem;
+    z-index: 1000;
+    background: white;
+    animation: slideDownNav 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav.show {
+    display: flex;
+    animation: fadeInNav 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .burger {
+    display: inline-block;
+    position: absolute;
+    top: 2rem;
+    right: 1rem;
+    margin-left: 0;
+    z-index: 1100;
+    transition: transform 0.2s;
+  }
+
+  .burger:active {
+    transform: scale(0.9) rotate(-10deg);
+  }
+
+  .masthead-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeInTitle 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav small {
+    margin-bottom: 0.5rem;
+    animation: fadeInSmall 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav a,
+  .nav .hover-link {
+    opacity: 0;
+    animation: fadeInLinkMobile 0.6s forwards;
+    animation-delay: 0.2s;
+  }
+
+  .nav.show a,
+  .nav.show .hover-link {
+    animation: fadeInLinkMobile 0.6s forwards;
+  }
+}
+
+@keyframes slideDownNav {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInNav {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInTitle {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSmall {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLinkMobile {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .nav {
+    background-color: white;
+    color: black;
+  }
+}
+
+html[data-theme="dark-poole"] .nav {
+  background-color: #000000;
+  color: white;
+}

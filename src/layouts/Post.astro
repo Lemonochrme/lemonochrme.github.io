@@ -1,0 +1,51 @@
+---
+import Default from './Default.astro';
+
+export interface Props {
+  title: string;
+  date: Date;
+  description?: string;
+  image?: string;
+  relatedPosts?: Array<{
+    title: string;
+    url: string;
+    date: Date;
+  }>;
+}
+
+const { title, date, description, image, relatedPosts } = Astro.props;
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+---
+
+<Default title={title} description={description} image={image}>
+  <article class="post">
+    <h1 class="post-title">{title}</h1>
+    <time datetime={date.toISOString()} class="post-date">{formatDate(date)}</time>
+    <slot />
+  </article>
+
+  {relatedPosts && relatedPosts.length > 0 && (
+    <aside class="related">
+      <h3>Related posts</h3>
+      <ul class="related-posts">
+        {relatedPosts.map((post) => (
+          <li>
+            <a href={post.url}>
+              {post.title}
+              <small>
+                <time datetime={post.date.toISOString()}>{formatDate(post.date)}</time>
+              </small>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )}
+</Default>

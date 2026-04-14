@@ -1,0 +1,103 @@
+---
+const nav = [
+  { title: "Posts", url: "/archive" },
+  { title: "About", url: "/about" },
+  { title: "Resume", url: "/resume" },
+];
+---
+
+<header class="masthead">
+  <h3 class="masthead-title">
+    <a href="/" title="Home" style="display: inline-block; vertical-align: middle;">
+      <img
+        id="logo"
+        src="/assets/logo-light.png"
+        alt="Lemonochrome Logo"
+        style="width: 100px; height: auto; vertical-align: middle;"
+      />
+    </a>
+
+    <!-- Burger Menu Button -->
+    <button class="burger" aria-label="Toggle navigation">&#9776;</button>
+
+    <!-- Navigation Menu -->
+    <nav class="nav">
+      {nav.map((item) => (
+        <small>
+          <a href={item.url} class="hover-link">{item.title}</a>
+        </small>
+      ))}
+
+      <small>
+        <button
+          id="theme-toggle"
+          style="background: none; border: none; color: inherit; cursor: pointer; font: inherit;"
+        >
+          <span id="theme-icon" class="hover-cool">✷</span>
+        </button>
+      </small>
+    </nav>
+  </h3>
+</header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Burger toggle
+    const burger = document.querySelector('.burger') as HTMLButtonElement | null;
+    const nav = document.querySelector('.nav') as HTMLElement | null;
+
+    if (burger && nav) {
+      burger.addEventListener('click', (e) => {
+        nav.classList.toggle('show');
+        e.stopPropagation();
+      });
+
+      document.addEventListener('click', (e) => {
+        if (
+          nav.classList.contains('show') &&
+          !nav.contains(e.target as Node) &&
+          !burger.contains(e.target as Node)
+        ) {
+          nav.classList.remove('show');
+        }
+      });
+    }
+
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const logo = document.getElementById('logo') as HTMLImageElement | null;
+
+    function updateLogo() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (logo) {
+        logo.src =
+          currentTheme === 'dark-poole'
+            ? '/assets/logo-light.png'
+            : '/assets/logo-dark.png';
+      }
+    }
+
+    if (themeToggle && themeIcon) {
+      themeToggle.addEventListener('click', () => {
+        const html = document.documentElement;
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark-poole' ? 'light' : 'dark-poole';
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        themeIcon.textContent = '✷';
+        updateLogo();
+      });
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
+    if (themeIcon) themeIcon.textContent = '✷';
+    updateLogo();
+  });
+</script>

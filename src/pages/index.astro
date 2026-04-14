@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Default from '../layouts/Default.astro';
+
+// Get page number from URL - default is page 1
+const POSTS_PER_PAGE = 5;
+
+const allPosts = (await getCollection('posts'))
+  .filter(p => !p.id.startsWith('insa-'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+const posts = allPosts.slice(0, POSTS_PER_PAGE);
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+  });
+}
+
+function truncate(str: string, max: number) {
+  return str.length > max ? str.slice(0, max) + '…' : str;
+}
+---
+
+<Default title="Home" isHome>
+  <div class="posts">
+    {posts.map((post) => (
+      <article class="post">
+        <a href={`/posts/${post.slug}`} class="post-link">
+          <h1 class="post-title">{post.data.title}</h1>
+          <time datetime={post.data.date.toISOString()} class="post-date">
+            {formatDate(post.data.date)}
+          </time>
+          <p>
+            {post.data.description
+              ? truncate(post.data.description, 400)
+              : truncate(post.body, 400)}
+          </p>
+        </a>
+      </article>
+    ))}
+  </div>
+
+  {totalPages > 1 && (
+    <div class="pagination">
+      <a class="pagination-item older" href="/page/2">&larr; Older</a>
+      <span class="pagination-item newer">Newer &rarr;</span>
+    </div>
+  )}
+
+  <style>
+    .post-link {
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</Default>
+
