@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aerolith Technology — Deep dive into our full-stack drone engineering: STM32 hardware, bare-metal firmware, BLDC control, and system co-design." />
+  <title>Technology — Engineering Deep Dive | Aerolith</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><path d='M16 6L26 16L16 26L6 16Z' fill='none' stroke='white' stroke-width='2'/><circle cx='16' cy='16' r='3' fill='white'/></svg>" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/><circle cx="9" cy="9" r="2.5" fill="white"/></svg>
+        </div>
+        Aerolith
+      </a>
+      <div class="nav-links">
+        <a href="index.html#platforms" class="nav-link">Platforms</a>
+        <a href="lithcore.html" class="nav-link">LithCore</a>
+        <a href="lithdrive.html" class="nav-link">LithDrive</a>
+        <a href="cinelith.html" class="nav-link">CineLith</a>
+        <a href="technology.html" class="nav-link active">Technology</a>
+        <a href="index.html#about" class="nav-link">About</a>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Get in Touch</a>
+        <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="nav-drawer" role="dialog">
+  <a href="index.html#platforms" class="nav-link">Platforms</a>
+  <a href="lithcore.html" class="nav-link">LithCore</a>
+  <a href="lithdrive.html" class="nav-link">LithDrive</a>
+  <a href="cinelith.html" class="nav-link">CineLith</a>
+  <a href="technology.html" class="nav-link">Technology</a>
+  <a href="index.html#about" class="nav-link">About</a>
+  <div style="margin-top:auto"><a href="contact.html" class="btn btn-primary">Get in Touch</a></div>
+</div>
+
+
+<!-- HERO -->
+<section class="product-hero" style="padding-bottom:var(--sp-32);" aria-labelledby="tech-hero-heading">
+  <div class="product-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <p class="section-label" style="margin-bottom:var(--sp-6);">Engineering</p>
+    <h1 id="tech-hero-heading" class="display-xl reveal" style="max-width:800px;">
+      The Aerolith<br>
+      <span class="gradient-text">Technology Stack</span>
+    </h1>
+    <p class="body-lg text-2 reveal reveal-delay-1" style="max-width:640px; margin-top:var(--sp-6); margin-bottom:var(--sp-8);">
+      A complete, vertically integrated engineering system — from MCU selection to
+      airframe geometry. Every layer designed with full ownership and no abstraction debt.
+    </p>
+    <div class="flex gap-4 flex-wrap reveal reveal-delay-2">
+      <a href="#hardware" class="btn btn-secondary btn-sm">Hardware</a>
+      <a href="#firmware" class="btn btn-secondary btn-sm">Firmware</a>
+      <a href="#control" class="btn btn-secondary btn-sm">Control Systems</a>
+      <a href="#specs" class="btn btn-secondary btn-sm">Full Specs</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- HARDWARE -->
+<section id="hardware" class="section" aria-labelledby="hw-heading">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">01 — Hardware</p>
+      <h2 id="hw-heading" class="display-md section-title reveal">
+        Custom Silicon.<br>
+        <span class="gradient-text">Custom Boards.</span>
+      </h2>
+      <p class="section-desc reveal reveal-delay-1">
+        We select and qualify every component. PCB designs are done in KiCad with
+        attention to signal integrity, power distribution, thermal performance, and
+        manufacturability. Nothing is left to defaults.
+      </p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal reveal-delay-1">
+        <div class="tech-card-number">MCU Selection</div>
+        <div class="tech-card-title">STM32 — The Right Tool</div>
+        <p class="tech-card-desc">
+          The STM32 family from ST Microelectronics offers the best balance of
+          performance, peripheral richness, community support, and long-term availability
+          for embedded flight systems. The F405 provides Cortex-M4F performance for the
+          FC; the F051 provides a lean, cost-effective Cortex-M0 for the ESC.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">STM32F405 — FC</span>
+          <span class="tech-tag">STM32F051 — ESC</span>
+          <span class="tech-tag">ARM ecosystem</span>
+          <span class="tech-tag">Long-term supply</span>
+        </div>
+      </div>
+
+      <div class="tech-card reveal reveal-delay-2">
+        <div class="tech-card-number">PCB Design</div>
+        <div class="tech-card-title">KiCad Schematics + Layout</div>
+        <p class="tech-card-desc">
+          All Aerolith boards are designed in KiCad — a professional, open-source EDA
+          tool. This allows us to maintain complete version-controlled schematics and
+          layouts, and enables full community inspection of the hardware under our OSHW license.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">KiCad EDA</span>
+          <span class="tech-tag">4-layer stack-up</span>
+          <span class="tech-tag">Impedance control</span>
+          <span class="tech-tag">DRC verified</span>
+        </div>
+      </div>
+
+      <div class="tech-card reveal reveal-delay-3">
+        <div class="tech-card-number">Power Architecture</div>
+        <div class="tech-card-title">MOSFET Half-Bridge Power Stage</div>
+        <p class="tech-card-desc">
+          The LithDrive ESC power stage uses N-channel MOSFETs in a 3-phase half-bridge
+          topology. Gate driver ICs provide bootstrap-based high-side switching with
+          precisely timed dead-time insertion to prevent shoot-through conditions.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">N-ch MOSFET</span>
+          <span class="tech-tag">Half-bridge</span>
+          <span class="tech-tag">Bootstrap gate drive</span>
+          <span class="tech-tag">Dead-time control</span>
+        </div>
+      </div>
+
+      <div class="tech-card reveal reveal-delay-4">
+        <div class="tech-card-number">Component Philosophy</div>
+        <div class="tech-card-title">Qualify Everything. Trust Nothing.</div>
+        <p class="tech-card-desc">
+          Every component is evaluated against its datasheet limits before being committed
+          to a design. Decoupling strategies, voltage derating, and thermal margins are
+          analyzed at the schematic stage — not discovered after first power-on.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">Derating policy</span>
+          <span class="tech-tag">Thermal modeling</span>
+          <span class="tech-tag">BOM qualification</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FIRMWARE -->
+<section id="firmware" class="section tech-bg" aria-labelledby="fw-heading">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">02 — Firmware</p>
+      <h2 id="fw-heading" class="display-md section-title reveal">
+        Bare Metal.<br>
+        <span class="gradient-text">Full Visibility.</span>
+      </h2>
+      <p class="section-desc reveal reveal-delay-1">
+        We write all firmware from scratch. There is no third-party flight stack, no
+        binary-only library, and no mystery code. Every register, every timer, every DMA
+        channel is configured and understood by our team.
+      </p>
+    </div>
+
+    <!-- Stack visualization -->
+    <div style="margin-bottom:var(--sp-10);" class="reveal">
+      <div class="stack-row">
+        <div class="stack-layer">
+          <div class="stack-layer-label">Boot</div>
+          <div class="stack-layer-name">CMSIS Startup</div>
+          <div class="stack-layer-detail">Vector table, clocks, stack pointer</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">HAL</div>
+          <div class="stack-layer-name">STM32 HAL / LL</div>
+          <div class="stack-layer-detail">Peripheral abstraction layer</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">RTOS</div>
+          <div class="stack-layer-name">FreeRTOS</div>
+          <div class="stack-layer-detail">Task scheduling, mutexes, queues</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">Drivers</div>
+          <div class="stack-layer-name">Custom Drivers</div>
+          <div class="stack-layer-detail">IMU, UART, DSHOT, telemetry</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">App</div>
+          <div class="stack-layer-name">Flight Logic</div>
+          <div class="stack-layer-detail">PID, sensor fusion, failsafe</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal reveal-delay-1">
+        <div class="tech-card-number">Real-Time Architecture</div>
+        <div class="tech-card-title">Deterministic Execution</div>
+        <p class="tech-card-desc">
+          Flight-critical loops run in interrupt context or high-priority RTOS tasks
+          with deterministic scheduling. Timer-based ISRs ensure sensor sampling and
+          motor output happen at precise, predictable intervals — regardless of
+          background processing load.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">IRQ-driven loops</span>
+          <span class="tech-tag">FreeRTOS priorities</span>
+          <span class="tech-tag">No blocking I/O</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-2">
+        <div class="tech-card-number">Driver Layer</div>
+        <div class="tech-card-title">Custom Peripheral Drivers</div>
+        <p class="tech-card-desc">
+          Each peripheral — IMU, RC receiver, DSHOT motor output, telemetry UART —
+          has a clean, tested driver layer. DMA is used extensively to offload CPU
+          from communication overhead, keeping the control loop running at full speed.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">DMA transfers</span>
+          <span class="tech-tag">Ring buffers</span>
+          <span class="tech-tag">Interrupt + polling modes</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTROL -->
+<section id="control" class="section" aria-labelledby="ctrl-heading">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">03 — Control Systems</p>
+      <h2 id="ctrl-heading" class="display-md section-title reveal">
+        From Sensor to Motor.<br>
+        <span class="gradient-text">In Microseconds.</span>
+      </h2>
+      <p class="section-desc reveal reveal-delay-1">
+        The control pipeline processes raw IMU data, estimates attitude, computes
+        PID corrections, and outputs motor commands — all within a tightly bounded
+        execution window.
+      </p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal reveal-delay-1">
+        <div class="tech-card-number">Attitude Estimation</div>
+        <div class="tech-card-title">Mahony / Complementary Filter</div>
+        <p class="tech-card-desc">
+          Accelerometer and gyroscope measurements are fused using a Mahony or
+          complementary filter running in quaternion space — providing drift-corrected
+          attitude estimates at rates exceeding 1 kHz.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">Quaternion math</span>
+          <span class="tech-tag">&gt;1 kHz update rate</span>
+          <span class="tech-tag">Drift correction</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-2">
+        <div class="tech-card-number">PID Control</div>
+        <div class="tech-card-title">Cascaded Rate + Attitude Loops</div>
+        <p class="tech-card-desc">
+          An outer attitude controller feeds setpoints into an inner rate controller.
+          Configurable P/I/D terms, anti-windup, and derivative filtering provide
+          stable and responsive flight. All parameters are tunable over the debug UART.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">Cascaded PID</span>
+          <span class="tech-tag">Anti-windup</span>
+          <span class="tech-tag">Derivative filter</span>
+          <span class="tech-tag">UART tuning</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-3">
+        <div class="tech-card-number">Motor Mixing</div>
+        <div class="tech-card-title">Quadrotor X Mixing Matrix</div>
+        <p class="tech-card-desc">
+          PID outputs are converted to per-motor thrust commands using a standard
+          quadrotor X mixing matrix, with output saturation and desaturation to
+          prevent loss of control authority at high throttle.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">X mixing matrix</span>
+          <span class="tech-tag">Output saturation</span>
+          <span class="tech-tag">Desaturation</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-4">
+        <div class="tech-card-number">BLDC Control</div>
+        <div class="tech-card-title">6-Step Trapezoidal (LithDrive)</div>
+        <p class="tech-card-desc">
+          Motor commands arrive at each LithDrive ESC as DSHOT frames. The ESC
+          executes 6-step commutation independently, using back-EMF ZCD for timing,
+          while returning RPM and current telemetry to LithCore on each cycle.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">6-step</span>
+          <span class="tech-tag">Back-EMF ZCD</span>
+          <span class="tech-tag">DSHOT telemetry</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FULL SPECS -->
+<section id="specs" class="section tech-bg" aria-labelledby="specs-heading">
+  <div class="container">
+    <div class="section-header centered">
+      <p class="section-label" style="justify-content:center;">Full Specifications</p>
+      <h2 id="specs-heading" class="display-md section-title reveal">
+        Complete Technical Reference
+      </h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-8);">
+      <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden;" class="reveal reveal-delay-1">
+        <table class="spec-table">
+          <thead><tr><th colspan="2" style="font-size:0.8rem; color:var(--text-2); padding:1rem 1.25rem; letter-spacing:0; text-transform:none;">LithCore — Flight Controller</th></tr></thead>
+          <tbody>
+            <tr><td colspan="2" class="spec-section-label">Processor</td></tr>
+            <tr><td>MCU</td><td>STM32F405RGT6</td></tr>
+            <tr><td>Core</td><td>ARM Cortex-M4F</td></tr>
+            <tr><td>Clock</td><td>168 MHz</td></tr>
+            <tr><td>Flash</td><td>1 MB</td></tr>
+            <tr><td>SRAM</td><td>192 KB</td></tr>
+            <tr><td>FPU</td><td>Single-precision HW</td></tr>
+            <tr><td colspan="2" class="spec-section-label">Interfaces</td></tr>
+            <tr><td>Motor out</td><td>4× DSHOT/PWM</td></tr>
+            <tr><td>UART</td><td>3×</td></tr>
+            <tr><td>SPI</td><td>2×</td></tr>
+            <tr><td>I²C</td><td>1×</td></tr>
+            <tr><td>RC input</td><td>SBUS / CRSF / PPM</td></tr>
+            <tr><td colspan="2" class="spec-section-label">Sensors</td></tr>
+            <tr><td>IMU</td><td>6-axis MEMS</td></tr>
+            <tr><td>Barometer</td><td>Digital, I²C</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden;" class="reveal reveal-delay-2">
+        <table class="spec-table">
+          <thead><tr><th colspan="2" style="font-size:0.8rem; color:var(--text-2); padding:1rem 1.25rem; letter-spacing:0; text-transform:none;">LithDrive — BLDC ESC</th></tr></thead>
+          <tbody>
+            <tr><td colspan="2" class="spec-section-label">Processor</td></tr>
+            <tr><td>MCU</td><td>STM32F051C8T6</td></tr>
+            <tr><td>Core</td><td>ARM Cortex-M0</td></tr>
+            <tr><td>Clock</td><td>48 MHz</td></tr>
+            <tr><td>Flash</td><td>64 KB</td></tr>
+            <tr><td colspan="2" class="spec-section-label">Control</td></tr>
+            <tr><td>Algorithm</td><td>6-step trapezoidal</td></tr>
+            <tr><td>Sensing</td><td>Back-EMF ZCD (sensorless)</td></tr>
+            <tr><td>PWM freq.</td><td>16–96 kHz</td></tr>
+            <tr><td>Protocol in</td><td>DSHOT / Analog PWM</td></tr>
+            <tr><td colspan="2" class="spec-section-label">Power Stage</td></tr>
+            <tr><td>Topology</td><td>3-phase half-bridge</td></tr>
+            <tr><td>Switches</td><td>N-channel MOSFET</td></tr>
+            <tr><td>Gate driver</td><td>Bootstrap high-side</td></tr>
+            <tr><td>Telemetry</td><td>eRPM, Current, Voltage, Temp</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-box-glow" aria-hidden="true"></div>
+      <h2 class="cta-title">Want to Collaborate?</h2>
+      <p class="cta-desc">
+        We're looking for technical partners, embedded engineers, and researchers
+        who want to build next-generation aerial systems alongside us.
+      </p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        <a href="index.html#platforms" class="btn btn-secondary">Browse Platforms</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="nav-logo-mark" aria-hidden="true" style="width:28px;height:28px;">
+            <svg viewBox="0 0 18 18" fill="none" style="width:14px;height:14px;"><path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/><circle cx="9" cy="9" r="2.5" fill="white"/></svg>
+          </div>
+          Aerolith
+        </div>
+        <p class="footer-desc">Vertically integrated drone systems — custom silicon, firmware, and aerial platforms built from first principles.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Platforms</div>
+        <div class="footer-links">
+          <a href="lithcore.html" class="footer-link">LithCore</a>
+          <a href="lithdrive.html" class="footer-link">LithDrive</a>
+          <a href="cinelith.html" class="footer-link">CineLith</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="index.html#about" class="footer-link">About</a>
+          <a href="technology.html" class="footer-link">Technology</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="https://github.com/Lemonochrme/Nanolith" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 Aerolith. All rights reserved.</div>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">License</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

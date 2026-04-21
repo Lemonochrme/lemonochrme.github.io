@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LithDrive — Custom STM32F051 BLDC ESC with 6-step trapezoidal control and MOSFET power stage by Aerolith." />
+  <title>LithDrive — BLDC ESC Platform | Aerolith</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><path d='M16 6L26 16L16 26L6 16Z' fill='none' stroke='white' stroke-width='2'/><circle cx='16' cy='16' r='3' fill='white'/></svg>" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/><circle cx="9" cy="9" r="2.5" fill="white"/></svg>
+        </div>
+        Aerolith
+      </a>
+      <div class="nav-links">
+        <a href="index.html#platforms" class="nav-link">Platforms</a>
+        <a href="lithcore.html" class="nav-link">LithCore</a>
+        <a href="lithdrive.html" class="nav-link active">LithDrive</a>
+        <a href="cinelith.html" class="nav-link">CineLith</a>
+        <a href="technology.html" class="nav-link">Technology</a>
+        <a href="index.html#about" class="nav-link">About</a>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Get in Touch</a>
+        <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="nav-drawer" role="dialog">
+  <a href="index.html#platforms" class="nav-link">Platforms</a>
+  <a href="lithcore.html" class="nav-link">LithCore</a>
+  <a href="lithdrive.html" class="nav-link">LithDrive</a>
+  <a href="cinelith.html" class="nav-link">CineLith</a>
+  <a href="technology.html" class="nav-link">Technology</a>
+  <a href="index.html#about" class="nav-link">About</a>
+  <div style="margin-top:auto"><a href="contact.html" class="btn btn-primary">Get in Touch</a></div>
+</div>
+
+
+<!-- PRODUCT HERO -->
+<section class="product-hero" aria-labelledby="ld-heading">
+  <div class="product-hero-glow" aria-hidden="true" style="background: radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%);"></div>
+  <div class="container">
+    <div class="product-hero-grid">
+
+      <div>
+        <div class="breadcrumb">
+          <a href="index.html">Aerolith</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="index.html#platforms">Platforms</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>LithDrive</span>
+        </div>
+        <span class="badge badge-cyan" style="margin-bottom:1.5rem; display:inline-flex;">ESC Platform</span>
+        <h1 id="ld-heading" class="product-headline">
+          LithDrive<br>
+          <span class="gradient-text">BLDC Speed Controller</span>
+        </h1>
+        <p class="product-tagline">
+          A custom electronic speed controller built on STM32F051, implementing
+          6-step trapezoidal BLDC commutation with a MOSFET power stage —
+          engineered for precision, efficiency, and native LithCore integration.
+        </p>
+        <div class="product-meta-row">
+          <span class="badge badge-amber badge-dot">In Development</span>
+          <span class="badge badge-neutral">STM32F051</span>
+          <span class="badge badge-neutral">6-step Trap.</span>
+          <span class="badge badge-neutral">N-ch MOSFET</span>
+        </div>
+      </div>
+
+      <div class="product-hero-visual" aria-hidden="true">
+        <!-- ESC schematic SVG -->
+        <svg class="product-hero-schematic" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- PCB outline - smaller, rectangular ESC form factor -->
+          <rect x="60" y="60" width="280" height="180" rx="10" stroke="rgba(6,182,212,0.3)" stroke-width="1.5"/>
+          <!-- MCU -->
+          <rect x="155" y="110" width="90" height="60" rx="4" stroke="rgba(6,182,212,0.5)" stroke-width="1.5"/>
+          <rect x="163" y="118" width="74" height="44" rx="2" fill="rgba(6,182,212,0.06)"/>
+          <text x="200" y="144" text-anchor="middle" fill="rgba(34,211,238,0.8)" font-size="9" font-family="JetBrains Mono, monospace">STM32F051</text>
+          <!-- Gate driver -->
+          <rect x="88" y="105" width="50" height="35" rx="3" stroke="rgba(6,182,212,0.35)" stroke-width="1"/>
+          <text x="113" y="126" text-anchor="middle" fill="rgba(34,211,238,0.5)" font-size="7" font-family="JetBrains Mono, monospace">GATE DRV</text>
+          <!-- MOSFETs (3 high-side, 3 low-side) -->
+          <g opacity="0.7">
+            <rect x="258" y="80"  width="16" height="22" rx="2" stroke="rgba(34,211,238,0.5)" stroke-width="0.8"/>
+            <rect x="280" y="80"  width="16" height="22" rx="2" stroke="rgba(34,211,238,0.5)" stroke-width="0.8"/>
+            <rect x="302" y="80"  width="16" height="22" rx="2" stroke="rgba(34,211,238,0.5)" stroke-width="0.8"/>
+            <rect x="258" y="110" width="16" height="22" rx="2" stroke="rgba(6,182,212,0.4)" stroke-width="0.8"/>
+            <rect x="280" y="110" width="16" height="22" rx="2" stroke="rgba(6,182,212,0.4)" stroke-width="0.8"/>
+            <rect x="302" y="110" width="16" height="22" rx="2" stroke="rgba(6,182,212,0.4)" stroke-width="0.8"/>
+          </g>
+          <text x="288" y="76"  text-anchor="middle" fill="rgba(34,211,238,0.4)" font-size="6" font-family="JetBrains Mono, monospace">HIGH</text>
+          <text x="288" y="107" text-anchor="middle" fill="rgba(34,211,238,0.4)" font-size="6" font-family="JetBrains Mono, monospace">LOW</text>
+          <!-- Motor phases A B C -->
+          <line x1="266" y1="132" x2="266" y2="200" stroke="rgba(6,182,212,0.25)" stroke-width="0.8"/>
+          <line x1="288" y1="132" x2="288" y2="200" stroke="rgba(6,182,212,0.25)" stroke-width="0.8"/>
+          <line x1="310" y1="132" x2="310" y2="200" stroke="rgba(6,182,212,0.25)" stroke-width="0.8"/>
+          <text x="266" y="212" text-anchor="middle" fill="rgba(34,211,238,0.4)" font-size="7" font-family="JetBrains Mono, monospace">A</text>
+          <text x="288" y="212" text-anchor="middle" fill="rgba(34,211,238,0.4)" font-size="7" font-family="JetBrains Mono, monospace">B</text>
+          <text x="310" y="212" text-anchor="middle" fill="rgba(34,211,238,0.4)" font-size="7" font-family="JetBrains Mono, monospace">C</text>
+          <!-- Input pad -->
+          <rect x="70" y="155" width="30" height="20" rx="3" fill="rgba(6,182,212,0.08)" stroke="rgba(6,182,212,0.3)" stroke-width="0.8"/>
+          <text x="85" y="168" text-anchor="middle" fill="rgba(34,211,238,0.4)" font-size="6" font-family="JetBrains Mono, monospace">IN</text>
+          <!-- Traces: MCU → gate driver -->
+          <path d="M155 130 L138 130" stroke="rgba(6,182,212,0.2)" stroke-width="0.5"/>
+          <!-- Gate driver → MOSFETs -->
+          <path d="M138 115 L258 91" stroke="rgba(6,182,212,0.15)" stroke-width="0.5"/>
+          <path d="M138 120 L258 121" stroke="rgba(6,182,212,0.15)" stroke-width="0.5"/>
+          <!-- Rings -->
+          <circle cx="200" cy="150" r="130" class="schematic-ring" style="stroke:rgba(6,182,212,0.2)"/>
+          <circle cx="200" cy="150" r="155" class="schematic-ring-2" style="stroke:rgba(34,211,238,0.1)"/>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- OVERVIEW -->
+<section class="section">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-16); align-items:start;">
+      <div>
+        <p class="section-label">ESC Design</p>
+        <h2 class="display-md section-title reveal">
+          Power Electronics,<br>
+          <span class="gradient-text">Done Right.</span>
+        </h2>
+        <p class="body-md text-2 reveal reveal-delay-1" style="margin-bottom:var(--sp-6);">
+          LithDrive implements 6-step trapezoidal BLDC commutation — the most efficient
+          and widely validated control scheme for drone motors. Our gate driver
+          and MOSFET selection are optimized for the switching frequencies and
+          current levels of mid-size drone applications.
+        </p>
+        <p class="body-md text-2 reveal reveal-delay-2" style="margin-bottom:var(--sp-6);">
+          Back-EMF zero-crossing detection enables sensorless motor startup and
+          speed feedback without hall sensors, keeping the airframe clean and
+          reducing failure points.
+        </p>
+        <div class="highlight-box reveal reveal-delay-3">
+          <p>
+            LithDrive is designed to operate natively with LithCore via DSHOT —
+            a digital protocol that eliminates PWM calibration, reduces timing jitter,
+            and enables bidirectional telemetry for real-time current and RPM monitoring.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden;" class="reveal reveal-delay-1">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th colspan="2" style="font-size:0.8rem; color:var(--text-2); padding:1rem 1.25rem; letter-spacing:0; text-transform:none;">
+                  LithDrive — Technical Specifications
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2" class="spec-section-label">Processor</td></tr>
+              <tr><td>MCU</td><td>STM32F051C8T6</td></tr>
+              <tr><td>Architecture</td><td>ARM Cortex-M0</td></tr>
+              <tr><td>Clock Speed</td><td>48 MHz</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Control</td></tr>
+              <tr><td>Algorithm</td><td>6-step trapezoidal commutation</td></tr>
+              <tr><td>Feedback</td><td>Back-EMF zero-crossing detection</td></tr>
+              <tr><td>Operation</td><td>Sensorless</td></tr>
+              <tr><td>PWM Frequency</td><td>Configurable (16–96 kHz)</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Power Stage</td></tr>
+              <tr><td>Topology</td><td>3-phase half-bridge</td></tr>
+              <tr><td>Switches</td><td>N-channel MOSFETs</td></tr>
+              <tr><td>Gate Driver</td><td>Bootstrap high-side driver</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Communication</td></tr>
+              <tr><td>Input Protocol</td><td>DSHOT / Analog PWM</td></tr>
+              <tr><td>Telemetry</td><td>RPM, Current, Voltage, Temp</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Firmware</td></tr>
+              <tr><td>Stack</td><td>Proprietary bare-metal</td></tr>
+              <tr><td>License</td><td>Open Source Hardware (OSHW)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONTROL THEORY -->
+<section class="section tech-bg">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">How It Works</p>
+      <h2 class="display-md section-title reveal">
+        6-Step Trapezoidal<br>Commutation Explained
+      </h2>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal reveal-delay-1">
+        <div class="tech-card-number">Step 1 — Signal</div>
+        <div class="tech-card-title">Receiving the Motor Command</div>
+        <p class="tech-card-desc">
+          LithDrive receives a digital DSHOT throttle command from LithCore.
+          The STM32F051 decodes the frame in real-time using DMA-assisted UART capture,
+          extracting the 11-bit throttle value and telemetry request bit.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">DSHOT</span>
+          <span class="tech-tag">11-bit throttle</span>
+          <span class="tech-tag">DMA capture</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-2">
+        <div class="tech-card-number">Step 2 — Commutation</div>
+        <div class="tech-card-title">6-Step Trapezoidal Sequencing</div>
+        <p class="tech-card-desc">
+          The motor's three phases are energized in six discrete steps per electrical
+          revolution. Two phases are active at any time; the third is used for back-EMF
+          sensing. The STM32's advanced timers generate complementary PWM signals
+          for the high- and low-side MOSFETs.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">Complementary PWM</span>
+          <span class="tech-tag">Dead-time insertion</span>
+          <span class="tech-tag">Phase sequencing</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-3">
+        <div class="tech-card-number">Step 3 — Sensing</div>
+        <div class="tech-card-title">Back-EMF Zero-Crossing Detection</div>
+        <p class="tech-card-desc">
+          During the floating phase, the STM32 ADC monitors the motor's back-EMF voltage.
+          When it crosses the motor's virtual neutral point, the next commutation step
+          is triggered — enabling sensorless, self-timed operation from idle to full speed.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">ADC sampling</span>
+          <span class="tech-tag">Virtual neutral</span>
+          <span class="tech-tag">ZCD comparator</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-4">
+        <div class="tech-card-number">Step 4 — Telemetry</div>
+        <div class="tech-card-title">Closed-Loop Feedback to LithCore</div>
+        <p class="tech-card-desc">
+          Real-time motor speed (eRPM), phase current (measured via shunt), supply
+          voltage, and temperature are packaged and returned to LithCore on each
+          telemetry cycle for closed-loop control and safety monitoring.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">eRPM</span>
+          <span class="tech-tag">Current shunt</span>
+          <span class="tech-tag">Voltage monitoring</span>
+          <span class="tech-tag">NTC temperature</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-box-glow" aria-hidden="true"></div>
+      <p class="section-label" style="justify-content:center; margin-bottom:var(--sp-6);">
+        <span style="display:inline-flex; align-items:center; gap:0.5rem;">
+          <span style="display:block; width:20px; height:1px; background:var(--text-3);"></span>
+          Next
+        </span>
+      </p>
+      <h2 class="cta-title">See the Complete Platform</h2>
+      <p class="cta-desc">LithCore + LithDrive power the CineLith cinema drone — the full Aerolith ecosystem in a single airframe.</p>
+      <div class="cta-actions">
+        <a href="cinelith.html" class="btn btn-primary">View CineLith →</a>
+        <a href="contact.html" class="btn btn-secondary">Technical Inquiry</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="nav-logo-mark" aria-hidden="true" style="width:28px;height:28px;">
+            <svg viewBox="0 0 18 18" fill="none" style="width:14px;height:14px;"><path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/><circle cx="9" cy="9" r="2.5" fill="white"/></svg>
+          </div>
+          Aerolith
+        </div>
+        <p class="footer-desc">Vertically integrated drone systems — custom silicon, firmware, and aerial platforms built from first principles.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Platforms</div>
+        <div class="footer-links">
+          <a href="lithcore.html" class="footer-link">LithCore</a>
+          <a href="lithdrive.html" class="footer-link">LithDrive</a>
+          <a href="cinelith.html" class="footer-link">CineLith</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="index.html#about" class="footer-link">About</a>
+          <a href="technology.html" class="footer-link">Technology</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="https://github.com/Lemonochrme/Nanolith" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 Aerolith. All rights reserved.</div>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">License</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

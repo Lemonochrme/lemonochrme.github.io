@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aerolith — Custom drone systems built from first principles. Vertically integrated hardware, firmware, and aerial platforms for next-generation flight." />
+  <meta name="theme-color" content="#04040c" />
+  <title>Aerolith — Vertically Integrated Drone Systems</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Aerolith — Vertically Integrated Drone Systems" />
+  <meta property="og:description" content="We build complete drone stacks from bare silicon to flight-ready platforms." />
+  <meta property="og:type" content="website" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Favicon (inline SVG data URI) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><path d='M16 6L26 16L16 26L6 16Z' fill='none' stroke='white' stroke-width='2'/><circle cx='16' cy='16' r='3' fill='white'/></svg>" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════════════ -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+
+      <a href="index.html" class="nav-logo" aria-label="Aerolith home">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/>
+            <circle cx="9" cy="9" r="2.5" fill="white"/>
+          </svg>
+        </div>
+        Aerolith
+      </a>
+
+      <div class="nav-links" role="list">
+        <a href="index.html#platforms" class="nav-link" role="listitem">Platforms</a>
+        <a href="lithcore.html" class="nav-link" role="listitem">LithCore</a>
+        <a href="lithdrive.html" class="nav-link" role="listitem">LithDrive</a>
+        <a href="cinelith.html" class="nav-link" role="listitem">CineLith</a>
+        <a href="technology.html" class="nav-link" role="listitem">Technology</a>
+        <a href="index.html#about" class="nav-link" role="listitem">About</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Get in Touch</a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="nav-drawer" role="dialog" aria-label="Mobile navigation">
+  <a href="index.html#platforms" class="nav-link">Platforms</a>
+  <a href="lithcore.html" class="nav-link">LithCore</a>
+  <a href="lithdrive.html" class="nav-link">LithDrive</a>
+  <a href="cinelith.html" class="nav-link">CineLith</a>
+  <a href="technology.html" class="nav-link">Technology</a>
+  <a href="index.html#about" class="nav-link">About</a>
+  <div style="margin-top:auto">
+    <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section id="hero" class="hero" aria-label="Hero">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot" aria-hidden="true"></span>
+      Active Development
+    </div>
+
+    <h1 class="hero-title">
+      <span class="hero-title-line">Built From</span>
+      <span class="hero-title-line accent">First Principles.</span>
+    </h1>
+
+    <p class="hero-sub">
+      We design the entire aerial stack, from silicon to flight-ready platforms.
+      Custom flight controllers, power electronics, and cinema-grade drone systems,
+      engineered without compromise.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#platforms" class="btn btn-primary">
+        Explore Platforms
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+          <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <a href="technology.html" class="btn btn-ghost">
+        Our Engineering Approach
+        <span class="arrow" aria-hidden="true"> →</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-stats" aria-label="Key metrics">
+    <div class="hero-stats-inner">
+      <div class="hero-stat">
+        <div class="hero-stat-value gradient-text-blue">STM32</div>
+        <div class="hero-stat-label">Based</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value gradient-text-blue">3</div>
+        <div class="hero-stat-label">Platform Ecosystems</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value gradient-text-blue">100%</div>
+        <div class="hero-stat-label">In-House Firmware</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value gradient-text-blue">F405</div>
+        <div class="hero-stat-label">Flight Controller MCU</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value gradient-text-blue">OSHW</div>
+        <div class="hero-stat-label">Open Source Hardware</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator" aria-hidden="true">
+    <span>SCROLL</span>
+    <div class="scroll-indicator-line"></div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     MISSION
+════════════════════════════════════════════════════════════ -->
+<section id="mission" class="section mission" aria-labelledby="mission-heading">
+  <div class="container">
+    <div class="mission-grid">
+
+      <div>
+        <p class="section-label">What We Are Building</p>
+        <h2 id="mission-heading" class="display-lg section-title reveal">
+          A Complete,<br>Vertically Integrated<br>
+          <span class="gradient-text">Aerial Technology Stack.</span>
+        </h2>
+        <p class="body-lg text-2 reveal reveal-delay-1" style="margin-bottom:2rem;">
+          Aerolith is not a reseller, not an integrator, and not a hobbyist project.
+          We design and manufacture every layer of our drone systems — the processor, the
+          power stage, the firmware, the airframe — from the ground up.
+        </p>
+        <div class="highlight-box reveal reveal-delay-2">
+          <p>
+            From custom STM32-based flight controllers to MOSFET-driven ESC architectures
+            and full cinema-drone platforms, every component is designed with precision,
+            purpose, and complete engineering ownership.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="mission-pillars">
+          <div class="pillar reveal reveal-delay-1">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="8" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                <rect x="13" y="13" width="10" height="10" rx="2" fill="currentColor" opacity="0.3"/>
+                <path d="M4 18h4M28 18h4M18 4v4M18 28v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="pillar-title">Custom Silicon</div>
+            <div class="pillar-desc">STM32F405 flight controllers &amp; STM32F051 ESCs designed in-house.</div>
+          </div>
+          <div class="pillar reveal reveal-delay-2">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 26l6-12 6 8 4-6 8 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="6" cy="26" r="2" fill="currentColor"/>
+                <circle cx="30" cy="26" r="2" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="pillar-title">In-House Firmware</div>
+            <div class="pillar-desc">Every line of flight-critical code written and owned by our team.</div>
+          </div>
+          <div class="pillar reveal reveal-delay-3">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L30 12V24L18 30L6 24V12Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                <path d="M18 6v24M6 12l12 6 12-6" stroke="currentColor" stroke-width="1" opacity="0.5"/>
+              </svg>
+            </div>
+            <div class="pillar-title">Power Electronics</div>
+            <div class="pillar-desc">MOSFET-based ESC architecture with 6-step trapezoidal BLDC control.</div>
+          </div>
+          <div class="pillar reveal reveal-delay-4">
+            <div class="pillar-icon" aria-hidden="true">
+              <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="12" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M18 10v8l5 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M8 18h2M26 18h2M18 8v2M18 26v2" stroke="currentColor" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="pillar-title">Full Platforms</div>
+            <div class="pillar-desc">Cinema drone airframes designed for professional payload integration.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     PLATFORMS
+════════════════════════════════════════════════════════════ -->
+<section id="platforms" class="section" aria-labelledby="platforms-heading">
+  <div class="container">
+
+    <div class="section-header">
+      <p class="section-label">The Aerolith Ecosystem</p>
+      <h2 id="platforms-heading" class="display-lg section-title reveal">
+        Three Platforms.<br>One Coherent Stack.
+      </h2>
+      <p class="section-desc reveal reveal-delay-1">
+        Each product in the Aerolith family is purpose-built and hardware-independent enough
+        to stand alone, yet seamlessly integrated when deployed together.
+      </p>
+    </div>
+
+    <div class="platforms-grid">
+
+      <!-- LithCore -->
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-glow" aria-hidden="true"></div>
+        <div class="product-card-header">
+          <div>
+            <div class="product-name">LithCore</div>
+            <div class="product-type">Flight Controller Platform</div>
+          </div>
+          <div>
+            <span class="badge badge-amber badge-dot">In Development</span>
+          </div>
+        </div>
+        <p class="product-desc">
+          A custom STM32F405-based flight controller designed for precision, reliability,
+          and full firmware ownership. No black-box middleware. No third-party dependencies.
+          Pure embedded engineering.
+        </p>
+        <div class="product-specs">
+          <div class="product-spec-row">
+            <span class="product-spec-key">MCU</span>
+            <span class="product-spec-val">STM32F405RGT6</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">Core</span>
+            <span class="product-spec-val">ARM Cortex-M4 @ 168 MHz</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">IMU</span>
+            <span class="product-spec-val">6-axis MEMS</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">Firmware</span>
+            <span class="product-spec-val">Proprietary / OSHW</span>
+          </div>
+        </div>
+        <div class="product-footer">
+          <a href="lithcore.html" class="product-link">
+            View LithCore
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <span class="badge badge-blue">FC Platform</span>
+        </div>
+      </div>
+
+      <!-- LithDrive -->
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-glow" aria-hidden="true"></div>
+        <div class="product-card-header">
+          <div>
+            <div class="product-name">LithDrive</div>
+            <div class="product-type">BLDC Electronic Speed Controller</div>
+          </div>
+          <div>
+            <span class="badge badge-amber badge-dot">In Development</span>
+          </div>
+        </div>
+        <p class="product-desc">
+          A custom BLDC ESC built on STM32F051, implementing 6-step trapezoidal commutation
+          with a MOSFET power stage. Full telemetry, configurable current limits,
+          and native protocol support — designed to pair with LithCore.
+        </p>
+        <div class="product-specs">
+          <div class="product-spec-row">
+            <span class="product-spec-key">MCU</span>
+            <span class="product-spec-val">STM32F051C8T6</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">Control</span>
+            <span class="product-spec-val">6-step Trapezoidal</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">Power Stage</span>
+            <span class="product-spec-val">N-channel MOSFETs</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">Protocol</span>
+            <span class="product-spec-val">DSHOT / Analog</span>
+          </div>
+        </div>
+        <div class="product-footer">
+          <a href="lithdrive.html" class="product-link">
+            View LithDrive
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <span class="badge badge-cyan">ESC Platform</span>
+        </div>
+      </div>
+
+      <!-- CineLith -->
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-card-glow" aria-hidden="true"></div>
+        <div class="product-card-header">
+          <div>
+            <div class="product-name">CineLith</div>
+            <div class="product-type">Cinema Drone Platform</div>
+          </div>
+          <div>
+            <span class="badge badge-green badge-dot">Design Phase</span>
+          </div>
+        </div>
+        <p class="product-desc">
+          A mid-frame cinema drone built to carry professional cameras such as the
+          Sony A7S&nbsp;III, in a compact F330-size format. Powered entirely by LithCore
+          and LithDrive — a complete, integrated aerial cinema system.
+        </p>
+        <div class="product-specs">
+          <div class="product-spec-row">
+            <span class="product-spec-key">Format</span>
+            <span class="product-spec-val">F330 (330mm)</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">Payload</span>
+            <span class="product-spec-val">Sony A7S III class</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">FC</span>
+            <span class="product-spec-val">LithCore</span>
+          </div>
+          <div class="product-spec-row">
+            <span class="product-spec-key">ESC</span>
+            <span class="product-spec-val">LithDrive ×4</span>
+          </div>
+        </div>
+        <div class="product-footer">
+          <a href="cinelith.html" class="product-link">
+            View CineLith
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <span class="badge badge-neutral">Drone Platform</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TECHNOLOGY
+════════════════════════════════════════════════════════════ -->
+<section id="technology" class="section tech-bg" aria-labelledby="tech-heading">
+  <div class="container">
+
+    <div class="section-header centered">
+      <p class="section-label" style="justify-content:center;">Engineering Approach</p>
+      <h2 id="tech-heading" class="display-lg section-title reveal">
+        The Full-Stack<br>
+        <span class="gradient-text">Engineering Philosophy</span>
+      </h2>
+      <p class="section-desc reveal reveal-delay-1">
+        We don't use off-the-shelf flight stacks. We design every layer — silicon, firmware,
+        power stage, and airframe — with complete ownership and zero compromises.
+      </p>
+    </div>
+
+    <!-- Stack layers -->
+    <div style="margin-bottom:var(--sp-8);" class="reveal">
+      <div class="stack-row">
+        <div class="stack-layer">
+          <div class="stack-layer-label">Layer 1 — Hardware</div>
+          <div class="stack-layer-name">Custom PCB Design</div>
+          <div class="stack-layer-detail">KiCad schematics, impedance-controlled layouts</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">Layer 2 — Silicon</div>
+          <div class="stack-layer-name">STM32 Microcontrollers</div>
+          <div class="stack-layer-detail">F405 for FC · F051 for ESC</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">Layer 3 — Firmware</div>
+          <div class="stack-layer-name">Bare-metal C / RTOS</div>
+          <div class="stack-layer-detail">HAL + custom drivers, no third-party FC stack</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">Layer 4 — Control</div>
+          <div class="stack-layer-name">Attitude &amp; Motor Control</div>
+          <div class="stack-layer-detail">PID, 6-step BLDC, real-time loop</div>
+        </div>
+        <div class="stack-layer">
+          <div class="stack-layer-label">Layer 5 — Platform</div>
+          <div class="stack-layer-name">Integrated Airframe</div>
+          <div class="stack-layer-detail">F330 CineLith — FC + ESC + Frame</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tech-grid">
+
+      <div class="tech-card reveal reveal-delay-1">
+        <div class="tech-card-number">01 — Flight Controller</div>
+        <div class="tech-card-title">STM32F405 — 168 MHz Cortex-M4</div>
+        <p class="tech-card-desc">
+          The LithCore flight controller is built around the STM32F405, a proven
+          Cortex-M4 processor with hardware floating-point — essential for fast,
+          stable PID loops. Every peripheral driver is written from scratch, with full
+          register-level control.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">168 MHz Cortex-M4F</span>
+          <span class="tech-tag">Hardware FPU</span>
+          <span class="tech-tag">DMA</span>
+          <span class="tech-tag">SPI / I2C / UART</span>
+          <span class="tech-tag">PWM / Timer</span>
+        </div>
+      </div>
+
+      <div class="tech-card reveal reveal-delay-2">
+        <div class="tech-card-number">02 — ESC Architecture</div>
+        <div class="tech-card-title">6-Step Trapezoidal BLDC Control</div>
+        <p class="tech-card-desc">
+          LithDrive uses an STM32F051 to implement 6-step trapezoidal commutation — the
+          gold standard for efficiency and simplicity in drone ESCs. The power stage is
+          built from N-channel MOSFETs in a 3-phase half-bridge configuration, with
+          back-EMF zero-crossing detection for sensorless operation.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">6-step Trapezoidal</span>
+          <span class="tech-tag">Back-EMF ZCD</span>
+          <span class="tech-tag">N-channel MOSFET</span>
+          <span class="tech-tag">STM32F051</span>
+          <span class="tech-tag">DSHOT</span>
+        </div>
+      </div>
+
+      <div class="tech-card reveal reveal-delay-3">
+        <div class="tech-card-number">03 — Firmware Philosophy</div>
+        <div class="tech-card-title">Zero Black Boxes. Full Ownership.</div>
+        <p class="tech-card-desc">
+          We do not integrate third-party flight stacks. All firmware is developed
+          in-house, giving us complete visibility into timing, determinism, and failure modes.
+          This is the only way to build a truly trustworthy aerial system.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">Bare-metal C</span>
+          <span class="tech-tag">FreeRTOS</span>
+          <span class="tech-tag">HAL abstraction</span>
+          <span class="tech-tag">Deterministic loops</span>
+        </div>
+      </div>
+
+      <div class="tech-card reveal reveal-delay-4">
+        <div class="tech-card-number">04 — Integrated Design</div>
+        <div class="tech-card-title">System Co-Design from Day One</div>
+        <p class="tech-card-desc">
+          Hardware and firmware are co-designed. Interface protocols, timing constraints,
+          and power budgets are resolved at the board level before a single line of firmware
+          is written. This eliminates integration debt and produces cleaner, more reliable systems.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">HW/FW co-design</span>
+          <span class="tech-tag">Power budgeting</span>
+          <span class="tech-tag">Signal integrity</span>
+          <span class="tech-tag">Thermal analysis</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:var(--sp-8); text-align:center;" class="reveal">
+      <a href="technology.html" class="btn btn-secondary">
+        Read the Full Technical Overview
+        <span aria-hidden="true"> →</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     VISION / MANIFESTO
+════════════════════════════════════════════════════════════ -->
+<section id="about" class="section manifesto" aria-labelledby="vision-heading">
+  <div class="container">
+
+    <div class="section-header centered" style="max-width:100%">
+      <p class="section-label" style="justify-content:center;">Vision</p>
+    </div>
+
+    <blockquote class="manifesto-quote reveal">
+      "Most drone systems are assembled from vendor components. Aerolith is different —
+      every layer is <em>engineered, owned, and understood</em>.
+      This is how you build systems that perform at the edge."
+    </blockquote>
+
+    <p class="body-lg text-2 text-center reveal reveal-delay-1" style="max-width:680px; margin:0 auto var(--sp-16);">
+      Our mission is to create a vertically integrated aerial technology stack —
+      where hardware decisions inform firmware design, firmware informs control algorithms,
+      and control algorithms inform the mechanical platform.
+    </p>
+
+    <div class="values-grid">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-num">01</div>
+        <div class="value-title">Engineering Integrity</div>
+        <p class="value-desc">
+          We design systems we fully understand. No hidden layers, no vendor lock-in,
+          no unexplained behavior. If we can't explain it, we redesign it.
+        </p>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-num">02</div>
+        <div class="value-title">Vertical Integration</div>
+        <p class="value-desc">
+          Silicon to airframe. Schematic to flight. We own the complete stack,
+          which means we control quality, performance, and the roadmap.
+        </p>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-num">03</div>
+        <div class="value-title">Open Source Foundation</div>
+        <p class="value-desc">
+          Aerolith is built on an open-source hardware philosophy. We publish schematics,
+          layouts, and firmware because the embedded community made us who we are.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     ROADMAP
+════════════════════════════════════════════════════════════ -->
+<section id="roadmap" class="section tech-bg" aria-labelledby="roadmap-heading">
+  <div class="container">
+
+    <div class="section-header centered">
+      <p class="section-label" style="justify-content:center;">Development Roadmap</p>
+      <h2 id="roadmap-heading" class="display-md section-title reveal">
+        Where We Are &amp; Where We're Going
+      </h2>
+    </div>
+
+    <div class="roadmap-grid">
+
+      <div class="roadmap-phase active reveal reveal-delay-1">
+        <div class="phase-label">Phase I — Active</div>
+        <div class="phase-title">Core Electronics</div>
+        <div class="phase-items">
+          <div class="phase-item">LithCore schematic design</div>
+          <div class="phase-item">LithDrive PCB layout</div>
+          <div class="phase-item">Firmware architecture</div>
+          <div class="phase-item">MOSFET gate driver design</div>
+          <div class="phase-item">STM32 peripheral bring-up</div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase reveal reveal-delay-2">
+        <div class="phase-label">Phase II — Upcoming</div>
+        <div class="phase-title">Prototype &amp; Validation</div>
+        <div class="phase-items">
+          <div class="phase-item">First board-level tests</div>
+          <div class="phase-item">Motor spin-up validation</div>
+          <div class="phase-item">Flight control loop tuning</div>
+          <div class="phase-item">Bench telemetry integration</div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase reveal reveal-delay-3">
+        <div class="phase-label">Phase III — Planned</div>
+        <div class="phase-title">CineLith Integration</div>
+        <div class="phase-items">
+          <div class="phase-item">F330 frame mechanical design</div>
+          <div class="phase-item">LithCore + LithDrive integration</div>
+          <div class="phase-item">Camera payload mount system</div>
+          <div class="phase-item">First flight testing</div>
+        </div>
+      </div>
+
+      <div class="roadmap-phase reveal reveal-delay-4">
+        <div class="phase-label">Phase IV — Future</div>
+        <div class="phase-title">Platform Expansion</div>
+        <div class="phase-items">
+          <div class="phase-item">FOC motor control research</div>
+          <div class="phase-item">Additional airframe formats</div>
+          <div class="phase-item">Ground control station</div>
+          <div class="phase-item">Community release</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     CTA
+════════════════════════════════════════════════════════════ -->
+<section class="section cta-section" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-box-glow" aria-hidden="true"></div>
+      <p class="section-label" style="justify-content:center; margin-bottom:var(--sp-6);">
+        <span style="display:inline-flex; align-items:center; gap:0.5rem;">
+          <span style="display:block; width:20px; height:1px; background:var(--text-3);"></span>
+          Collaborate With Us
+        </span>
+      </p>
+      <h2 id="cta-heading" class="cta-title">
+        Interested in What<br>We're Building?
+      </h2>
+      <p class="cta-desc">
+        We're open to technical partnerships, research collaborations, and conversations
+        with engineers, investors, and organizations pushing the boundaries of aerial systems.
+      </p>
+      <div class="cta-actions">
+        <a href="contact.html" class="btn btn-primary">
+          Start a Conversation
+        </a>
+        <a href="https://github.com/Lemonochrme/Nanolith" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer class="footer" aria-label="Site footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="nav-logo-mark" aria-hidden="true" style="width:28px;height:28px;">
+            <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;">
+              <path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/>
+              <circle cx="9" cy="9" r="2.5" fill="white"/>
+            </svg>
+          </div>
+          Aerolith
+        </div>
+        <p class="footer-desc">
+          Vertically integrated drone systems — custom silicon, firmware, and aerial platforms
+          built from first principles.
+        </p>
+        <a href="https://github.com/Lemonochrme/Nanolith" target="_blank" rel="noopener noreferrer"
+           class="badge badge-neutral" style="display:inline-flex;">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="margin-right:4px;" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          Open Source on GitHub
+        </a>
+      </div>
+      <div>
+        <div class="footer-col-title">Platforms</div>
+        <div class="footer-links">
+          <a href="lithcore.html" class="footer-link">LithCore</a>
+          <a href="lithdrive.html" class="footer-link">LithDrive</a>
+          <a href="cinelith.html" class="footer-link">CineLith</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="index.html#about" class="footer-link">About</a>
+          <a href="technology.html" class="footer-link">Technology</a>
+          <a href="index.html#roadmap" class="footer-link">Roadmap</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="https://github.com/Lemonochrme/Nanolith" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="technology.html#specs" class="footer-link">Technical Specs</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">
+        &copy; 2025 Aerolith. All rights reserved.
+      </div>
+      <div class="footer-legal">
+        <a href="#">Privacy</a>
+        <a href="#">License</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

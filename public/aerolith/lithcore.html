@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LithCore — Custom STM32F405-based flight controller platform by Aerolith. Full firmware ownership, no black boxes, precision embedded design." />
+  <title>LithCore — Flight Controller Platform | Aerolith</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%232563eb'/><path d='M16 6L26 16L16 26L6 16Z' fill='none' stroke='white' stroke-width='2'/><circle cx='16' cy='16' r='3' fill='white'/></svg>" />
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 18 18" fill="none"><path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/><circle cx="9" cy="9" r="2.5" fill="white"/></svg>
+        </div>
+        Aerolith
+      </a>
+      <div class="nav-links">
+        <a href="index.html#platforms" class="nav-link">Platforms</a>
+        <a href="lithcore.html" class="nav-link active">LithCore</a>
+        <a href="lithdrive.html" class="nav-link">LithDrive</a>
+        <a href="cinelith.html" class="nav-link">CineLith</a>
+        <a href="technology.html" class="nav-link">Technology</a>
+        <a href="index.html#about" class="nav-link">About</a>
+      </div>
+      <div class="nav-actions">
+        <a href="contact.html" class="btn btn-primary btn-sm">Get in Touch</a>
+        <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="nav-drawer" role="dialog">
+  <a href="index.html#platforms" class="nav-link">Platforms</a>
+  <a href="lithcore.html" class="nav-link">LithCore</a>
+  <a href="lithdrive.html" class="nav-link">LithDrive</a>
+  <a href="cinelith.html" class="nav-link">CineLith</a>
+  <a href="technology.html" class="nav-link">Technology</a>
+  <a href="index.html#about" class="nav-link">About</a>
+  <div style="margin-top:auto"><a href="contact.html" class="btn btn-primary">Get in Touch</a></div>
+</div>
+
+
+<!-- PRODUCT HERO -->
+<section class="product-hero" aria-labelledby="lc-heading">
+  <div class="product-hero-glow" aria-hidden="true"></div>
+  <div class="container">
+    <div class="product-hero-grid">
+
+      <div>
+        <div class="breadcrumb">
+          <a href="index.html">Aerolith</a>
+          <span class="breadcrumb-sep">/</span>
+          <a href="index.html#platforms">Platforms</a>
+          <span class="breadcrumb-sep">/</span>
+          <span>LithCore</span>
+        </div>
+        <span class="badge badge-blue" style="margin-bottom:1.5rem; display:inline-flex;">FC Platform</span>
+        <h1 id="lc-heading" class="product-headline">
+          LithCore<br>
+          <span class="gradient-text">Flight Controller</span>
+        </h1>
+        <p class="product-tagline">
+          A custom STM32F405-based flight controller engineered from scratch.
+          No black-box middleware. No third-party flight stack. Complete firmware
+          ownership and register-level hardware control.
+        </p>
+        <div class="product-meta-row">
+          <span class="badge badge-amber badge-dot">In Development</span>
+          <span class="badge badge-neutral">STM32F405</span>
+          <span class="badge badge-neutral">168 MHz</span>
+          <span class="badge badge-neutral">Cortex-M4F</span>
+        </div>
+      </div>
+
+      <div class="product-hero-visual" aria-hidden="true">
+        <!-- Stylised FC schematic SVG -->
+        <svg class="product-hero-schematic" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- PCB outline -->
+          <rect x="80" y="50" width="240" height="200" rx="12" stroke="rgba(59,130,246,0.3)" stroke-width="1.5"/>
+          <!-- MCU die -->
+          <rect x="155" y="115" width="90" height="70" rx="4" stroke="rgba(59,130,246,0.6)" stroke-width="1.5"/>
+          <rect x="163" y="123" width="74" height="54" rx="2" fill="rgba(37,99,235,0.08)"/>
+          <text x="200" y="154" text-anchor="middle" fill="rgba(96,165,250,0.8)" font-size="9" font-family="JetBrains Mono, monospace">STM32F405</text>
+          <text x="200" y="166" text-anchor="middle" fill="rgba(96,165,250,0.5)" font-size="7" font-family="JetBrains Mono, monospace">Cortex-M4F</text>
+          <!-- IMU -->
+          <rect x="105" y="75" width="40" height="32" rx="3" stroke="rgba(6,182,212,0.4)" stroke-width="1"/>
+          <text x="125" y="94" text-anchor="middle" fill="rgba(34,211,238,0.6)" font-size="7" font-family="JetBrains Mono, monospace">IMU</text>
+          <!-- Power regulator -->
+          <rect x="255" y="75" width="48" height="28" rx="3" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+          <text x="279" y="91" text-anchor="middle" fill="rgba(34,211,238,0.5)" font-size="7" font-family="JetBrains Mono, monospace">PWR REG</text>
+          <!-- Connector pads -->
+          <rect x="88" y="120" width="8" height="60" rx="2" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="0.5"/>
+          <rect x="304" y="120" width="8" height="60" rx="2" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="0.5"/>
+          <!-- Traces -->
+          <path d="M145 91 L155 130" stroke="rgba(59,130,246,0.2)" stroke-width="0.5"/>
+          <path d="M255 91 L245 130" stroke="rgba(59,130,246,0.2)" stroke-width="0.5"/>
+          <path d="M155 150 L96 150" stroke="rgba(59,130,246,0.15)" stroke-width="0.5"/>
+          <path d="M245 150 L312 150" stroke="rgba(59,130,246,0.15)" stroke-width="0.5"/>
+          <!-- Corner mounting holes -->
+          <circle cx="96" cy="66" r="4" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <circle cx="304" cy="66" r="4" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <circle cx="96" cy="234" r="4" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <circle cx="304" cy="234" r="4" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <!-- Spinning ring -->
+          <circle cx="200" cy="150" r="130" class="schematic-ring"/>
+          <circle cx="200" cy="150" r="155" class="schematic-ring-2"/>
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- OVERVIEW -->
+<section class="section" aria-labelledby="lc-overview-heading">
+  <div class="container">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-16); align-items:start;">
+      <div>
+        <p class="section-label">Design Philosophy</p>
+        <h2 id="lc-overview-heading" class="display-md section-title reveal">
+          No Off-the-Shelf<br>
+          <span class="gradient-text">Flight Stacks.</span>
+        </h2>
+        <p class="body-md text-2 reveal reveal-delay-1" style="margin-bottom:var(--sp-6);">
+          Most drone developers build on top of Betaflight, ArduPilot, or PX4.
+          LithCore takes the opposite approach: we own every line of flight-critical
+          code, every register configuration, every interrupt handler.
+        </p>
+        <p class="body-md text-2 reveal reveal-delay-2" style="margin-bottom:var(--sp-6);">
+          This means more development time upfront — and dramatically better visibility
+          into system behavior in production. When something fails, we know exactly why.
+        </p>
+        <div class="highlight-box reveal reveal-delay-3">
+          <p>
+            LithCore is designed to be the brain of the Aerolith ecosystem — interfacing
+            directly with LithDrive ESCs, IMU sensors, and the CineLith airframe electronics
+            through clean, documented protocols.
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <!-- Specs table -->
+        <div style="background:var(--bg-2); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden;" class="reveal reveal-delay-1">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th colspan="2" style="font-size:0.8rem; color:var(--text-2); padding:1rem 1.25rem; letter-spacing:0; text-transform:none;">
+                  LithCore — Technical Specifications
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="2" class="spec-section-label">Processor</td></tr>
+              <tr><td>MCU</td><td>STM32F405RGT6</td></tr>
+              <tr><td>Architecture</td><td>ARM Cortex-M4F</td></tr>
+              <tr><td>Clock Speed</td><td>168 MHz</td></tr>
+              <tr><td>Flash / RAM</td><td>1 MB / 192 KB</td></tr>
+              <tr><td>FPU</td><td>Single-precision hardware</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Sensors</td></tr>
+              <tr><td>IMU</td><td>6-axis MEMS (acc + gyro)</td></tr>
+              <tr><td>Barometer</td><td>Altitude hold capable</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Connectivity</td></tr>
+              <tr><td>Motor Outputs</td><td>4× PWM / DSHOT</td></tr>
+              <tr><td>UART</td><td>3× (GPS, telemetry, debug)</td></tr>
+              <tr><td>SPI / I²C</td><td>2× SPI, 1× I²C</td></tr>
+              <tr><td>RC Input</td><td>SBUS / CRSF / PPM</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Power</td></tr>
+              <tr><td>Input Voltage</td><td>3S – 6S LiPo</td></tr>
+              <tr><td>Onboard Regulator</td><td>3.3V / 5V rails</td></tr>
+              <tr><td colspan="2" class="spec-section-label">Firmware</td></tr>
+              <tr><td>Stack</td><td>Proprietary bare-metal + RTOS</td></tr>
+              <tr><td>License</td><td>Open Source Hardware (OSHW)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FIRMWARE ARCHITECTURE -->
+<section class="section tech-bg" aria-labelledby="lc-fw-heading">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Firmware</p>
+      <h2 id="lc-fw-heading" class="display-md section-title reveal">
+        Built on Bare Metal.<br>Designed for Determinism.
+      </h2>
+      <p class="section-desc reveal reveal-delay-1">
+        The LithCore firmware is a custom real-time control system. Sensor fusion,
+        attitude estimation, PID control, and motor output are all handled in tightly
+        scheduled interrupt-driven loops.
+      </p>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card reveal reveal-delay-1">
+        <div class="tech-card-number">Sensor Fusion</div>
+        <div class="tech-card-title">IMU Processing Pipeline</div>
+        <p class="tech-card-desc">
+          Raw accelerometer and gyroscope data is processed through a complementary or
+          Mahony filter at a fixed update rate, providing stable attitude estimates
+          even under vibration.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">Mahony / Madgwick</span>
+          <span class="tech-tag">Quaternion math</span>
+          <span class="tech-tag">Anti-aliasing</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-2">
+        <div class="tech-card-number">Control Loop</div>
+        <div class="tech-card-title">Cascaded PID Architecture</div>
+        <p class="tech-card-desc">
+          An outer attitude loop and inner rate loop run at separate update frequencies,
+          providing both stability and responsiveness. Gains are tunable over the
+          debug UART interface.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">Cascaded PID</span>
+          <span class="tech-tag">Rate + Attitude loops</span>
+          <span class="tech-tag">Configurable gains</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-3">
+        <div class="tech-card-number">Communication</div>
+        <div class="tech-card-title">DSHOT Motor Protocol</div>
+        <p class="tech-card-desc">
+          Motor commands are transmitted to LithDrive ESCs over DSHOT, a digital
+          protocol that eliminates calibration and provides precise, latency-free
+          motor control with bidirectional telemetry.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">DSHOT300/600</span>
+          <span class="tech-tag">Bidirectional telemetry</span>
+          <span class="tech-tag">Zero latency jitter</span>
+        </div>
+      </div>
+      <div class="tech-card reveal reveal-delay-4">
+        <div class="tech-card-number">Safety</div>
+        <div class="tech-card-title">Watchdog &amp; Failsafe</div>
+        <p class="tech-card-desc">
+          Hardware watchdog timers and software-defined failsafes ensure predictable
+          behavior on signal loss, sensor faults, or firmware hangs — critical for
+          operating over people or property.
+        </p>
+        <div class="tech-tags">
+          <span class="tech-tag">IWDG / WWDG</span>
+          <span class="tech-tag">RC signal timeout</span>
+          <span class="tech-tag">Motor cutoff policy</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="section cta-section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="cta-box-glow" aria-hidden="true"></div>
+      <p class="section-label" style="justify-content:center; margin-bottom:var(--sp-6);">
+        <span style="display:inline-flex; align-items:center; gap:0.5rem;">
+          <span style="display:block; width:20px; height:1px; background:var(--text-3);"></span>
+          Next
+        </span>
+      </p>
+      <h2 class="cta-title">Explore the ESC Platform</h2>
+      <p class="cta-desc">LithCore pairs natively with LithDrive — our custom BLDC speed controller.</p>
+      <div class="cta-actions">
+        <a href="lithdrive.html" class="btn btn-primary">View LithDrive →</a>
+        <a href="contact.html" class="btn btn-secondary">Technical Inquiry</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="nav-logo-mark" aria-hidden="true" style="width:28px;height:28px;">
+            <svg viewBox="0 0 18 18" fill="none" style="width:14px;height:14px;"><path d="M9 2L16 9L9 16L2 9Z" fill="none" stroke="white" stroke-width="1.5"/><circle cx="9" cy="9" r="2.5" fill="white"/></svg>
+          </div>
+          Aerolith
+        </div>
+        <p class="footer-desc">Vertically integrated drone systems — custom silicon, firmware, and aerial platforms built from first principles.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Platforms</div>
+        <div class="footer-links">
+          <a href="lithcore.html" class="footer-link">LithCore</a>
+          <a href="lithdrive.html" class="footer-link">LithDrive</a>
+          <a href="cinelith.html" class="footer-link">CineLith</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="index.html#about" class="footer-link">About</a>
+          <a href="technology.html" class="footer-link">Technology</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Resources</div>
+        <div class="footer-links">
+          <a href="https://github.com/Lemonochrme/Nanolith" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2025 Aerolith. All rights reserved.</div>
+      <div class="footer-legal"><a href="#">Privacy</a><a href="#">License</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
