@@ -19,7 +19,7 @@ const { title, description, image, isHome = false } = Astro.props;
   <ThemeScript />
   <Head title={title} description={description} image={image} />
 
-  <body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
+  <body class={isHome ? 'home-page' : undefined} style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
     <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script is:inline>
       MathJax = {
@@ -30,20 +30,40 @@ const { title, description, image, isHome = false } = Astro.props;
       };
     </script>
 
-    <div class="container content" style="flex: 1;">
-      <Masthead />
+    <div class:list={['container', 'content', { 'home-content': isHome }]} style="flex: 1;">
+      {!isHome && <Masthead />}
       <main>
-        {isHome && <><br /><br /></>}
         <slot />
       </main>
     </div>
 
-    <div class="container">
-      <footer>
-        <small>
-          &copy; {new Date().getFullYear()} Robin Marin-Muller
-        </small>
-      </footer>
-    </div>
+    {!isHome && (
+      <div class="container">
+        <footer>
+          <small>
+            &copy; {new Date().getFullYear()} Robin Marin-Muller
+          </small>
+        </footer>
+      </div>
+    )}
   </body>
+  <style>
+    .home-page {
+      overflow: hidden;
+      background: #080b10;
+    }
+
+    .home-content {
+      width: 100%;
+      max-width: none;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 0;
+    }
+
+    .home-content main {
+      height: 100vh;
+      height: 100dvh;
+    }
+  </style>
 </html>

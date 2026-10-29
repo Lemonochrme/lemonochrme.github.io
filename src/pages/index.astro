@@ -1,206 +1,89 @@
 ---
-import { getCollection } from 'astro:content';
+import redline from '../../aerolith-galery/Lithframe_Bezier_01_Redline_4K.png';
+import obsidian from '../../aerolith-galery/Lithframe_Bezier_02_Obsidian_4K.png';
+import powertrain from '../../aerolith-galery/Lithframe_Bezier_03_Powertrain_4K.png';
+import exploded from '../../aerolith-galery/Lithframe_Bezier_04_Exploded_4K.png';
+import service from '../../aerolith-galery/Lithframe_Bezier_05_Service_4K.png';
+import silhouette from '../../aerolith-galery/Lithframe_Bezier_06_Silhouette_4K.png';
+import flightController from '../../aerolith-galery/Lithframe_Bezier_07_FC_4K.png';
+import windings from '../../aerolith-galery/Lithframe_Bezier_08_Windings_4K.png';
+import harness from '../../aerolith-galery/Lithframe_Bezier_09_Harness_4K.png';
 import Default from '../layouts/Default.astro';
 
-const allPosts = (await getCollection('posts'))
-  .filter(p => !p.id.startsWith('insa-'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const latest = allPosts[0];
-
-function formatDate(d: Date) {
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-
-function truncate(str: string, max: number) {
-  return str.length > max ? str.slice(0, max) + '…' : str;
-}
+const renders = [
+  { image: redline, title: 'Redline' },
+  { image: obsidian, title: 'Obsidian' },
+  { image: powertrain, title: 'Powertrain' },
+  { image: exploded, title: 'Exploded view' },
+  { image: service, title: 'Service access' },
+  { image: silhouette, title: 'Silhouette' },
+  { image: flightController, title: 'Flight controller' },
+  { image: windings, title: 'Motor windings' },
+  { image: harness, title: 'Wiring harness' },
+];
 ---
 
 <Default title="Home" isHome>
-
-  <!-- Hero -->
-  <p class="hero-name">Robin Marin–Muller</p>
-  <p class="hero-handle">@Lemonochrome</p>
-
-  <p class="hero-links">
-    <span class="contact-desktop">
-      <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email Me</a> |
-      <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> |
-      <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
-      <a href="/resume/" class="hover-link">View Curriculum Vitae</a>
-    </span>
-    <span class="contact-mobile">
-      <a href="mailto:marin-muller@insa-toulouse.fr" class="hover-link">Email</a> |
-      <a href="http://github.com/Lemonochrme/" target="_blank" class="hover-link">GitHub</a> |
-      <a href="https://medium.com/@Lemonochrome" target="_blank" class="hover-link">Medium</a> |
-      <a href="/resume/" class="hover-link">CV</a>
-    </span>
-  </p>
-
-  <p class="hero-desc">
-    I like to understand how complex systems work: signals, control, electronics, firmware,
-    architecture, and the scientific principles behind them. Here are some of the systems
-    I've designed, built, and analysed as an engineering student at INSA Toulouse.
-  </p>
-
-  <div class="hero-actions">
-    <a href="/archive" class="btn-outline hero-btn">✦ Discover the Projects</a>
-  </div>
-
-  <!-- Latest post -->
-  {latest && (
-    <section class="latest-section">
-      <div class="latest-header">
-        <span class="latest-label">Latest</span>
-        <span class="latest-rule"></span>
-      </div>
-      <a href={`/posts/${latest.slug}`} class="latest-link">
-        <h2 class="latest-title">{latest.data.title}</h2>
-        <time datetime={latest.data.date.toISOString()} class="latest-date">
-          {formatDate(latest.data.date)}
-        </time>
-        {latest.data.description && (
-          <p class="latest-desc">{truncate(latest.data.description, 200)}</p>
-        )}
-      </a>
-    </section>
-  )}
+  <section class="aerolith-showcase" aria-label="Galerie des rendus Aerolith">
+    <div class="gallery">
+      {renders.map((render, index) => (
+        <figure class="gallery-slide">
+          <img
+            src={render.image.src}
+            alt={`Aerolith — ${render.title}`}
+            fetchpriority={index === 0 ? 'high' : undefined}
+            loading={index === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        </figure>
+      ))}
+    </div>
+  </section>
 
   <style>
-    /* ── Keyframe ── */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .aerolith-showcase {
+      width: 100%;
+      height: 100%;
     }
 
-    /* ── Hero ── */
-    .hero-name {
-      opacity: 0;
-      animation: fadeInUp 1.2s ease-out forwards;
-      animation-delay: 0s;
-      text-align: center;
-      font-size: 2em;
-      margin-bottom: 0.2rem;
-    }
-
-    .hero-handle {
-      opacity: 0;
-      animation: fadeInUp 1s ease-out forwards;
-      animation-delay: 0.15s;
-      text-align: center;
-      font-size: 1em;
-      color: var(--gray-600);
-      margin-top: 0;
-    }
-
-    .hero-links {
-      opacity: 0;
-      animation: fadeInUp 1s ease-out forwards;
-      animation-delay: 0.35s;
-      text-align: center;
-      font-style: italic;
-    }
-
-    .hero-desc {
-      opacity: 0;
-      animation: fadeInUp 1s ease-out forwards;
-      animation-delay: 0.55s;
-    }
-
-    .hero-actions {
-      opacity: 0;
-      animation: fadeInUp 1s ease-out forwards;
-      animation-delay: 0.75s;
-      text-align: right;
-      margin-bottom: 0;
-    }
-
-    @media (max-width: 720px) {
-      .hero-name  { font-size: 1.4em; }
-      .hero-actions { text-align: center; }
-      .contact-desktop { display: none !important; }
-      .contact-mobile  { display: inline !important; }
-    }
-
-    .contact-desktop { display: inline; font-style: italic; }
-    .contact-mobile  { display: none;   font-style: italic; }
-
-    /* ── Button ── */
-    .btn-outline {
-      display: inline-block;
-      padding: 10px 20px;
-      font-size: 1rem;
-      color: var(--link-color);
-      border: 1.5px solid var(--link-color);
-      text-decoration: none;
-      transition: background-color 0.35s, color 0.25s;
-    }
-    .btn-outline:hover {
-      color: var(--body-bg);
-      background-color: var(--link-color);
-    }
-
-    /* ── Latest post ── */
-    .latest-section {
-      opacity: 0;
-      animation: fadeInUp 1s ease-out forwards;
-      animation-delay: 1.05s;
-      margin-top: 3rem;
-    }
-
-    .latest-header {
+    .gallery {
       display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: #fa5252 #080b10;
     }
 
-    .latest-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gray-600);
-      white-space: nowrap;
-    }
-
-    .latest-rule {
-      flex: 1;
-      height: 1px;
-      background: var(--border-color);
-    }
-
-    .latest-link {
-      display: block;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .latest-title {
-      font-size: 1.3rem;
-      font-weight: 420;
-      margin: 0 0 0.3rem;
-      color: var(--heading-color);
-      transition: opacity 0.2s;
-    }
-    .latest-link:hover .latest-title {
-      opacity: 0.65;
-    }
-
-    .latest-date {
-      display: block;
-      font-size: 0.85rem;
-      color: var(--gray-600);
-      margin-bottom: 0.6rem;
-    }
-
-    .latest-desc {
+    .gallery-slide {
+      display: grid;
+      flex: 0 0 100%;
+      min-width: 100%;
+      min-height: 100%;
+      height: 100%;
       margin: 0;
-      font-size: 0.95rem;
-      color: var(--body-color);
-      line-height: 1.6;
+      place-items: center;
+      background: #080b10;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
     }
+
+    .gallery-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gallery { scroll-behavior: auto; }
+    }
+
   </style>
 
 </Default>
