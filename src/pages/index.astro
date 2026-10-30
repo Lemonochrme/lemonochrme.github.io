@@ -231,7 +231,7 @@ const renders = [
     }
 
     @keyframes panel-in { to { clip-path: inset(0 0 0 0); } }
-    @keyframes type { to { width: 16ch; } }
+    @keyframes type { to { width: calc(16 * (1ch + .3em)); } }
     @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(var(--end)); } }
     @keyframes pulse { 50% { opacity: .55; } }
     @keyframes blink { 50% { opacity: 0; } }
@@ -253,7 +253,7 @@ const renders = [
     }
 
     @media (max-width: 600px) {
-      .hud { align-items: flex-end; padding: 1rem; }
+      .hud { align-items: flex-end; padding: 1rem 1rem 4.5rem; }
       .hud-panel { width: 100%; }
     }
 
