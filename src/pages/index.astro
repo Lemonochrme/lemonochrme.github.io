@@ -24,6 +24,22 @@ const renders = [
 ---
 
 <Default title="Home" isHome>
+  <svg class="crt-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <filter id="crt" x="0" y="0" width="1" height="1" primitiveUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+      <feImage href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22256%22%20height%3D%22256%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%220%22%3E%3Cstop%20offset%3D%220.0%22%20stop-color%3D%22rgb%280%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.1%22%20stop-color%3D%22rgb%2862%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22rgb%28100%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.3%22%20stop-color%3D%22rgb%28119%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22rgb%28126%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.5%22%20stop-color%3D%22rgb%28128%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22rgb%28129%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.7%22%20stop-color%3D%22rgb%28136%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22rgb%28155%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.9%22%20stop-color%3D%22rgb%28193%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%221.0%22%20stop-color%3D%22rgb%28255%2C0%2C0%29%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22256%22%20height%3D%22256%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="mx" />
+      <feImage href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22256%22%20height%3D%22256%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%220%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220.0%22%20stop-color%3D%22rgb%280%2C0%2C0%29%22/%3E%3Cstop%20offset%3D%220.1%22%20stop-color%3D%22rgb%280%2C62%2C0%29%22/%3E%3Cstop%20offset%3D%220.2%22%20stop-color%3D%22rgb%280%2C100%2C0%29%22/%3E%3Cstop%20offset%3D%220.3%22%20stop-color%3D%22rgb%280%2C119%2C0%29%22/%3E%3Cstop%20offset%3D%220.4%22%20stop-color%3D%22rgb%280%2C126%2C0%29%22/%3E%3Cstop%20offset%3D%220.5%22%20stop-color%3D%22rgb%280%2C128%2C0%29%22/%3E%3Cstop%20offset%3D%220.6%22%20stop-color%3D%22rgb%280%2C129%2C0%29%22/%3E%3Cstop%20offset%3D%220.7%22%20stop-color%3D%22rgb%280%2C136%2C0%29%22/%3E%3Cstop%20offset%3D%220.8%22%20stop-color%3D%22rgb%280%2C155%2C0%29%22/%3E%3Cstop%20offset%3D%220.9%22%20stop-color%3D%22rgb%280%2C193%2C0%29%22/%3E%3Cstop%20offset%3D%221.0%22%20stop-color%3D%22rgb%280%2C255%2C0%29%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%22256%22%20height%3D%22256%22%20fill%3D%22url%28%23g%29%22/%3E%3C/svg%3E" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="my" />
+      <feComposite in="mx" in2="my" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="map" />
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0.022" xChannelSelector="R" yChannelSelector="G" result="dr" />
+      <feColorMatrix in="dr" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r" />
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0.016" xChannelSelector="R" yChannelSelector="G" result="dg" />
+      <feColorMatrix in="dg" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g" />
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="0.01" xChannelSelector="R" yChannelSelector="G" result="db" />
+      <feColorMatrix in="db" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b" />
+      <feBlend in="r" in2="g" mode="screen" result="rg" />
+      <feBlend in="rg" in2="b" mode="screen" />
+    </filter>
+  </svg>
+
   <section class="aerolith-showcase" aria-label="Galerie des rendus Aerolith">
     <div class="gallery">
       {renders.map((render, index) => (
@@ -43,16 +59,24 @@ const renders = [
       <div class="hud-panel">
         <h1 class="hud-title" data-text="AEROLITH">AEROLITH</h1>
         <p class="hud-status"><span class="hud-typed">WORK IN PROGRESS</span><span class="hud-cursor"></span></p>
-        <div class="hud-progress"><i></i></div>
       </div>
     </div>
     <div class="scanlines" aria-hidden="true"></div>
+    <div class="crt-glass" aria-hidden="true"></div>
     <div class="boot" aria-hidden="true"></div>
   </section>
 
   <style>
+    .crt-defs {
+      position: absolute;
+      pointer-events: none;
+    }
+
     .aerolith-showcase {
       position: relative;
+      overflow: hidden;
+      background: #080b10;
+      filter: url(#crt);
       width: 100%;
       height: 100%;
     }
@@ -164,28 +188,12 @@ const renders = [
     }
 
     .hud-cursor {
-      width: .6em;
-      height: 1em;
-      margin-left: .2em;
+      width: .12em;
+      height: 1.15em;
+      margin-left: .35em;
       background: var(--hud);
+      box-shadow: 0 0 8px var(--hud);
       animation: blink .9s steps(1) infinite;
-    }
-
-    .hud-progress {
-      height: 3px;
-      margin-top: .7rem;
-      background: rgba(255, 179, 71, .18);
-      overflow: hidden;
-    }
-
-    .hud-progress i {
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(90deg, var(--hud) 0 6px, transparent 6px 9px);
-      transform-origin: left;
-      animation: progress 2.2s steps(22) 1.8s both, pulse 2.4s ease-in-out 4s infinite;
-      --end: .62;
     }
 
     .scanlines {
@@ -195,6 +203,18 @@ const renders = [
       pointer-events: none;
       background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .14) 0 1px, transparent 1px 3px);
       mix-blend-mode: multiply;
+    }
+
+    /* Vitre bombée : vignettage + reflet léger */
+    .crt-glass {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0, 0, 0, .55) 100%),
+        radial-gradient(ellipse at 30% 15%, rgba(255, 255, 255, .05), transparent 45%);
+      box-shadow: inset 0 0 6vmin 1vmin rgba(0, 0, 0, .65);
     }
 
     /* Rideau d'allumage CRT à l'arrivée */
@@ -215,8 +235,6 @@ const renders = [
 
     @keyframes panel-in { to { clip-path: inset(0 0 0 0); } }
     @keyframes type { to { width: calc(16 * (1ch + .3em)); } }
-    @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(var(--end)); } }
-    @keyframes pulse { 50% { opacity: .55; } }
     @keyframes blink { 50% { opacity: 0; } }
     @keyframes flicker {
       0%, 94%, 100% { opacity: 1; }
@@ -242,12 +260,12 @@ const renders = [
 
     @media (prefers-reduced-motion: reduce) {
       .gallery { scroll-behavior: auto; }
-      .gallery-slide img, .hud-panel, .hud-typed, .hud-progress i, .boot,
+      .gallery-slide img, .hud-panel, .hud-typed, .boot,
       .hud-title, .hud-title::before, .hud-title::after { animation: none; }
       .hud-panel { clip-path: none; }
       .hud-typed { width: auto; }
-      .hud-progress i { transform: scaleX(.62); }
       .boot { display: none; }
+      .hud-cursor { animation: none; }
     }
 
   </style>
