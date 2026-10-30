@@ -8,7 +8,7 @@ import silhouette from '../../aerolith-galery/Lithframe_Bezier_06_Silhouette_4K.
 import flightController from '../../aerolith-galery/Lithframe_Bezier_07_FC_4K.png';
 import windings from '../../aerolith-galery/Lithframe_Bezier_08_Windings_4K.png';
 import harness from '../../aerolith-galery/Lithframe_Bezier_09_Harness_4K.png';
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import Default from '../layouts/Default.astro';
 
 const renders = [
@@ -29,15 +29,16 @@ const renders = [
     <div class="gallery">
       {renders.map((render, index) => (
         <figure class="gallery-slide">
-          <Image
+          <Picture
             src={render.image}
             alt={`Aerolith — ${render.title}`}
-            widths={[960, 1440, 1920, 2560]}
+            widths={[640, 960, 1280, 1600, 1920]}
             sizes="max(100vw, 160vh)"
-            format="webp"
-            quality={72}
-            fetchpriority={index === 0 ? 'high' : undefined}
-            loading={index === 0 ? 'eager' : 'lazy'}
+            formats={['avif', 'webp']}
+            fallbackFormat="webp"
+            quality={index === 0 ? 55 : 45}
+            fetchpriority={index === 0 ? 'high' : 'low'}
+            loading="eager"
             decoding="async"
           />
         </figure>
@@ -86,6 +87,12 @@ const renders = [
       scroll-snap-stop: always;
       overflow: hidden;
       contain: layout paint size;
+    }
+
+    .gallery-slide :global(picture) {
+      display: block;
+      width: 100%;
+      height: 100%;
     }
 
     .gallery-slide :global(img) {
