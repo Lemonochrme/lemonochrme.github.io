@@ -20,15 +20,19 @@ const { title, description, image, isHome = false } = Astro.props;
   <Head title={title} description={description} image={image} />
 
   <body class={isHome ? 'home-page' : undefined} style="display: flex; flex-direction: column; min-height: 100vh; margin: 0;">
-    <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script is:inline>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']]
-        }
-      };
-    </script>
+    {!isHome && (
+      <>
+      <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script is:inline>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+          }
+        };
+      </script>
+      </>
+    )}
 
     <div class:list={['container', 'content', { 'home-content': isHome }]} style="flex: 1;">
       {!isHome && <Masthead />}
