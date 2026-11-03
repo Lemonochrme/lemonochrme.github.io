@@ -97,6 +97,26 @@ const { title, description } = Astro.props;
     display: block;
   }
 
+  /* Effets typographiques : chaque caractère garde la largeur de son glyphe final. */
+  .fx-ch {
+    display: inline-block;
+    text-align: center;
+    white-space: pre;
+    transition: color 0.18s;
+  }
+
+  .fx-ch[data-fx='wait'] {
+    opacity: 0;
+  }
+
+  .fx-ch[data-fx='spin'] {
+    color: var(--ink-3);
+  }
+
+  .fx-ch[data-fx='hit'] {
+    color: var(--sig);
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;

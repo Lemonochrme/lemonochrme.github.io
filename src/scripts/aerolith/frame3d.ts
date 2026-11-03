@@ -1,14 +1,23 @@
-// Châssis 3D : le modèle FreeCAD assemblé, rendu en WebGL puis converti en ASCII.
-// Au scroll, les 34 pièces s'assemblent, puis un scan « matérialise » le dessin en pièce solide.
-import { FONT, RAMP, dpr, reducedMotion, trackVisible } from './glyphs';
+// Châssis 3D : le modèle FreeCAD assemblé, rendu en WebGL.
+// Au scroll, les 34 pièces s'assemblent pendant que la caméra tourne ; le survol identifie chaque pièce.
+import { dpr, reducedMotion, trackVisible } from './glyphs';
 
 interface Mesh { v: number; nv: number; i: number; ni: number }
 interface Part { name: string; kind: string; mesh: string; m: number[]; centre: number[] }
 interface Model { meshes: Record<string, Mesh>; parts: Part[]; min: number[]; max: number[] }
 
-const GLYPHS = RAMP + '|\\-/';
+// Désignation de chaque famille de pièces, pour les légendes et le survol.
+export const PART_INFO: Record<string, { name: string; desc: string }> = {
+  plate: { name: 'Plate', desc: 'Carbon, 270 × 126 mm, ×2' },
+  long: { name: 'Long arm', desc: 'Carbon truss, 190 × 28 mm, ×4' },
+  short: { name: 'Short arm', desc: 'Carbon truss, 160 × 28 mm, ×4' },
+  mount: { name: 'Motor mount', desc: 'Carbon, 61 × 47 mm, ×8' },
+  standoff: { name: 'Standoff', desc: 'M3, ×16' },
+};
+const family = (p: Part) =>
+  p.kind === 'arm' ? (p.name.includes('Long') ? 'long' : 'short') : p.kind;
 
-const SCENE_VS = `
+const VS = `
 attribute vec3 aPos;
 uniform mat4 uModel;
 uniform mat4 uView;
@@ -22,109 +31,78 @@ void main() {
   gl_Position = uProj * v;
 }`;
 
-const SCENE_FS = `
+const FS = `
 #extension GL_OES_standard_derivatives : enable
 precision highp float;
 varying vec3 vView;
-uniform float uNear;
-uniform float uFar;
-uniform float uTone;
+uniform float uMetal;
+uniform float uHot;
+uniform float uFade;
 void main() {
   vec3 n = normalize(cross(dFdx(vView), dFdy(vView)));
   vec3 v = normalize(-vView);
-  vec3 key = normalize(vec3(-0.45, 0.75, 0.55));
-  vec3 fill = normalize(vec3(0.7, -0.2, 0.4));
+  vec3 key = normalize(vec3(-0.5, 0.8, 0.6));
+  vec3 fill = normalize(vec3(0.8, -0.3, 0.3));
   float lam = max(dot(n, key), 0.0);
-  float spec = pow(max(dot(reflect(-key, n), v), 0.0), 28.0);
-  float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0);
-  float lum = 0.06 + 0.62 * lam + 0.16 * max(dot(n, fill), 0.0) + 0.35 * spec + 0.22 * rim;
-  float d = clamp((-vView.z - uNear) / (uFar - uNear), 0.0, 1.0);
-  float hi = floor(d * 255.0) / 255.0;
-  float lo = fract(d * 255.0);
-  gl_FragColor = vec4(clamp(lum * uTone, 0.0, 1.0), hi, lo, 1.0);
+  float fil = max(dot(n, fill), 0.0);
+  vec3 h = normalize(key + v);
+  float nh = max(dot(n, h), 0.0);
+  float fres = pow(1.0 - max(dot(n, v), 0.0), 4.0);
+
+  // Carbone : sombre, reflet net ; entretoises : métal clair.
+  vec3 albedo = mix(vec3(0.085, 0.087, 0.094), vec3(0.55, 0.55, 0.57), uMetal);
+  float spec = mix(pow(nh, 70.0) * 0.7 + pow(nh, 10.0) * 0.08, pow(nh, 30.0) * 0.9, uMetal);
+  vec3 col = albedo * (0.35 + 1.45 * lam + 0.45 * fil) + vec3(spec) + vec3(0.18) * fres;
+
+  vec3 sig = vec3(1.0, 0.231, 0.114);
+  col = mix(col, sig * (0.45 + 0.75 * lam) + vec3(spec) * 0.4, uHot * 0.85);
+  col = mix(vec3(0.024), col, uFade);
+  gl_FragColor = vec4(pow(col, vec3(1.0 / 1.15)), 1.0);
 }`;
 
 const POST_VS = `
-attribute vec2 aPos;
-void main() { gl_Position = vec4(aPos, 0.0, 1.0); }`;
+attribute vec2 aQuad;
+void main() { gl_Position = vec4(aQuad, 0.0, 1.0); }`;
 
+// Passe finale : moyenne de 4 échantillons (anticrénelage) et arêtes fines tirées de la profondeur.
 const POST_FS = `
 precision highp float;
-uniform sampler2D uScene;
-uniform sampler2D uAtlas;
+uniform sampler2D uColor;
+uniform sampler2D uDepth;
 uniform vec2 uRes;
-uniform vec2 uCell;
-uniform float uN;
-uniform float uRamp;
-uniform float uScan;
-uniform float uTime;
-
-float depth(vec2 px) {
-  vec4 s = texture2D(uScene, px / uRes);
-  return s.a < 0.5 ? 1.0 : s.g + s.b / 255.0;
+uniform vec2 uSrc;
+uniform float uNear;
+uniform float uFar;
+float lin(vec2 uv) {
+  float z = texture2D(uDepth, uv).r * 2.0 - 1.0;
+  return (2.0 * uNear * uFar) / (uFar + uNear - z * (uFar - uNear));
 }
-
+float edge(vec2 uv) {
+  vec2 px = 1.0 / uSrc;
+  float c = lin(uv);
+  float l = lin(uv - vec2(px.x, 0.0));
+  float r = lin(uv + vec2(px.x, 0.0));
+  float d = lin(uv - vec2(0.0, px.y));
+  float u = lin(uv + vec2(0.0, px.y));
+  float lap = abs(l + r - 2.0 * c) + abs(d + u - 2.0 * c);
+  return smoothstep(0.6, 2.4, lap / max(c, 1.0) * 200.0);
+}
 void main() {
-  vec2 frag = gl_FragCoord.xy;
-  vec3 bg = vec3(0.024);
   vec3 ink = vec3(0.914, 0.906, 0.886);
-  vec3 sig = vec3(1.0, 0.231, 0.114);
-
-  // Rendu solide : ombrage + arêtes détectées sur la profondeur.
-  vec4 s = texture2D(uScene, frag / uRes);
-  float d0 = depth(frag);
-  float e = abs(depth(frag + vec2(1.0, 0.0)) - depth(frag - vec2(1.0, 0.0)))
-          + abs(depth(frag + vec2(0.0, 1.0)) - depth(frag - vec2(0.0, 1.0)));
-  float edge = smoothstep(0.004, 0.02, e);
-  vec3 carbon = mix(vec3(0.035, 0.036, 0.04), vec3(0.78, 0.77, 0.74), pow(s.r, 1.35));
-  vec3 solid = s.a > 0.5 ? carbon : bg;
-  solid = mix(solid, ink * 0.85, edge * 0.8);
-
-  // Rendu ASCII : une cellule = un glyphe choisi sur la luminance ou l'orientation du bord.
-  vec2 ci = floor(frag / uCell);
-  vec2 cc = (ci + 0.5) * uCell;
-  vec4 c = texture2D(uScene, cc / uRes);
-  // Un plan incliné a une dérivée première non nulle mais une dérivée seconde nulle :
-  // seules les vraies discontinuités (arêtes, silhouettes) deviennent des glyphes de bord.
-  float dc = depth(cc);
-  float dl = depth(cc - vec2(uCell.x, 0.0));
-  float dr = depth(cc + vec2(uCell.x, 0.0));
-  float dd = depth(cc - vec2(0.0, uCell.y));
-  float du = depth(cc + vec2(0.0, uCell.y));
-  float dx = dr - dl;
-  float dy = du - dd;
-  float ce = abs(dl + dr - 2.0 * dc) + abs(dd + du - 2.0 * dc);
-  vec3 ascii = bg;
-  vec2 inCell = fract(frag / uCell);
-  inCell.y = 1.0 - inCell.y;
-  float g = -1.0;
-  float bright = 0.0;
-  if (ce > 0.02) {
-    float ang = mod(atan(dy, dx) + 3.14159, 3.14159);
-    g = uRamp + mod(floor(ang / 0.785398 + 0.5), 4.0);
-    bright = 1.0;
-  } else if (c.a > 0.5) {
-    g = max(1.0, floor(clamp(c.r, 0.0, 0.999) * uRamp));
-    bright = mix(0.35, 1.0, c.r);
-  } else if (mod(ci.x, 6.0) == 0.0 && mod(ci.y, 4.0) == 0.0) {
-    g = 2.0;
-    bright = 0.12;
+  vec3 acc = vec3(0.0);
+  for (int i = 0; i < 4; i++) {
+    vec2 o = vec2(i == 1 || i == 3 ? 0.25 : -0.25, i >= 2 ? 0.25 : -0.25);
+    vec2 uv = (gl_FragCoord.xy + o) / uRes;
+    vec3 c = texture2D(uColor, uv).rgb;
+    acc += mix(c, ink * 0.62, edge(uv) * 0.75);
   }
-  if (g >= 0.0) {
-    float a = texture2D(uAtlas, vec2((g + inCell.x) / uN, inCell.y)).r;
-    ascii = bg + ink * a * bright;
-  }
-
-  // Le scan balaie l'écran : à gauche la pièce, à droite le dessin.
-  float x = frag.x / uRes.x;
-  float m = step(x, uScan);
-  vec3 col = mix(ascii, solid, m);
-  float line = exp(-abs(x - uScan) * uRes.x * 0.9);
-  float halo = exp(-abs(x - uScan) * uRes.x * 0.03) * 0.18;
-  float on = step(0.0001, uScan) * step(uScan, 0.9999);
-  col += sig * (line + halo) * on;
-  gl_FragColor = vec4(col, 1.0);
+  gl_FragColor = vec4(acc * 0.25, 1.0);
 }`;
+
+const ID_FS = `
+precision mediump float;
+uniform float uId;
+void main() { gl_FragColor = vec4(uId / 255.0, 0.0, 0.0, 1.0); }`;
 
 // ───── Mathématiques minimales (colonnes, comme WebGL) ─────
 type M4 = Float32Array;
@@ -149,6 +127,12 @@ function perspective(fov: number, ar: number, n: number, f: number) {
   o[14] = (2 * f * n) / (n - f);
   return o;
 }
+const dot = (a: number[], b: number[]) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross = (a: number[], b: number[]) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const norm = (a: number[]) => {
+  const l = Math.hypot(a[0], a[1], a[2]) || 1;
+  return [a[0] / l, a[1] / l, a[2] / l];
+};
 function lookAt(e: number[], c: number[], up: number[]) {
   const z = norm([e[0] - c[0], e[1] - c[1], e[2] - c[2]]);
   const x = norm(cross(up, z));
@@ -157,12 +141,6 @@ function lookAt(e: number[], c: number[], up: number[]) {
   o.set([x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -dot(x, e), -dot(y, e), -dot(z, e), 1]);
   return o;
 }
-const dot = (a: number[], b: number[]) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-const cross = (a: number[], b: number[]) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
-const norm = (a: number[]) => {
-  const l = Math.hypot(a[0], a[1], a[2]) || 1;
-  return [a[0] / l, a[1] / l, a[2] / l];
-};
 const clamp01 = (x: number) => Math.min(Math.max(x, 0), 1);
 const ease = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
@@ -183,6 +161,7 @@ export async function initFrame(root: HTMLElement) {
   const canvas = root.querySelector<HTMLCanvasElement>('canvas.frame-gl')!;
   const stage = root.querySelector<HTMLElement>('.frame-stage')!;
   const labels = [...root.querySelectorAll<HTMLElement>('[data-callout]')];
+  const tip = root.querySelector<HTMLElement>('.frame-tip')!;
   const outCount = root.querySelector<HTMLElement>('[data-out="count"]');
   const outStage = root.querySelector<HTMLElement>('[data-out="stage"]');
   const gl = canvas.getContext('webgl', { antialias: false, alpha: false });
@@ -196,7 +175,6 @@ export async function initFrame(root: HTMLElement) {
     fetch(root.dataset.bin!).then((r) => r.arrayBuffer()),
   ]);
 
-  // Géométries de base, partagées par les instances.
   const geo: Record<string, { vb: WebGLBuffer; ib: WebGLBuffer; n: number }> = {};
   for (const [name, m] of Object.entries(model.meshes)) {
     const vb = gl.createBuffer()!;
@@ -208,97 +186,113 @@ export async function initFrame(root: HTMLElement) {
     geo[name] = { vb, ib, n: m.ni };
   }
 
-  // Ordre et direction d'assemblage de chaque pièce.
-  const ORDER: Record<string, number> = { plate: 0, standoff: 1, arm: 2, mount: 3 };
+  // Ordre et direction d'arrivée de chaque pièce.
   const parts = model.parts.map((p) => {
     const M = m4();
     M.set([p.m[0], p.m[1], p.m[2], 0, p.m[3], p.m[4], p.m[5], 0, p.m[6], p.m[7], p.m[8], 0, p.m[9], p.m[10], p.m[11], 1]);
     const [cx, cy, cz] = p.centre;
     const r = Math.hypot(cx, cy) || 1;
     let off = [0, 0, 0];
-    let order = ORDER[p.kind] ?? 1;
+    let order = 1;
     if (p.kind === 'plate') {
       const top = cz > -10;
-      off = [0, 0, top ? 120 : -95];
+      off = [0, 0, top ? 130 : -100];
       order = top ? 4 : 0;
-    } else if (p.kind === 'arm') off = [(cx / r) * 70, (cy / r) * 70, 26];
-    else if (p.kind === 'mount') off = [(cx / r) * 95, (cy / r) * 95, p.name.includes('Haut') ? 70 : -60];
-    else if (p.kind === 'standoff') off = [0, 0, 55 + r * 0.12];
-    return { ...p, M, off, order, t: 0 };
+    } else if (p.kind === 'arm') {
+      off = [(cx / r) * 80, (cy / r) * 80, 30];
+      order = 2;
+    } else if (p.kind === 'mount') {
+      off = [(cx / r) * 110, (cy / r) * 110, p.name.includes('Haut') ? 75 : -65];
+      order = 3;
+    } else {
+      off = [0, 0, 60 + r * 0.12];
+      order = 1;
+    }
+    return { ...p, M, off, order, fam: family(p), t: 0 };
   });
   const maxOrder = Math.max(...parts.map((p) => p.order));
   const centre = [0, 0, (model.min[2] + model.max[2]) / 2];
   const radius = Math.hypot(model.max[0] - model.min[0], model.max[1] - model.min[1]) / 2;
 
-  const scene = compile(gl, SCENE_VS, SCENE_FS);
+  const depthExt = gl.getExtension('WEBGL_depth_texture');
+  if (!depthExt) {
+    root.classList.add('is-fallback');
+    return;
+  }
+  const prog = compile(gl, VS, FS);
+  const idProg = compile(gl, VS, ID_FS);
   const post = compile(gl, POST_VS, POST_FS);
-  const su = (n: string) => gl.getUniformLocation(scene, n);
-  const pu = (n: string) => gl.getUniformLocation(post, n);
-  const aPos = gl.getAttribLocation(scene, 'aPos');
-  const aQuad = gl.getAttribLocation(post, 'aPos');
   const quad = gl.createBuffer()!;
   gl.bindBuffer(gl.ARRAY_BUFFER, quad);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  const sceneFbo = gl.createFramebuffer()!;
+  const colorTex = gl.createTexture()!;
+  const depthTex = gl.createTexture()!;
+  let SW = 1;
+  let SH = 1;
+  const U = (p: WebGLProgram, n: string) => gl.getUniformLocation(p, n);
 
-  // Cible de rendu de la scène (luminance + profondeur encodée).
-  const fbo = gl.createFramebuffer()!;
-  const tex = gl.createTexture()!;
-  const rbo = gl.createRenderbuffer()!;
-  const atlasTex = gl.createTexture()!;
-  let W = 0;
-  let H = 0;
-  let cell = [8, 14];
-
-  function setupTex(t: WebGLTexture, filter: number) {
-    gl!.bindTexture(gl!.TEXTURE_2D, t);
-    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_S, gl!.CLAMP_TO_EDGE);
-    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
-    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, filter);
-    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, filter);
-  }
+  // Cible de sélection : on y dessine l'indice de chaque pièce.
+  const pickFbo = gl.createFramebuffer()!;
+  const pickTex = gl.createTexture()!;
+  const pickDepth = gl.createRenderbuffer()!;
+  let PW = 1;
+  let PH = 1;
+  let W = 1;
+  let H = 1;
 
   function resize() {
-    const r = Math.min(dpr(), 1.75);
+    const r = Math.min(dpr(), 2);
     W = Math.max(1, Math.round(stage.clientWidth * r));
     H = Math.max(1, Math.round(stage.clientHeight * r));
     canvas.width = W;
     canvas.height = H;
-    setupTex(tex, gl!.NEAREST);
-    gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, W, H, 0, gl!.RGBA, gl!.UNSIGNED_BYTE, null);
-    gl!.bindRenderbuffer(gl!.RENDERBUFFER, rbo);
-    gl!.renderbufferStorage(gl!.RENDERBUFFER, gl!.DEPTH_COMPONENT16, W, H);
-    gl!.bindFramebuffer(gl!.FRAMEBUFFER, fbo);
-    gl!.framebufferTexture2D(gl!.FRAMEBUFFER, gl!.COLOR_ATTACHMENT0, gl!.TEXTURE_2D, tex, 0);
-    gl!.framebufferRenderbuffer(gl!.FRAMEBUFFER, gl!.DEPTH_ATTACHMENT, gl!.RENDERBUFFER, rbo);
+    // Scène sur-échantillonnée, ramenée à la taille de l'écran dans la passe finale.
+    const ss = r < 1.5 ? 2 : 1.5;
+    SW = Math.min(Math.round(W * ss), 4096);
+    SH = Math.min(Math.round(H * ss), 4096);
+    for (const [t, filter] of [[colorTex, gl!.LINEAR], [depthTex, gl!.NEAREST]] as const) {
+      gl!.bindTexture(gl!.TEXTURE_2D, t);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, filter);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, filter);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_S, gl!.CLAMP_TO_EDGE);
+      gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
+    }
+    gl!.bindTexture(gl!.TEXTURE_2D, colorTex);
+    gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, SW, SH, 0, gl!.RGBA, gl!.UNSIGNED_BYTE, null);
+    gl!.bindTexture(gl!.TEXTURE_2D, depthTex);
+    gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.DEPTH_COMPONENT, SW, SH, 0, gl!.DEPTH_COMPONENT, gl!.UNSIGNED_INT, null);
+    gl!.bindFramebuffer(gl!.FRAMEBUFFER, sceneFbo);
+    gl!.framebufferTexture2D(gl!.FRAMEBUFFER, gl!.COLOR_ATTACHMENT0, gl!.TEXTURE_2D, colorTex, 0);
+    gl!.framebufferTexture2D(gl!.FRAMEBUFFER, gl!.DEPTH_ATTACHMENT, gl!.TEXTURE_2D, depthTex, 0);
     gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
-
-    // Atlas de glyphes à la taille de cellule.
-    const cw = Math.round((stage.clientWidth < 700 ? 5 : 6.5) * r);
-    const ch = Math.round(cw * 1.72);
-    cell = [cw, ch];
-    const c = document.createElement('canvas');
-    c.width = cw * GLYPHS.length;
-    c.height = ch;
-    const x = c.getContext('2d')!;
-    x.fillStyle = '#000';
-    x.fillRect(0, 0, c.width, c.height);
-    x.fillStyle = '#fff';
-    x.font = `${Math.round(cw / 0.6)}px ${FONT}`;
-    x.textAlign = 'center';
-    x.textBaseline = 'middle';
-    [...GLYPHS].forEach((g, i) => x.fillText(g, i * cw + cw / 2, ch * 0.55));
-    setupTex(atlasTex, gl!.LINEAR);
-    gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGB, gl!.RGB, gl!.UNSIGNED_BYTE, c);
+    PW = Math.max(1, Math.round(stage.clientWidth / 2));
+    PH = Math.max(1, Math.round(stage.clientHeight / 2));
+    gl!.bindTexture(gl!.TEXTURE_2D, pickTex);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.NEAREST);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, gl!.NEAREST);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_S, gl!.CLAMP_TO_EDGE);
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
+    gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, PW, PH, 0, gl!.RGBA, gl!.UNSIGNED_BYTE, null);
+    gl!.bindRenderbuffer(gl!.RENDERBUFFER, pickDepth);
+    gl!.renderbufferStorage(gl!.RENDERBUFFER, gl!.DEPTH_COMPONENT16, PW, PH);
+    gl!.bindFramebuffer(gl!.FRAMEBUFFER, pickFbo);
+    gl!.framebufferTexture2D(gl!.FRAMEBUFFER, gl!.COLOR_ATTACHMENT0, gl!.TEXTURE_2D, pickTex, 0);
+    gl!.framebufferRenderbuffer(gl!.FRAMEBUFFER, gl!.DEPTH_ATTACHMENT, gl!.RENDERBUFFER, pickDepth);
+    gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
     dirty = true;
   }
 
-  // ───── État piloté par le scroll et le pointeur ─────
+  // ───── État : scroll, glisser, survol ─────
   const still = reducedMotion();
   let progress = 0;
   let drag = 0;
   let dragV = 0;
   let dirty = true;
   let visible = false;
+  let hot = -1;
+  let pointer: { x: number; y: number } | null = null;
+  let needPick = false;
 
   function measure() {
     if (still) {
@@ -306,8 +300,7 @@ export async function initFrame(root: HTMLElement) {
       return;
     }
     const b = root.getBoundingClientRect();
-    const span = b.height - innerHeight;
-    const p = clamp01(-b.top / Math.max(span, 1));
+    const p = clamp01(-b.top / Math.max(b.height - innerHeight, 1));
     if (p !== progress) {
       progress = p;
       dirty = true;
@@ -316,21 +309,54 @@ export async function initFrame(root: HTMLElement) {
 
   let down = false;
   let lastX = 0;
+  let moved = 0;
   stage.addEventListener('pointerdown', (e) => {
     down = true;
+    moved = 0;
     lastX = e.clientX;
     stage.setPointerCapture(e.pointerId);
   });
   stage.addEventListener('pointermove', (e) => {
-    if (!down) return;
-    dragV = (e.clientX - lastX) * 0.006;
-    drag += dragV;
-    lastX = e.clientX;
+    const b = stage.getBoundingClientRect();
+    pointer = { x: e.clientX - b.left, y: e.clientY - b.top };
+    if (down) {
+      dragV = (e.clientX - lastX) * 0.006;
+      drag += dragV;
+      moved += Math.abs(e.clientX - lastX);
+      lastX = e.clientX;
+    } else needPick = true;
     dirty = true;
   });
-  const up = () => (down = false);
-  stage.addEventListener('pointerup', up);
-  stage.addEventListener('pointercancel', up);
+  const release = (e: PointerEvent) => {
+    down = false;
+    // Un appui sans glisser sélectionne la pièce (utile au toucher).
+    if (moved < 4) {
+      const b = stage.getBoundingClientRect();
+      pointer = { x: e.clientX - b.left, y: e.clientY - b.top };
+      needPick = true;
+      dirty = true;
+    }
+  };
+  stage.addEventListener('pointerup', release);
+  stage.addEventListener('pointercancel', () => (down = false));
+  stage.addEventListener('pointerleave', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    pointer = null;
+    setHot(-1);
+  });
+
+  function setHot(i: number) {
+    if (i === hot) return;
+    hot = i;
+    dirty = true;
+    if (i < 0) {
+      tip.classList.remove('is-on');
+      return;
+    }
+    const info = PART_INFO[parts[i].fam];
+    tip.innerHTML = `<b>${info.name}</b><span>${info.desc}</span>`;
+    tip.classList.add('is-on');
+  }
 
   function project(p: number[], vp: M4) {
     const x = vp[0] * p[0] + vp[4] * p[1] + vp[8] * p[2] + vp[12];
@@ -339,93 +365,120 @@ export async function initFrame(root: HTMLElement) {
     return [((x / w) * 0.5 + 0.5) * stage.clientWidth, (1 - ((y / w) * 0.5 + 0.5)) * stage.clientHeight];
   }
 
-  let t0 = performance.now();
-  function render(now: number) {
-    const t = (now - t0) / 1000;
-    const p = progress;
-    // Chronologie : assemblage (0 → 0,55), puis scan de matérialisation (0,6 → 0,92).
-    const a = clamp01((p - 0.02) / 0.53);
-    const scan = still ? 1 : clamp01((p - 0.6) / 0.32);
-
-    if (!down) {
-      dragV *= 0.92;
-      drag += dragV;
-    }
-    const az = -0.9 + p * 2.6 + drag + (still ? 0 : t * 0.05);
-    const el = 0.95 - p * 0.55;
-    // Cadrage : le modèle éclaté (plus large que l'assemblé) doit tenir dans le cadre.
-    const fit = Math.tan(0.31) * Math.min(1, W / H);
-    const dist = ((radius * (1.32 - 0.42 * a)) / fit) * (stage.clientWidth < 700 ? 1.2 : 0.82);
-    const eye = [centre[0] + Math.cos(az) * Math.cos(el) * dist, centre[1] + Math.sin(az) * Math.cos(el) * dist, centre[2] + Math.sin(el) * dist];
-    const view = lookAt(eye, centre, [0, 0, 1]);
-    const near = dist * 0.4;
-    const far = dist * 2.2;
-    const proj = perspective(0.62, W / H, near, far);
-    const vp = mul(proj, view);
-
-    gl!.bindFramebuffer(gl!.FRAMEBUFFER, fbo);
-    gl!.viewport(0, 0, W, H);
-    gl!.clearColor(0, 0, 0, 0);
-    gl!.clear(gl!.COLOR_BUFFER_BIT | gl!.DEPTH_BUFFER_BIT);
-    gl!.enable(gl!.DEPTH_TEST);
-    gl!.useProgram(scene);
-    gl!.uniformMatrix4fv(su('uView'), false, view);
-    gl!.uniformMatrix4fv(su('uProj'), false, proj);
-    gl!.uniform1f(su('uNear'), near);
-    gl!.uniform1f(su('uFar'), far);
-    gl!.uniform1f(su('uTone'), 1.0);
-    let placed = 0;
-    for (const part of parts) {
-      // Chaque groupe de pièces arrive à son tour, avec un léger décalage interne.
-      const start = (part.order / (maxOrder + 1)) * 0.8;
-      const k = ease(clamp01((a - start) / 0.28));
-      if (k > 0.999) placed++;
-      const off = part.off.map((o) => o * (1 - k));
-      part.t = k;
-      gl!.uniformMatrix4fv(su('uModel'), false, part.M);
-      gl!.uniform3f(su('uOffset'), off[0], off[1], off[2]);
+  function drawParts(program: WebGLProgram, view: M4, proj: M4, ids: boolean) {
+    gl!.useProgram(program);
+    gl!.uniformMatrix4fv(U(program, 'uView'), false, view);
+    gl!.uniformMatrix4fv(U(program, 'uProj'), false, proj);
+    const aPos = gl!.getAttribLocation(program, 'aPos');
+    parts.forEach((part, i) => {
+      const off = part.off.map((o) => o * (1 - part.t));
+      gl!.uniformMatrix4fv(U(program, 'uModel'), false, part.M);
+      gl!.uniform3f(U(program, 'uOffset'), off[0], off[1], off[2]);
+      if (ids) gl!.uniform1f(U(program, 'uId'), i + 1);
+      else {
+        gl!.uniform1f(U(program, 'uMetal'), part.kind === 'standoff' ? 1 : 0);
+        gl!.uniform1f(U(program, 'uHot'), hot >= 0 && parts[hot].fam === part.fam ? (i === hot ? 1 : 0.45) : 0);
+        gl!.uniform1f(U(program, 'uFade'), 0.25 + 0.75 * clamp01(part.t * 1.4 + 0.2));
+      }
       const g = geo[part.mesh];
       gl!.bindBuffer(gl!.ARRAY_BUFFER, g.vb);
       gl!.enableVertexAttribArray(aPos);
       gl!.vertexAttribPointer(aPos, 3, gl!.SHORT, false, 0, 0);
       gl!.bindBuffer(gl!.ELEMENT_ARRAY_BUFFER, g.ib);
       gl!.drawElements(gl!.TRIANGLES, g.n, gl!.UNSIGNED_SHORT, 0);
+    });
+  }
+
+  const t0 = performance.now();
+  function render(now: number) {
+    const t = (now - t0) / 1000;
+    const p = progress;
+    const a = clamp01((p - 0.04) / 0.56);
+    if (!down) {
+      dragV *= 0.93;
+      drag += dragV;
     }
+    const az = -0.75 + p * 2.4 + drag + (still ? 0 : t * 0.04);
+    const el = 0.62 - p * 0.3;
+    const fit = Math.tan(0.31) * Math.min(1, W / H);
+    const dist = ((radius * (1.3 - 0.4 * a)) / fit) * (stage.clientWidth < 700 ? 1.15 : 0.85);
+    const eye = [
+      centre[0] + Math.cos(az) * Math.cos(el) * dist,
+      centre[1] + Math.sin(az) * Math.cos(el) * dist,
+      centre[2] + Math.sin(el) * dist,
+    ];
+    const view = lookAt(eye, centre, [0, 0, 1]);
+    const near = dist * 0.3;
+    const far = dist * 2.5;
+    const proj = perspective(0.62, W / H, near, far);
+    const vp = mul(proj, view);
+
+    let placed = 0;
+    for (const part of parts) {
+      const start = (part.order / (maxOrder + 1)) * 0.8;
+      part.t = ease(clamp01((a - start) / 0.3));
+      if (part.t > 0.999) placed++;
+    }
+
+    gl!.enable(gl!.DEPTH_TEST);
+    if (needPick && pointer) {
+      needPick = false;
+      gl!.bindFramebuffer(gl!.FRAMEBUFFER, pickFbo);
+      gl!.viewport(0, 0, PW, PH);
+      gl!.clearColor(0, 0, 0, 0);
+      gl!.clear(gl!.COLOR_BUFFER_BIT | gl!.DEPTH_BUFFER_BIT);
+      drawParts(idProg, view, proj, true);
+      const px = new Uint8Array(4);
+      const x = Math.floor((pointer.x / stage.clientWidth) * PW);
+      const y = PH - 1 - Math.floor((pointer.y / stage.clientHeight) * PH);
+      gl!.readPixels(x, y, 1, 1, gl!.RGBA, gl!.UNSIGNED_BYTE, px);
+      gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
+      setHot(px[0] - 1);
+    }
+
+    gl!.bindFramebuffer(gl!.FRAMEBUFFER, sceneFbo);
+    gl!.viewport(0, 0, SW, SH);
+    gl!.clearColor(0.024, 0.024, 0.024, 1);
+    gl!.clear(gl!.COLOR_BUFFER_BIT | gl!.DEPTH_BUFFER_BIT);
+    drawParts(prog, view, proj, false);
     gl!.disable(gl!.DEPTH_TEST);
 
     gl!.bindFramebuffer(gl!.FRAMEBUFFER, null);
     gl!.viewport(0, 0, W, H);
     gl!.useProgram(post);
     gl!.activeTexture(gl!.TEXTURE0);
-    gl!.bindTexture(gl!.TEXTURE_2D, tex);
+    gl!.bindTexture(gl!.TEXTURE_2D, colorTex);
     gl!.activeTexture(gl!.TEXTURE1);
-    gl!.bindTexture(gl!.TEXTURE_2D, atlasTex);
-    gl!.uniform1i(pu('uScene'), 0);
-    gl!.uniform1i(pu('uAtlas'), 1);
-    gl!.uniform2f(pu('uRes'), W, H);
-    gl!.uniform2f(pu('uCell'), cell[0], cell[1]);
-    gl!.uniform1f(pu('uN'), GLYPHS.length);
-    gl!.uniform1f(pu('uRamp'), RAMP.length);
-    gl!.uniform1f(pu('uScan'), scan);
-    gl!.uniform1f(pu('uTime'), t);
+    gl!.bindTexture(gl!.TEXTURE_2D, depthTex);
+    gl!.uniform1i(U(post, 'uColor'), 0);
+    gl!.uniform1i(U(post, 'uDepth'), 1);
+    gl!.uniform2f(U(post, 'uRes'), W, H);
+    gl!.uniform2f(U(post, 'uSrc'), SW, SH);
+    gl!.uniform1f(U(post, 'uNear'), near);
+    gl!.uniform1f(U(post, 'uFar'), far);
     gl!.bindBuffer(gl!.ARRAY_BUFFER, quad);
+    const aQuad = gl!.getAttribLocation(post, 'aQuad');
     gl!.enableVertexAttribArray(aQuad);
     gl!.vertexAttribPointer(aQuad, 2, gl!.FLOAT, false, 0, 0);
     gl!.drawArrays(gl!.TRIANGLES, 0, 3);
 
-    // Légendes : visibles pendant que le modèle est éclaté.
-    const show = a > 0.02 && a < 0.62;
+    if (hot >= 0 && pointer) tip.style.transform = `translate(${pointer.x + 16}px, ${pointer.y + 14}px)`;
+
+    // Légendes : une par famille, visibles tant que le modèle est éclaté.
+    const show = a > 0.02 && a < 0.7 && hot < 0;
     for (const el_ of labels) {
       const part = parts.find((q) => q.name === el_.dataset.callout);
       if (!part) continue;
-      const k = part.t;
-      const c = part.centre.map((v, i) => v + part.off[i] * (1 - k));
+      const c = part.centre.map((v, i) => v + part.off[i] * (1 - part.t));
       const [x, y] = project(c, vp);
-      el_.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+      // Près du bord droit, la légende passe à gauche de son repère.
+      const flip = x + el_.offsetWidth > stage.clientWidth - 8;
+      el_.classList.toggle('is-left', flip);
+      el_.style.transform = `translate(${(flip ? x - el_.offsetWidth : x).toFixed(1)}px, ${y.toFixed(1)}px)`;
       el_.classList.toggle('is-on', show && x > 0 && x < stage.clientWidth && y > 0 && y < stage.clientHeight);
     }
     if (outCount) outCount.textContent = String(placed).padStart(2, '0');
-    if (outStage) outStage.textContent = scan > 0 ? (scan >= 1 ? 'Solid' : 'Scan') : a >= 1 ? 'Assembled' : 'Assembly';
+    if (outStage) outStage.textContent = placed === parts.length ? 'Assembled' : 'Assembly';
   }
 
   let raf = 0;
@@ -434,7 +487,7 @@ export async function initFrame(root: HTMLElement) {
     if (!visible || document.hidden) return;
     raf = requestAnimationFrame(loop);
     measure();
-    if (!dirty && still) return;
+    if (still && !dirty) return;
     dirty = false;
     render(now);
   };
