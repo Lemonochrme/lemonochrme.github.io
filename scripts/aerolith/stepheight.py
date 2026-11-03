@@ -1,9 +1,9 @@
 """Carte de hauteur des composants (vue de dessus et de dessous) depuis un STEP EasyEDA.
 
-Usage : python3 stepheight.py <carte.step> <sortie.bin> <sortie.json> <carte.pcbdoc>
+Usage : python3 stepheight.py <carte.step> <sortie.png> <sortie.json> <carte.pcbdoc>
 Les volumes du STEP ne sont pas tous nommés : chaque volume est rattaché au composant
 du PcbDoc le plus proche, sur la même face.
-Sortie binaire : 4 grilles de W×H, dans l'ordre :
+Sortie : un PNG en niveaux de gris de W × 4H, soit 4 grilles empilées :
   hauteur dessus (Uint8, pas de 0.05 mm), composant dessus (Uint8, 0 = aucun),
   hauteur dessous, composant dessous.
 Le JSON donne la résolution, l'emprise et la liste des composants (référence, boîtier).
@@ -140,7 +140,8 @@ def q(hm):
     return np.clip(np.round(hm / STEP_H), 0, 255).astype(np.uint8)
 
 blob = q(top_h).tobytes() + top_id.astype(np.uint8).tobytes() + q(bot_h).tobytes() + bot_id.astype(np.uint8).tobytes()
-open(out_bin, 'wb').write(blob)
+from PIL import Image
+Image.fromarray(np.frombuffer(blob, np.uint8).reshape(4 * H, W), 'L').save(out_bin, optimize=True)
 json.dump({'w': W, 'h': H, 'res': RES, 'step': STEP_H, 'mm': [round(bx1 - bx0, 2), round(by1 - by0, 2)], 'comps': refs},
           open(out_json, 'w'), ensure_ascii=False)
 print(f'{W}x{H}, {len(refs)} composants, max {top_h.max():.2f} mm dessus / {bot_h.max():.2f} mm dessous', file=sys.stderr)

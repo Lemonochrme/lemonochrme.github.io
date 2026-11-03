@@ -355,7 +355,7 @@ export async function initFrame(root: HTMLElement) {
     const el = 0.95 - p * 0.55;
     // Cadrage : le modèle éclaté (plus large que l'assemblé) doit tenir dans le cadre.
     const fit = Math.tan(0.31) * Math.min(1, W / H);
-    const dist = ((radius * (1.32 - 0.42 * a)) / fit) * (stage.clientWidth < 700 ? 0.86 : 0.82);
+    const dist = ((radius * (1.32 - 0.42 * a)) / fit) * (stage.clientWidth < 700 ? 1.2 : 0.82);
     const eye = [centre[0] + Math.cos(az) * Math.cos(el) * dist, centre[1] + Math.sin(az) * Math.cos(el) * dist, centre[2] + Math.sin(el) * dist];
     const view = lookAt(eye, centre, [0, 0, 1]);
     const near = dist * 0.4;

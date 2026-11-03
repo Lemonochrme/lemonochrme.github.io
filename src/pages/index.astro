@@ -194,7 +194,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
         <p class="chapter-lede">STM32F405 flight controller. Four layers, 38 × 38 mm.</p>
       </header>
 
-      <div class="scope scope-square" data-svg="/data/aerolith/lithcore.svg" data-meta="/data/aerolith/lithcore.json" data-height="/data/aerolith/lithcore-h.bin" data-hmeta="/data/aerolith/lithcore-h.json">
+      <div class="scope scope-square" data-svg="/data/aerolith/lithcore.svg" data-meta="/data/aerolith/lithcore.json" data-height="/data/aerolith/lithcore-h.png" data-hmeta="/data/aerolith/lithcore-h.json">
         <div class="scope-sticky">
           <div class="scope-head mono">
             <ol class="steps" aria-label="Views">
@@ -245,7 +245,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
         <p class="chapter-lede">Sensorless three-phase ESC for a 6S bus. Four layers, 49.4 × 23.8 mm.</p>
       </header>
 
-      <div class="scope scope-wide" data-svg="/data/aerolith/lithdrive.svg" data-meta="/data/aerolith/lithdrive.json" data-height="/data/aerolith/lithdrive-h.bin" data-hmeta="/data/aerolith/lithdrive-h.json">
+      <div class="scope scope-wide" data-svg="/data/aerolith/lithdrive.svg" data-meta="/data/aerolith/lithdrive.json" data-height="/data/aerolith/lithdrive-h.png" data-hmeta="/data/aerolith/lithdrive-h.json">
         <div class="scope-sticky">
           <div class="scope-head mono">
             <ol class="steps" aria-label="Views">
@@ -656,6 +656,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
   .frame-stage {
     position: relative;
     min-height: 0;
+    overflow: hidden;
     cursor: grab;
     touch-action: pan-y;
   }
@@ -908,6 +909,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
 
   .pcb-stage {
     position: relative;
+    overflow: hidden;
     align-self: center;
     justify-self: center;
     width: 100%;

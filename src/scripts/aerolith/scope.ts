@@ -29,6 +29,22 @@ interface Meta {
 }
 interface Height { w: number; h: number; res: number; step: number; mm: [number, number]; comps: { ref: string; pkg: string }[] }
 
+// Décode un PNG en niveaux de gris en tableau d'octets (canal rouge).
+async function loadGrid(url: string) {
+  const img = new Image();
+  img.src = url;
+  await img.decode();
+  const c = document.createElement('canvas');
+  c.width = img.naturalWidth;
+  c.height = img.naturalHeight;
+  const x = c.getContext('2d', { willReadFrequently: true })!;
+  x.drawImage(img, 0, 0);
+  const px = x.getImageData(0, 0, c.width, c.height).data;
+  const out = new Uint8Array(c.width * c.height);
+  for (let i = 0; i < out.length; i++) out[i] = px[i * 4];
+  return out;
+}
+
 export function initScope(root: HTMLElement) {
   whenNear(root, () => start(root), '120%');
 }
@@ -48,7 +64,7 @@ async function start(root: HTMLElement) {
     fetch(root.dataset.svg!).then((r) => r.text()),
     fetch(root.dataset.meta!).then((r) => r.json() as Promise<Meta>),
     fetch(root.dataset.hmeta!).then((r) => r.json() as Promise<Height>),
-    fetch(root.dataset.height!).then((r) => r.arrayBuffer()),
+    loadGrid(root.dataset.height!),
     fontsReady(),
   ]);
   const svg = new DOMParser().parseFromString(svgText, 'image/svg+xml').documentElement;
@@ -82,14 +98,14 @@ async function start(root: HTMLElement) {
     netStats.get(n)!.vias += (v.getAttribute('d')!.match(/M/g) || []).length;
   }
 
-  // Cartes de hauteur : dessus, identifiants dessus, dessous, identifiants dessous.
+  // Cartes de hauteur, empilées dans un PNG en niveaux de gris :
+  // dessus, identifiants dessus, dessous, identifiants dessous.
   const HW = hmeta.w;
   const HH = hmeta.h;
   const n = HW * HH;
-  const topH = new Uint8Array(hbuf, 0, n);
-  const topId = new Uint8Array(hbuf, n, n);
-  const botH = new Uint8Array(hbuf, 2 * n, n);
-  const botId = new Uint8Array(hbuf, 3 * n, n);
+  const topH = hbuf.subarray(0, n);
+  const topId = hbuf.subarray(n, 2 * n);
+  const botId = hbuf.subarray(3 * n, 4 * n);
 
   let cols = 0;
   let rows = 0;
