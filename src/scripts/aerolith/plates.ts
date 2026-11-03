@@ -127,3 +127,33 @@ export function initDecode(root: ParentNode = document) {
     io.observe(el);
   });
 }
+
+/** Survol : le texte d'un lien se brouille brièvement puis se recompose. */
+export function initScramble(root: ParentNode = document) {
+  if (reducedMotion() || matchMedia('(pointer: coarse)').matches) return;
+  const pool = '#%=+-:/\\|01<>*';
+  root.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el) => {
+    const nodes: { node: Text; text: string }[] = [];
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    while (walk.nextNode()) {
+      const node = walk.currentNode as Text;
+      if (node.data.trim()) nodes.push({ node, text: node.data });
+    }
+    let raf = 0;
+    el.addEventListener('mouseenter', () => {
+      cancelAnimationFrame(raf);
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const f = Math.min((now - t0) / 380, 1);
+        for (const { node, text } of nodes) {
+          const keep = Math.floor(f * text.length);
+          node.data =
+            text.slice(0, keep) +
+            [...text.slice(keep)].map((c) => (c === ' ' ? ' ' : pool[(Math.random() * pool.length) | 0])).join('');
+        }
+        if (f < 1) raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    });
+  });
+}
