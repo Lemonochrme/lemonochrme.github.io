@@ -375,13 +375,13 @@ async function start(root: HTMLElement) {
             const shade = Math.min(Math.max(0.55 + (h - hl) * 0.5 + (h - hu) * 0.5, 0), 1);
             const lum = Math.min(0.2 + Math.min(h / 2.2, 1) * 0.5 + shade * 0.35, 0.999);
             g = RAMP[Math.floor(lum * RAMP.length)];
-            col = lum > 0.7 ? 0 : lum > 0.45 ? 1 : 2;
+            col = lum > 0.55 ? 0 : 1;
           }
         } else {
           const c = grids.top[i];
           if (viaGrid[i] >= 0) {
             g = 7;
-            col = 4;
+            col = 5;
           } else if (c.g >= 0 && !c.fill) {
             g = c.g;
             col = c.g === 8 ? 5 : 4;
@@ -429,7 +429,7 @@ async function start(root: HTMLElement) {
   const still = reducedMotion();
   let progress = 0;
   let shown = -1;
-  let hot = -1;
+  let hot = -2; // -2 : rien d'affiché encore, force le premier texte d'aide
   let hotKind: 'net' | 'comp' = 'net';
 
   function stageAt(p: number) {
