@@ -5,7 +5,7 @@ import { Atlas, FONT, INK, SIG, dpr, fontsReady, reducedMotion, rgba, trackVisib
 const FILL = '.:-=+*#%@';
 const EDGE = '|/-\\';
 const CHARS = FILL + EDGE + '0123456789ABCDEF';
-const COLORS = [rgba(INK, 1), rgba(INK, 0.7), rgba(INK, 0.42), rgba(SIG, 1), rgba(SIG, 0.6)];
+const COLORS = [rgba(INK, 1), rgba(INK, 0.7), rgba(INK, 0.42), rgba(SIG, 1)];
 
 export async function initWordmark(root: HTMLElement) {
   const canvas = root.querySelector<HTMLCanvasElement>('canvas')!;
@@ -99,8 +99,6 @@ export async function initWordmark(root: HTMLElement) {
     const t = (now - t0) / 1000;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     const intro = still ? 99 : t / 1.4;
-    // Une ligne de balayage traverse le mot toutes les 7 secondes.
-    const sweep = still ? -99 : ((t % 7) / 1.6) * (cols + 40) - 20;
     const R = Math.max(6, rows * 0.35);
     for (let y = 0; y < rows; y++)
       for (let x = 0; x < cols; x++) {
@@ -111,7 +109,6 @@ export async function initWordmark(root: HTMLElement) {
         // Décodage d'entrée, de gauche à droite.
         if (intro < 1 && x / cols > intro * 1.25 - s * 0.25) continue;
         const near = Math.hypot((x - pointer.x) * 0.55, y - pointer.y) < R;
-        const ds = Math.abs(x - sweep);
         let g: number;
         let col = 0;
         if (near || (intro < 1.2 && x / cols > intro - 0.1)) {
@@ -126,8 +123,6 @@ export async function initWordmark(root: HTMLElement) {
           g = Math.min(FILL.length - 1, Math.floor((0.35 + 0.65 * f) * c * FILL.length));
           col = f > 0.75 ? 0 : 1;
         }
-        if (ds < 1.5) col = 3;
-        else if (ds < 5) col = 4;
         atlas.draw(ctx, g, col, x * cw, y * ch);
       }
   }

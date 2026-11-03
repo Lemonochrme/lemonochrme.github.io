@@ -19,27 +19,24 @@ const srcset = async (image: ImageMetadata, widths: number[], format: 'avif' | '
     .map((r, k) => `${r.src} ${widths[k]}w`)
     .join(', ');
 const heroWide = { avif: await srcset(redline, [1280, 1920, 2560, 3200], 'avif'), webp: await srcset(redline, [1280, 1920, 2560], 'webp') };
-const heroTall = { avif: await srcset(exploded, [800, 1200, 1600], 'avif'), webp: await srcset(exploded, [800, 1200, 1600], 'webp') };
 const heroFallback = await getImage({ src: redline, width: 1920, format: 'webp', quality: 74 });
 
-// Chaque planche a une petite version pour générer son ASCII.
-const plate = async (image: ImageMetadata, title: string, n: string, span = '') => ({
+const plate = (image: ImageMetadata, title: string, n: string, span = '') => ({
   image,
   title,
   n,
   span,
-  ascii: (await getImage({ src: image, width: 320, format: 'webp', quality: 60 })).src,
 });
-const fcPlate = await plate(flightController, 'LithCore Rev A, populated', 'Fig. 03');
-const explodedPlate = await plate(exploded, 'Exploded assembly', 'Fig. 02');
-const windingsPlate = await plate(windings, 'Stator, 12 slots', 'Fig. 04');
-const plates = await Promise.all([
+const fcPlate = plate(flightController, 'LithCore Rev A, populated', 'Fig. 03');
+const explodedPlate = plate(exploded, 'Exploded assembly', 'Fig. 02');
+const windingsPlate = plate(windings, 'Stator, 12 slots', 'Fig. 04');
+const plates = [
   plate(silhouette, 'Silhouette', 'Pl. 01', 'a'),
   plate(powertrain, 'Powertrain', 'Pl. 02', 'b'),
   plate(service, 'Service access', 'Pl. 03', 'c'),
   plate(harness, 'Harness routing', 'Pl. 04', 'd'),
   plate(obsidian, 'Obsidian', 'Pl. 05', 'e'),
-]);
+];
 
 const fc = lithcore.stats;
 const esc = lithdrive.stats;
@@ -64,7 +61,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
 ---
 
 <Aerolith
-  title="Aerolith — Heavy-lift cinema quadcopter"
+  title="Aerolith · Heavy-lift cinema quadcopter"
   description="Aerolith: a heavy-lift cinema quadcopter. Carbon airframe, flight controller, ESCs and firmware designed in-house."
 >
   <header class="bar">
@@ -84,17 +81,15 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
   </header>
 
   <main id="top">
-    <!-- 00 — Hero -->
+    <!-- 00 · Hero -->
     <section class="hero" aria-label="Aerolith">
       <picture class="hero-media">
-        <source media="(max-width: 760px) and (orientation: portrait)" type="image/avif" srcset={heroTall.avif} sizes="100vw" />
-        <source media="(max-width: 760px) and (orientation: portrait)" type="image/webp" srcset={heroTall.webp} sizes="100vw" />
-        <source type="image/avif" srcset={heroWide.avif} sizes="100vw" />
-        <source type="image/webp" srcset={heroWide.webp} sizes="100vw" />
+        <source type="image/avif" srcset={heroWide.avif} sizes="(max-width: 760px) 260vw, 100vw" />
+        <source type="image/webp" srcset={heroWide.webp} sizes="(max-width: 760px) 260vw, 100vw" />
         <img src={heroFallback.src} alt="Aerolith on the ground, lit by a red light strip" fetchpriority="high" decoding="async" />
       </picture>
       <div class="hero-ui">
-        <p class="hero-fig mono">Fig. 01 — Lithframe F380, render</p>
+        <p class="hero-fig mono">Fig. 01 · Lithframe F380, render</p>
         <h1 class="wordmark">
           <span class="sr-only">Aerolith</span>
           <span class="wordmark-fallback" aria-hidden="true">AEROLITH</span>
@@ -127,7 +122,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
       </ol>
     </section>
 
-    <!-- 01 — Châssis -->
+    <!-- 01 · Châssis -->
     <section id="frame" class="chapter" data-section="frame">
       <header class="chapter-head">
         <span class="chapter-n mono">01</span>
@@ -138,22 +133,22 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
       <div class="frame3d" data-model="/data/aerolith/chassis.json" data-bin="/data/aerolith/chassis.bin">
         <div class="frame-sticky">
           <div class="frame-head mono">
-            <span>Assembly — <output data-out="stage">Assembly</output></span>
-            <span class="frame-hint">Drag to rotate</span>
+            <span>Lithframe F380 · <output data-out="stage">Assembly</output></span>
+            <span class="frame-hint">Drag to rotate · hover a part</span>
           </div>
           <div class="frame-stage">
-            <canvas class="frame-gl" aria-label="Lithframe F380 assembly, 34 parts, rendered as text"></canvas>
-            <span class="callout mono" data-callout="Platine_superieure">Plate ×2<small>270 × 126</small></span>
-            <span class="callout mono" data-callout="Bras_Long_D_AV">Long arm ×4<small>190 × 28</small></span>
-            <span class="callout mono" data-callout="Bras_Court_G_AV">Short arm ×4<small>160 × 28</small></span>
-            <span class="callout mono" data-callout="Support_moteur_Haut_D_AR">Motor mount ×8<small>61 × 47</small></span>
-            <span class="callout mono" data-callout="Entretoise_M3_10_G_AR">Standoff M3 ×16</span>
+            <canvas class="frame-gl" aria-label="Lithframe F380 assembly, 34 parts. Hover a part to identify it."></canvas>
+            <span class="callout mono" data-callout="Platine_superieure"><b>Plate</b>Carbon, 270 × 126 mm, ×2</span>
+            <span class="callout mono" data-callout="Bras_Long_D_AV"><b>Long arm</b>Carbon truss, 190 × 28 mm, ×4</span>
+            <span class="callout mono" data-callout="Bras_Court_G_AV"><b>Short arm</b>Carbon truss, 160 × 28 mm, ×4</span>
+            <span class="callout mono" data-callout="Support_moteur_Haut_D_AR"><b>Motor mount</b>Carbon, 61 × 47 mm, ×8</span>
+            <span class="callout mono" data-callout="Entretoise_M3_10_G_AR"><b>Standoff</b>M3, ×16</span>
+            <span class="frame-tip mono" aria-live="polite"></span>
             <span class="tick tl"></span><span class="tick tr"></span><span class="tick bl"></span><span class="tick br"></span>
           </div>
           <div class="frame-read mono" aria-hidden="true">
             <div><span>Parts</span><b><output data-out="count">00</output> / 34</b></div>
             <div><span>Envelope</span><b>339 × 328 × 28 mm</b></div>
-            <div><span>Source</span><b>FreeCAD assembly</b></div>
           </div>
         </div>
       </div>
@@ -168,7 +163,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
               <tr><td>Long arm</td><td>190 × 28 mm</td><td>4</td></tr>
               <tr><td>Short arm</td><td>160 × 28 mm</td><td>4</td></tr>
               <tr><td>Motor mount</td><td>61 × 47 mm</td><td>8</td></tr>
-              <tr><td>Standoff M3</td><td>—</td><td>16</td></tr>
+              <tr><td>Standoff</td><td>M3</td><td>16</td></tr>
             </tbody>
           </table>
           <dl class="spec mono">
@@ -178,15 +173,14 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
             <div><dt>FC mount</dt><dd>30.5 × 30.5 mm</dd></div>
           </dl>
         </div>
-        <figure class="plate plate-exploded" data-ascii={explodedPlate.ascii}>
+        <figure class="plate plate-exploded">
           <Picture src={exploded} alt="Exploded view of the Aerolith assembly" widths={[640, 960, 1400]} sizes="(min-width: 900px) 58vw, 100vw" formats={['avif', 'webp']} fallbackFormat="webp" quality={50} loading="lazy" />
-          <canvas aria-hidden="true"></canvas>
           <figcaption class="mono"><span>{explodedPlate.n}</span>{explodedPlate.title}</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- 02 — Contrôleur de vol -->
+    <!-- 02 · Contrôleur de vol -->
     <section id="lithcore" class="chapter" data-section="lithcore">
       <header class="chapter-head">
         <span class="chapter-n mono">02</span>
@@ -194,18 +188,15 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
         <p class="chapter-lede">STM32F405 flight controller. Four layers, 38 × 38 mm.</p>
       </header>
 
-      <div class="scope scope-square" data-svg="/data/aerolith/lithcore.svg" data-meta="/data/aerolith/lithcore.json" data-height="/data/aerolith/lithcore-h.png" data-hmeta="/data/aerolith/lithcore-h.json">
+      <div class="scope scope-square" data-svg="/data/aerolith/lithcore.svg" data-meta="/data/aerolith/lithcore.json" data-render="/data/aerolith/lithcore">
         <div class="scope-sticky">
           <div class="scope-head mono">
             <ol class="steps" aria-label="Views">
               {scopeSteps.map((s, k) => <li><button data-step={k} aria-current={k === 0 ? 'true' : 'false'}><i>{String(k + 1).padStart(2, '0')}</i>{s}</button></li>)}
             </ol>
-            <div class="readout" aria-live="polite"><b data-out="name">—</b><em data-out="info"></em></div>
+            <div class="readout" aria-live="polite"><b data-out="name"></b><em data-out="info"></em></div>
           </div>
-          <div class="pcb-stage">
-            <canvas aria-label="LithCore layout rendered as text: components, copper layers and one traced net"></canvas>
-            <div class="pcb-labels mono" aria-hidden="true"></div>
-          </div>
+          <div class="pcb-stage" data-label="LithCore layout: components, four copper layers and one traced net"></div>
           <p class="board-dim mono"><span data-out="stage">Components</span><span>{fc.w} × {fc.h} mm</span><span>4 layers</span><span>{fc.components} parts</span><span>{fc.vias} vias</span></p>
         </div>
       </div>
@@ -221,7 +212,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
           <div><dt>I/O</dt><dd>USB-C, 5 UART, I²C, SWD<small>8 motor outputs</small></dd></div>
         </dl>
         <div class="errata-list">
-          <h3 class="mono" data-decode>Rev A — bring-up</h3>
+          <h3 class="mono" data-decode>Rev A bring-up</h3>
           <ol class="mono">
             <li><span>E1</span>VDDA left unconnected from 3V3. Bridged across two decoupling capacitors.</li>
             <li><span>E2</span>BOOT0 button footprint open. DFU forced with a solder bridge.</li>
@@ -230,14 +221,13 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
           <p class="note">Board runs firmware over USB and SWD. Both layout errata are closed for Rev B.</p>
         </div>
       </div>
-      <figure class="plate plate-fc" data-ascii={fcPlate.ascii}>
+      <figure class="plate plate-fc">
         <Picture src={flightController} alt="LithCore flight controller, populated board" widths={[640, 960, 1400, 1920]} sizes="100vw" formats={['avif', 'webp']} fallbackFormat="webp" quality={50} loading="lazy" />
-        <canvas aria-hidden="true"></canvas>
         <figcaption class="mono"><span>{fcPlate.n}</span>{fcPlate.title}</figcaption>
       </figure>
     </section>
 
-    <!-- 03 — ESC -->
+    <!-- 03 · ESC -->
     <section id="lithdrive" class="chapter" data-section="lithdrive">
       <header class="chapter-head">
         <span class="chapter-n mono">03</span>
@@ -245,18 +235,15 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
         <p class="chapter-lede">Sensorless three-phase ESC for a 6S bus. Four layers, 49.4 × 23.8 mm.</p>
       </header>
 
-      <div class="scope scope-wide" data-svg="/data/aerolith/lithdrive.svg" data-meta="/data/aerolith/lithdrive.json" data-height="/data/aerolith/lithdrive-h.png" data-hmeta="/data/aerolith/lithdrive-h.json">
+      <div class="scope scope-wide" data-svg="/data/aerolith/lithdrive.svg" data-meta="/data/aerolith/lithdrive.json" data-render="/data/aerolith/lithdrive">
         <div class="scope-sticky">
           <div class="scope-head mono">
             <ol class="steps" aria-label="Views">
               {scopeSteps.map((s, k) => <li><button data-step={k} aria-current={k === 0 ? 'true' : 'false'}><i>{String(k + 1).padStart(2, '0')}</i>{s}</button></li>)}
             </ol>
-            <div class="readout" aria-live="polite"><b data-out="name">—</b><em data-out="info"></em></div>
+            <div class="readout" aria-live="polite"><b data-out="name"></b><em data-out="info"></em></div>
           </div>
-          <div class="pcb-stage">
-            <canvas aria-label="LithDrive 6S layout rendered as text: components, copper layers and one traced net"></canvas>
-            <div class="pcb-labels mono" aria-hidden="true"></div>
-          </div>
+          <div class="pcb-stage" data-label="LithDrive 6S layout: components, four copper layers and one traced net"></div>
           <p class="board-dim mono"><span data-out="stage">Components</span><span>{esc.w} × {esc.h} mm</span><span>4 layers</span><span>{esc.components} parts</span><span>{esc.vias} vias</span></p>
         </div>
       </div>
@@ -274,15 +261,14 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
           <h3 class="mono" data-decode>Iterations</h3>
           <p>Several iterations led to the current design. It is still in development.</p>
         </div>
-        <figure class="plate plate-windings" data-ascii={windingsPlate.ascii}>
+        <figure class="plate plate-windings">
           <Picture src={windings} alt="Motor stator with copper windings" widths={[640, 960, 1400]} sizes="(min-width: 900px) 50vw, 100vw" formats={['avif', 'webp']} fallbackFormat="webp" quality={50} loading="lazy" />
-          <canvas aria-hidden="true"></canvas>
           <figcaption class="mono"><span>{windingsPlate.n}</span>{windingsPlate.title}</figcaption>
         </figure>
       </div>
     </section>
 
-    <!-- 04 — Statut -->
+    <!-- 04 · Statut -->
     <section id="status" class="chapter" data-section="status">
       <header class="chapter-head">
         <span class="chapter-n mono">04</span>
@@ -312,9 +298,8 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
       <header class="plates-head mono"><span data-decode>Plates</span><span>Cycles renders of the F380 assembly</span></header>
       <div class="plates-grid">
         {plates.map((p) => (
-          <figure class:list={['plate', `plate-${p.span}`]} data-ascii={p.ascii}>
+          <figure class:list={['plate', `plate-${p.span}`]}>
             <Picture src={p.image} alt={`Aerolith, ${p.title.toLowerCase()}`} widths={[640, 960, 1400, 1920]} sizes="(min-width: 900px) 66vw, 100vw" formats={['avif', 'webp']} fallbackFormat="webp" quality={50} loading="lazy" />
-            <canvas aria-hidden="true"></canvas>
             <figcaption class="mono"><span>{p.n}</span>{p.title}</figcaption>
           </figure>
         ))}
@@ -348,14 +333,14 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
     import { initWordmark } from '../scripts/aerolith/wordmark';
     import { initFrame } from '../scripts/aerolith/frame3d';
     import { initScope } from '../scripts/aerolith/scope';
-    import { initPlates, initDecode, initScramble } from '../scripts/aerolith/plates';
+    import { initReveal, initDecode, initScramble } from '../scripts/aerolith/effects';
     import { whenNear } from '../scripts/aerolith/glyphs';
 
     initWordmark(document.querySelector<HTMLElement>('.wordmark')!);
     const frame = document.querySelector<HTMLElement>('.frame3d')!;
     whenNear(frame, () => initFrame(frame).catch(() => frame.classList.add('is-fallback')), '100%');
     document.querySelectorAll<HTMLElement>('.scope').forEach((s) => initScope(s));
-    initPlates();
+    initReveal();
     initDecode();
     initScramble();
 
@@ -616,6 +601,10 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
       grid-template-columns: 1fr 1fr;
     }
 
+    .hero-media img {
+      object-position: 54% 40%;
+    }
+
     .hero-ui {
       padding-top: 200px;
       background: linear-gradient(to top, rgba(6, 6, 6, 0.95) 45%, rgba(6, 6, 6, 0) 100%);
@@ -677,8 +666,11 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
     top: 0;
     left: 0;
     display: grid;
-    padding: 0 0 0 14px;
-    color: var(--ink);
+    gap: 2px;
+    margin: -4px 0 0;
+    padding: 4px 8px 5px 14px;
+    background: rgba(6, 6, 6, 0.72);
+    color: var(--ink-3);
     white-space: nowrap;
     pointer-events: none;
     opacity: 0;
@@ -689,18 +681,50 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
     content: '';
     position: absolute;
     left: -3px;
-    top: 5px;
+    top: 9px;
     width: 6px;
     height: 6px;
     background: var(--sig);
   }
 
-  .callout small {
-    font-size: inherit;
-    color: var(--ink-3);
+  .callout:global(.is-left) {
+    padding: 4px 14px 5px 8px;
+    text-align: right;
+  }
+
+  .callout:global(.is-left)::before {
+    left: auto;
+    right: -3px;
+  }
+
+  .callout b,
+  .frame-tip :global(b) {
+    font-weight: 400;
+    color: var(--ink);
   }
 
   .callout:global(.is-on) {
+    opacity: 1;
+  }
+
+  .frame-tip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    gap: 2px;
+    padding: 8px 10px;
+    background: rgba(6, 6, 6, 0.9);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--sig);
+    color: var(--ink-3);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .frame-tip:global(.is-on) {
     opacity: 1;
   }
 
@@ -749,8 +773,13 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
       display: none;
     }
 
-    .callout small {
-      display: none;
+    /* Sur mobile, seul le nom de la pièce reste affiché. */
+    .callout {
+      font-size: 0;
+    }
+
+    .callout b {
+      font-size: 10px;
     }
   }
 
@@ -923,39 +952,151 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
     max-width: min(100%, calc((100svh - var(--bar) - 170px) * 2.08));
   }
 
-  .pcb-stage canvas {
+  /* Carte vectorielle : chaque étape règle l'opacité des couches. */
+  .pcb-stage :global(.pcb-svg) {
+    display: block;
     width: 100%;
-    cursor: crosshair;
-  }
-
-  .pcb-stage :global(.pcb-overlay) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-  }
-
-  .pcb-labels {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-
-  .scope:global([data-stage='comp']) .pcb-labels {
-    opacity: 1;
-  }
-
-  .pcb-labels :global(span) {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    padding: 1px 4px;
-    background: rgba(6, 6, 6, 0.82);
+    height: auto;
+    overflow: visible;
     color: var(--ink);
-    font-size: 10px;
-    letter-spacing: 0.04em;
   }
+
+  .pcb-stage :global(.pcb-outline) {
+    fill: #0b0b0c;
+    stroke: var(--ink-3);
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .pcb-stage :global(.pcb-layer),
+  .pcb-stage :global(.pcb-vias),
+  .pcb-stage :global(.pcb-silk),
+  .pcb-stage :global(.comp-img),
+  .pcb-stage :global(.comp-labels),
+  .pcb-stage :global(.route) {
+    opacity: 0;
+    transition: opacity 0.55s ease;
+  }
+
+  .pcb-stage :global(.trk) {
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pcb-stage :global(.pad) {
+    fill: currentColor;
+  }
+
+  .pcb-stage :global(.pour) {
+    fill: currentColor;
+    fill-opacity: 0.1;
+    fill-rule: evenodd;
+    stroke: currentColor;
+    stroke-opacity: 0.35;
+    stroke-width: 0.5px;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
+
+  .pcb-stage :global(.via) {
+    fill: #0b0b0c;
+    stroke: currentColor;
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .pcb-stage :global(.pcb-silk) {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 0.6px;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .pcb-stage :global(.is-hot) {
+    color: var(--sig);
+  }
+
+  .pcb-stage :global(.pour.is-hot) {
+    fill-opacity: 0.25;
+  }
+
+  .pcb-stage :global(.hit) {
+    fill: transparent;
+    stroke: transparent;
+    stroke-width: 1px;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
+
+  .pcb-stage :global(.hit.is-hot) {
+    fill: rgba(255, 59, 29, 0.12);
+    stroke: var(--sig);
+  }
+
+  .pcb-stage :global(.comp-labels text) {
+    fill: var(--ink);
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    text-anchor: middle;
+    dominant-baseline: central;
+    paint-order: stroke;
+    stroke: rgba(6, 6, 6, 0.85);
+    stroke-width: 3px;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+  }
+
+  .pcb-stage :global(.route-ghost) {
+    fill: none;
+    stroke: var(--ink);
+    stroke-opacity: 0.35;
+    stroke-width: 1px;
+    stroke-dasharray: 2 3;
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Pas de non-scaling-stroke ici : le pointillé de progression doit rester en millimètres. */
+  .pcb-stage :global(.route-lit) {
+    fill: none;
+    stroke: var(--sig);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pcb-stage :global(.probe) {
+    fill: var(--sig);
+    filter: drop-shadow(0 0 6px rgba(255, 59, 29, 0.9));
+  }
+
+  /* Composants : le cuivre du dessus en filigrane sous le rendu. */
+  .scope:global([data-stage='comp']) :global(.pcb-layer[data-layer='top']) { opacity: 0.16; }
+  .scope:global([data-stage='comp']) :global(.pcb-silk) { opacity: 0.35; }
+  .scope:global([data-stage='comp']) :global(.comp-top),
+  .scope:global([data-stage='comp']) :global(.comp-labels) { opacity: 1; }
+  .scope:global([data-stage='comp']) :global(.hit) { pointer-events: all; }
+
+  /* Couches de cuivre : une couche nette, les autres en fantôme. */
+  .scope:global([data-stage='top']) :global(.pcb-layer),
+  .scope:global([data-stage='in1']) :global(.pcb-layer),
+  .scope:global([data-stage='in2']) :global(.pcb-layer),
+  .scope:global([data-stage='bot']) :global(.pcb-layer) { opacity: 0.06; }
+  .scope:global([data-stage='top']) :global(.pcb-layer[data-layer='top']),
+  .scope:global([data-stage='in1']) :global(.pcb-layer[data-layer='in1']),
+  .scope:global([data-stage='in2']) :global(.pcb-layer[data-layer='in2']),
+  .scope:global([data-stage='bot']) :global(.pcb-layer[data-layer='bot']) { opacity: 1; }
+  .scope:not(:global([data-stage='comp'])) :global(.pcb-vias) { opacity: 0.55; }
+  .scope:global([data-stage='bot']) :global(.comp-bot) { opacity: 0.22; }
+
+  /* Trace : tout s'efface, la couche où passe la sonde se rallume. */
+  .scope:global([data-stage='trace']) :global(.pcb-layer) { opacity: 0.08; }
+  .scope:global([data-stage='trace']) :global(.pcb-vias) { opacity: 0.18; }
+  .scope:global([data-stage='trace']) :global(.route) { opacity: 1; }
+  .scope:global([data-stage='trace'][data-probe='top']) :global(.pcb-layer[data-layer='top']),
+  .scope:global([data-stage='trace'][data-probe='in1']) :global(.pcb-layer[data-layer='in1']),
+  .scope:global([data-stage='trace'][data-probe='in2']) :global(.pcb-layer[data-layer='in2']),
+  .scope:global([data-stage='trace'][data-probe='bot']) :global(.pcb-layer[data-layer='bot']) { opacity: 0.3; }
 
   .board-dim {
     display: flex;
@@ -1207,8 +1348,7 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
   }
 
   .plate :global(picture),
-  .plate :global(img),
-  .plate canvas {
+  .plate :global(img) {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -1219,41 +1359,15 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
     object-fit: cover;
   }
 
-  .plate canvas {
+  .plate :global(img) {
     opacity: 0;
-    pointer-events: none;
+    transform: scale(1.03);
+    transition: opacity 0.9s ease, transform 1.4s cubic-bezier(0.2, 0.7, 0.1, 1);
   }
 
-  .plate:global(.is-ascii) canvas {
+  .plate:global(.is-in) :global(img) {
     opacity: 1;
-  }
-
-  .plate:global(.is-ascii) :global(img) {
-    opacity: 0;
-  }
-
-  .plate:global(.is-developed) :global(img) {
-    opacity: 1;
-    transition: opacity 0.01s 0.05s;
-  }
-
-  .plate:global(.is-developed) canvas {
-    -webkit-mask-image: linear-gradient(to bottom, transparent 40%, #000 60%);
-    mask-image: linear-gradient(to bottom, transparent 40%, #000 60%);
-    -webkit-mask-size: 100% 250%;
-    mask-size: 100% 250%;
-    -webkit-mask-position: 0 100%;
-    mask-position: 0 100%;
-    animation: develop 1.5s cubic-bezier(0.6, 0, 0.2, 1) forwards;
-  }
-
-  @keyframes develop {
-    to {
-      -webkit-mask-position: 0 0;
-      mask-position: 0 0;
-      opacity: 1;
-      visibility: hidden;
-    }
+    transform: none;
   }
 
   .plate figcaption {
