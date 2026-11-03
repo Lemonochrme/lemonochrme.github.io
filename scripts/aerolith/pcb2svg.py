@@ -184,3 +184,87 @@ stats = {
 }
 json.dump({'nets': named, 'stats': stats}, open(out_json, 'w'), ensure_ascii=False)
 print(src.split('/')[-1], stats, f'{len(open(out_svg).read())/1024:.0f} KB', file=sys.stderr)
+
+
+# ───── Tracé ordonné d'un net, pour la sonde qui le parcourt au scroll ─────
+def net_route(net_id):
+    """Plus long chemin (approché) dans le graphe des pistes du net, à travers les vias."""
+    import heapq
+    key = lambda x, y, L: (round(x, 2), round(y, 2), L)
+    adj = {}
+    def link(a, b, w):
+        adj.setdefault(a, []).append((b, w))
+        adj.setdefault(b, []).append((a, w))
+    for r in R:
+        if r.get('RECORD') == 'Track' and r.get('LAYER') in COPPER and int(r.get('NET', -1)) == net_id:
+            L = COPPER[r['LAYER']]
+            a = key(mil(r['X1']), mil(r['Y1']), L)
+            b = key(mil(r['X2']), mil(r['Y2']), L)
+            link(a, b, math.dist(a[:2], b[:2]))
+    for r in R:
+        if r.get('RECORD') == 'Via' and int(r.get('NET', -1)) == net_id:
+            x, y = mil(r['X']), mil(r['Y'])
+            here = [n for n in adj if math.dist(n[:2], (x, y)) < mil(r['DIAMETER']) / 2 + 0.05]
+            for i in range(len(here)):
+                for j in range(i + 1, len(here)):
+                    if here[i][2] != here[j][2]:
+                        link(here[i], here[j], 0.0)
+    if not adj:
+        return None
+    def farthest(s):
+        dist = {s: 0.0}
+        prev = {}
+        pq = [(0.0, s)]
+        while pq:
+            d, u = heapq.heappop(pq)
+            if d > dist[u]:
+                continue
+            for v, w in adj[u]:
+                if d + w < dist.get(v, 1e18):
+                    dist[v] = d + w
+                    prev[v] = u
+                    heapq.heappush(pq, (d + w, v))
+        end = max(dist, key=dist.get)
+        return end, dist[end], prev
+    a, _, _ = farthest(next(iter(adj)))
+    b, length, prev = farthest(a)
+    path = [b]
+    while path[-1] != a:
+        path.append(prev[path[-1]])
+    return length, [(n[0] - X0, Y1 - n[1], ['top', 'in1', 'in2', 'bot'].index(n[2])) for n in path]
+
+meta = json.load(open(out_json))
+routes = []
+for nid, name in meta['nets'].items():
+    if name in ('GND', 'VBAT', 'BAT', '3V3', '5V', '10V', '3V3_ICM', '5V_BUCK', '5V_USB'):
+        continue
+    res = net_route(int(nid))
+    if res:
+        routes.append((res[0], name, res[1]))
+routes.sort(reverse=True)
+print('plus longs tracés :', [(n, round(l, 1), len({p[2] for p in pts})) for l, n, pts in routes[:8]], file=sys.stderr)
+pick = (sys.argv[4] if len(sys.argv) > 4 else '') or routes[0][1]
+length, name, pts = next(r for r in routes if r[1] == pick)
+meta['route'] = {'net': name, 'length': round(length, 2), 'pts': [[round(x, 2), round(y, 2), L] for x, y, L in pts]}
+
+# Références → numéros de pièce, depuis le schéma (facultatif, 5e argument).
+if len(sys.argv) > 5:
+    raw = open(sys.argv[5], encoding='utf-8', errors='replace').read().replace('\r\n', '\n')
+    srecs = []
+    for line in raw.split('\n'):
+        if '|RECORD=' in line:
+            d = {}
+            for kv in line.strip('|').split('|'):
+                if '=' in kv:
+                    k, v = kv.split('=', 1)
+                    d.setdefault(k.upper(), v)
+            srecs.append(d)
+    parts = {}
+    for d in srecs:
+        if d.get('RECORD') == '34' and d.get('NAME') == 'Designator' and 'OWNERINDEX' in d:
+            owner = srecs[int(d['OWNERINDEX'])] if int(d['OWNERINDEX']) < len(srecs) else {}
+            lib = owner.get('LIBREFERENCE', '')
+            if lib and not lib.startswith(('castellated', 'Test-Point', 'BLDC PIN')):
+                parts[d.get('TEXT', '')] = lib
+    meta['parts'] = parts
+json.dump(meta, open(out_json, 'w'), ensure_ascii=False)
