@@ -132,7 +132,8 @@ async function start(root: HTMLElement) {
       t.classList.add('is-hot');
       hotEls = [t];
       const ref = t.getAttribute('data-ref')!;
-      const pkg = partsData.parts.find((p) => p.ref === ref)?.pkg || '';
+      // Boîtier abrégé : « LQFP-64_L10.0-W10.0-… » devient « LQFP-64 ».
+      const pkg = (partsData.parts.find((p) => p.ref === ref)?.pkg || '').split('_')[0];
       out.name.textContent = ref;
       out.info.textContent = [partNumbers[ref], pkg].filter(Boolean).join(' · ');
       return;
