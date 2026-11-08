@@ -88,6 +88,8 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
         <source type="image/webp" srcset={heroWide.webp} sizes="(max-width: 760px) 260vw, 100vw" />
         <img src={heroFallback.src} alt="Aerolith on the ground, lit by a red light strip" fetchpriority="high" decoding="async" />
       </picture>
+      <!-- La vidéo recouvre l'image seulement une fois qu'elle joue : l'image reste le secours. -->
+      <video class="hero-video" muted loop playsinline preload="none" poster={heroFallback.src} aria-hidden="true" data-src="/media/aerolith-bg.webm"></video>
       <div class="hero-ui">
         <p class="hero-fig mono">Fig. 01 · Lithframe F380, render</p>
         <h1 class="wordmark">
@@ -337,6 +339,16 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
     import { whenNear } from '../scripts/aerolith/glyphs';
 
     initWordmark(document.querySelector<HTMLElement>('.wordmark')!);
+
+    // Vidéo de fond : chargée après l'image, affichée seulement si elle joue vraiment.
+    const video = document.querySelector<HTMLVideoElement>('.hero-video')!;
+    const canPlay = video.canPlayType('video/webm; codecs="vp9"') !== '';
+    if (canPlay && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
+      video.addEventListener('error', () => video.remove(), { once: true });
+      video.src = video.dataset.src!;
+      video.play().catch(() => video.remove());
+    } else video.remove();
     const frame = document.querySelector<HTMLElement>('.frame3d')!;
     whenNear(frame, () => initFrame(frame).catch(() => frame.classList.add('is-fallback')), '100%');
     document.querySelectorAll<HTMLElement>('.scope').forEach((s) => initScope(s));
@@ -516,6 +528,21 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
     animation: hero-in 1.6s cubic-bezier(0.2, 0.7, 0.1, 1) both;
   }
 
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 42%;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .hero-video:global(.is-playing) {
+    opacity: 1;
+  }
+
   @keyframes hero-in {
     from {
       opacity: 0;
@@ -601,7 +628,8 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
       grid-template-columns: 1fr 1fr;
     }
 
-    .hero-media img {
+    .hero-media img,
+    .hero-video {
       object-position: 54% 40%;
     }
 
@@ -1761,6 +1789,10 @@ const scopeSteps = ['Parts', 'Top', 'In1', 'In2', 'Bot', 'Trace'];
   @media (prefers-reduced-motion: reduce) {
     .hero-media img {
       animation: none;
+    }
+
+    .hero-video {
+      display: none;
     }
   }
 </style>
